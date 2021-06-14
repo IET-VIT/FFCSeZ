@@ -20,9 +20,9 @@ The app can be used by any student studying in VIT right from the first years to
 The main features of the app are broken down into a technical task timeline.
 
 - Task 1: Project Setup
-  - [ ] Add the required dependencies for library support.
+  - [x] Add the required dependencies for library support.
   - [ ] Create a Login UI for GoogleAuth.
-  - [ ] Setup database services
+  - [x] Setup database services.
 
 - Task2: Setting up the FFCS interface and database
   - [ ] Build the UI for the FFCS selection screen.
