@@ -80,6 +80,43 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
                 });
             }
         });
+        holder.longPress.setOnLongClickListener(v -> {
+
+            View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null);
+
+            TextView facultyName = view.findViewById(R.id.digFacultyName);
+            TextView facultySchool = view.findViewById(R.id.digFacultySchool);
+            TextView courseName = view.findViewById(R.id.digCourseName);
+            TextView l = view.findViewById(R.id.l);
+            TextView t = view.findViewById(R.id.t);
+            TextView p = view.findViewById(R.id.p);
+            TextView j = view.findViewById(R.id.j);
+            TextView c = view.findViewById(R.id.c);
+            TextView digSlot = view.findViewById(R.id.digSlot);
+            TextView digCourseCode = view.findViewById(R.id.digCourseCode);
+            TextView digCourseType = view.findViewById(R.id.digCourseType);
+            TextView digRoomNo = view.findViewById(R.id.digRoomNo);
+
+            facultyName.setText(model.getEmpName());
+            facultySchool.setText(model.getEmpSchool());
+            courseName.setText(model.getCourseTitle());
+            l.setText(model.getL());
+            t.setText(model.getT());
+            p.setText(model.getP());
+            j.setText(model.getJ());
+            c.setText(model.getC());
+            digSlot.setText(model.getSlot());
+            digCourseCode.setText(model.getCourseCode());
+            digCourseType.setText(model.getCourseType());
+            digRoomNo.setText(model.getRoomNumber());
+
+            AlertDialog alertDialog = new AlertDialog.Builder(context)
+                    .setView(view)
+                    .setCancelable(true)
+                    .create();
+            alertDialog.show();
+            return true;
+        });
     }
 
     @Override
@@ -102,6 +139,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
             roomNumber = view.findViewById(R.id.roomNoHome);
             typeSelector = view.findViewById(R.id.typeSelector);
             deleteButton = view.findViewById(R.id.deleteButton);
+            longPress = view.findViewById(R.id.longPress);
         }
     }
 
