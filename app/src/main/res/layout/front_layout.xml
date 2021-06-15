@@ -65,6 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sunday" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Project" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
