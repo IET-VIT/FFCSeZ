@@ -38,12 +38,12 @@ public class CourseACAdapter extends ArrayAdapter<CourseDetails> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            //convertView = LayoutInflater.from(getContext())
-                   // .inflate(R.layout.autocomplete_layout, parent, false);
+            convertView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.autocomplete_layout, parent, false);
         }
 
-        //text1 = convertView.findViewById(R.id.textView);
-        //text2 = convertView.findViewById(R.id.textView2);
+        text1 = convertView.findViewById(R.id.textView);
+        text2 = convertView.findViewById(R.id.textView2);
 
         CourseDetails course = getItem(position);
 
