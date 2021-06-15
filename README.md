@@ -25,10 +25,10 @@ The main features of the app are broken down into a technical task timeline.
   - [x] Setup database services.
 
 - Task2: Setting up the FFCS interface and database
-  - [ ] Build the UI for the FFCS selection screen.
-  - [ ] Adding query methods from the database for the selection. 
-  - [ ] Add chips and set up a filter system.
-  - [ ] Build the UI for the slot display screen.
+  - [x] Build the UI for the FFCS selection screen.
+  - [x] Adding query methods from the database for the selection. 
+  - [x] Add chips and set up a filter system.
+  - [x] Build the UI for the slot display screen.
 
 - Task 3: Setting the Timetables
   - [ ] Build the UI for the timetable display.
