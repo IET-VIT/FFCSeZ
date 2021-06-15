@@ -45,8 +45,8 @@ public class FridayFragment extends Fragment {
         fridayRecyclerView.setLayoutManager(layoutManager);
         fridayRecyclerView.setAdapter(adapter);
 
-        LiveData<List<TimeTableData>> monTimeTable = database.timeTableDao().loadTTDetails(1, 4, 9);
-        monTimeTable.observe(getActivity(), new Observer<List<TimeTableData>>() {
+        LiveData<List<TimeTableData>> friTimeTable = database.timeTableDao().loadTTDetails(1, 4, 9);
+        friTimeTable.observe(getActivity(), new Observer<List<TimeTableData>>() {
             @Override
             public void onChanged(List<TimeTableData> timeTableData) {
                 adapter.updateAdapter(timeTableData);
