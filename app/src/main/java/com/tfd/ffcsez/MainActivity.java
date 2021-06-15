@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         backdropLayout = findViewById(R.id.container);
 
         ButterKnife.bind(this);
+        initialize();
 
         database = FacultyDatabase.getInstance(getApplicationContext());
         back_layout = backdropLayout.getChildAt(0);
@@ -333,4 +334,75 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+    private void initialize() {
+        chosenSlots = new int[10][6];
+        for (int i = 0; i < 10; i++){
+            for(int j = 0; j < 6; j++){
+                chosenSlots[i][j] = 0;
+            }
+        }
+
+        slotList.clear();
+        slotList.put("A1", new int[]{1, 14});
+        slotList.put("TA1", new int[]{27});
+        slotList.put("TAA1", new int[]{11});
+        slotList.put("A2", new int[]{31, 44});
+        slotList.put("TA2", new int[]{57});
+        slotList.put("TAA2", new int[]{41});
+        slotList.put("B1", new int[]{7, 20});
+        slotList.put("TB1", new int[]{4});
+        slotList.put("B2", new int[]{37, 50});
+        slotList.put("TB2", new int[]{34});
+        slotList.put("TBB2", new int[]{47});
+        slotList.put("C1", new int[]{13, 26});
+        slotList.put("TC1", new int[]{10});
+        slotList.put("TCC1", new int[]{23});
+        slotList.put("C2", new int[]{43, 56});
+        slotList.put("TC2", new int[]{40});
+        slotList.put("TCC2", new int[]{53});
+        slotList.put("D1", new int[]{3, 19});
+        slotList.put("TD1", new int[]{29});
+        slotList.put("D2", new int[]{33, 49});
+        slotList.put("TD2", new int[]{46});
+        slotList.put("TDD2", new int[]{59});
+        slotList.put("E1", new int[]{9, 25});
+        slotList.put("TE1", new int[]{22});
+        slotList.put("E2", new int[]{39, 55});
+        slotList.put("TE2", new int[]{52});
+        slotList.put("F1", new int[]{2, 15});
+        slotList.put("TF1", new int[]{28});
+        slotList.put("F2", new int[]{32, 45});
+        slotList.put("TF2", new int[]{58});
+        slotList.put("G1", new int[]{8, 21});
+        slotList.put("TG1", new int[]{5});
+        slotList.put("G2", new int[]{38, 51});
+        slotList.put("TG2", new int[]{35});
+        slotList.put("V1", new int[]{16});
+        slotList.put("V2", new int[]{17});
+        slotList.put("V3", new int[]{36});
+        slotList.put("V4", new int[]{42});
+        slotList.put("V5", new int[]{48});
+        slotList.put("V6", new int[]{54});
+        slotList.put("V7", new int[]{60});
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (realm != null)
+            realm.close();
+
+        if (user != null) {
+            user.logOutAsync(result -> {
+                if (result.isSuccess()) {
+                    Log.d(LOG_TAG, "Successfully logged out.");
+                } else {
+                    Log.d(LOG_TAG, "Failed to log out, error: " + result.getError());
+                }
+            });
+        }
+    }
+
 }
