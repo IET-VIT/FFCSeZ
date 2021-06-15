@@ -19,46 +19,46 @@ The app can be used by any student studying in VIT right from the first years to
 ## <img src="https://image.flaticon.com/icons/png/512/1632/1632633.png" width="32" height="32"> Next Steps: Required Tasks
 The main features of the app are broken down into a technical task timeline.
 
-- Task 1: Project Setup
+- <strong><em> Task 1: Project Setup </em></strong>
   - [x] Add the required dependencies for library support.
   - [ ] Create a Login UI for GoogleAuth.
   - [x] Setup database services.
 
-- Task2: Setting up the FFCS interface and database
+- <strong><em> Task2: Setting up the FFCS interface and database </em></strong>
   - [x] Build the UI for the FFCS selection screen.
   - [x] Adding query methods from the database for the selection. 
   - [x] Add chips and set up a filter system.
   - [x] Build the UI for the slot display screen.
 
-- Task 3: Setting the Timetables
+- <strong><em> Task 3: Setting the Timetables </em></strong>
   - [x] Build the UI for the timetable display.
   - [x] Setup app navigation.
   - [x] Code for the database storage of timetables.
   - [x] Wrap up the code of Task 2 and the code of Task 3.
   - [x] Complete debug till Task 3. 
 
-- Task 4: The Navigation Pane
+- <strong><em> Task 4: The Navigation Pane </em></strong>
   - [ ] Setup the functionality to add and display the existing timetables of the user.
   - [ ] Adding the import timetable feature.
   - [ ] UI cleanup.
 
-- Task 5: Notes (To-Dos) and Reminders
+- <strong><em> Task 5: Notes (To-Dos) and Reminders </em></strong>
   - [ ] Building the UI for the to-dos activity for each class.
   - [ ] Setting up a broadcast receiver for the notifications.
   - [ ] Code for Task 5.
 
-- Task 6: Alarms
+- <strong><em> Task 6: Alarms </em></strong>
   - [ ] UI for the alarms setup.
   - [ ] Implementation of alarms using a content provider.
   - [ ] Driver code.
   - [ ] Complete debug till Task 6.
 
-- Task 7: Cleanup
+- <strong><em> Task 7: Cleanup </em></strong>
   - [ ] Cleanup or improvise the UI/UX.
   - [ ] Refactor code and code optimizations.
   - [ ] Add guide at first-time startup.
 
-- Task 8: Widgets and Additional features
+- <strong><em> Task 8: Widgets and Additional features </em></strong>
   - [ ] Implement a dark theme and its toggle.
   - [ ] Build a widget of the current timetable.
   - [ ] Build a widget of the to-dos of the current timetable.
