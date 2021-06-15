@@ -54,6 +54,32 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
             holder.typeSelector.setBackgroundColor(Color.parseColor("#B00020"));
         else
             holder.typeSelector.setBackgroundResource(R.color.orange);
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimeTableData data = list.get(position);
+                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<TimeTableData> slots = database.timeTableDao().loadSlotDetails(data.getEmpName(), data.getSlot());
+                        for (TimeTableData timeTableData: slots){
+                            database.timeTableDao().deleteSlot(timeTableData);
+                            if (!timeTableData.isClash()){
+                                MainActivity.chosenSlots[timeTableData.getRow()][timeTableData.getColumn()] = 0;
+                            }else{
+                                List<TimeTableData> clashSlots = database.timeTableDao()
+                                        .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn());
+                                //clashSlots.removeAll(Collections.singleton(data));
+                                if (clashSlots.size() == 1){
+                                    clashSlots.get(0).setClash(false);
+                                    database.timeTableDao().updateDetail(clashSlots.get(0));
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
+import com.tfd.ffcsez.database.TimeTableData;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -78,7 +79,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setTTSlot(list.get(position));
             }
         });
 
@@ -168,5 +169,127 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     public void updateAdapter(List<FacultyData> list){
         this.list = list;
         notifyDataSetChanged();
+    }
+
+    public void setTTSlot(FacultyData facultyData){
+        String[] slot = facultyData.getSlot().split("[+]");
+        Pattern pattern = Pattern.compile("^L");
+        Matcher matcher;
+        exists = false;
+
+        for (String slotNum: slot){
+            Log.d("Hellox", slotNum);
+            matcher = pattern.matcher(slotNum);
+            if (matcher.find()){
+                int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
+                TimeTableData data;
+                if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                    data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                            coord[1], slotNum, "x", "x", true);
+                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<TimeTableData> clashSlots = database.timeTableDao()
+                                    .loadClashSlots(coord[0], coord[1]);
+                            for (TimeTableData timeTableData : clashSlots) {
+                                if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                    exists = true;
+                                    Log.d("Hellobool", String.valueOf(exists));
+                                    break;
+                                }
+                            }
+                            if (!exists) {
+                                for (TimeTableData timeTableData : clashSlots) {
+                                    Log.d("Helloclash", timeTableData.getEmpName());
+                                    timeTableData.setClash(true);
+                                    database.timeTableDao().updateDetail(timeTableData);
+                                }
+                                database.timeTableDao().insertSlot(data);
+                                MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                            }
+                        }
+                    });
+
+                }else{
+                    data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                            coord[1], slotNum, "x", "x", false);
+
+                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            database.timeTableDao().insertSlot(data);
+                            MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                        }
+                    });
+                }
+
+            }else{
+                if (MainActivity.slotList.get(slotNum) != null) {
+                    for (int i = 0; i < MainActivity.slotList.get(slotNum).length; i++) {
+                        int[] coord = getCoord(MainActivity.slotList.get(slotNum)[i]);
+                        TimeTableData data;
+                        if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                            data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                    coord[1], slotNum, "x", "x", true);
+                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    List<TimeTableData> clashSlots = database.timeTableDao()
+                                            .loadClashSlots(coord[0], coord[1]);
+                                    for (TimeTableData timeTableData : clashSlots) {
+                                        if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                            exists = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!exists) {
+                                        for (TimeTableData timeTableData : clashSlots) {
+                                            Log.d("Helloclash", timeTableData.getEmpName());
+                                            timeTableData.setClash(true);
+                                            database.timeTableDao().updateDetail(timeTableData);
+                                        }
+                                        database.timeTableDao().insertSlot(data);
+                                        MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                    }
+                                }
+                            });
+
+                        }else{
+                            data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                    coord[1], slotNum, "x", "x", false);
+
+                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    database.timeTableDao().insertSlot(data);
+                                    MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private int[] getCoord(int num){
+        int[] coord = new int[2];
+        int r, c;
+        Log.d("Hellonum", Integer.toString(num));
+
+        if (num%6 == 0){
+            r = num/6 - 1;
+            c = 5;
+        }else{
+            r = num/6;
+            c = num%6 - 1;
+        }
+        Log.d("Hellor", Integer.toString(r));
+        Log.d("Helloc", Integer.toString(c));
+        Log.d("Helloslot", Integer.toString(MainActivity.chosenSlots[r][c]));
+        coord[0] = r;
+        coord[1] = c;
+
+        return coord;
     }
 }
