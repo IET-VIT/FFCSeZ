@@ -28,7 +28,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
-import com.roacult.backdrop.BackdropLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
 import com.tfd.ffcsez.adapters.FacultyACAdapter;
 import com.tfd.ffcsez.adapters.FacultyAdapter;
@@ -39,6 +38,7 @@ import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
 import com.tfd.ffcsez.models.FacultyDetails;
+import com.roacult.backdrop.BackdropLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,24 +81,15 @@ public class MainActivity extends AppCompatActivity {
     User user;
     App app;
     //@BindView(R.id.facultyRecyclerView) RecyclerView facultyRecyclerView;
-    @BindView(R.id.button)
-    Button button;
-    @BindView(R.id.morningChip)
-    Chip morningChip;
-    @BindView(R.id.afternoonChip)
-    Chip afternoonChip;
-    @BindView(R.id.theoryChip)
-    Chip theoryChip;
-    @BindView(R.id.labChip)
-    Chip labChip;
-    @BindView(R.id.projectChip)
-    Chip projectChip;
-    @BindView(R.id.animation)
-    LottieAnimationView animation;
-    @BindView(R.id.animation2)
-    LottieAnimationView notFound;
-    @BindView(R.id.errorText)
-    TextView errorText;
+    @BindView(R.id.button) Button button;
+    @BindView(R.id.morningChip) Chip morningChip;
+    @BindView(R.id.afternoonChip) Chip afternoonChip;
+    @BindView(R.id.theoryChip) Chip theoryChip;
+    @BindView(R.id.labChip) Chip labChip;
+    @BindView(R.id.projectChip) Chip projectChip;
+    @BindView(R.id.animation) LottieAnimationView animation;
+    @BindView(R.id.animation2) LottieAnimationView notFound;
+    @BindView(R.id.errorText) TextView errorText;
 
 
     @Override
@@ -116,11 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         initialize();
-
         database = FacultyDatabase.getInstance(getApplicationContext());
         back_layout = backdropLayout.getChildAt(0);
         courseCodeEditText = back_layout.findViewById(R.id.courseCodeEditText);
-
         RecyclerView facultyRecyclerView = back_layout.findViewById(R.id.facultyRecyclerView);
         adapter = new FacultyAdapter(facultyList, this);
         LinearLayoutManager layoutManager =
@@ -247,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         fText = back_layout.findViewById(R.id.fText);
 
         toggle.setOnClickListener(v -> {
-            if (toggle.isChecked()) {
+            if(toggle.isChecked()){
                 courseCodeLayout.setVisibility(View.INVISIBLE);
                 facultyNameLayout.setVisibility(View.VISIBLE);
                 cText.setTextColor(Color.parseColor("#fff5eb"));
@@ -259,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 cText.setTextColor(Color.parseColor("#03256c"));
             }
         });
+
 
 
         courseCodeEditText.addTextChangedListener(new TextWatcher() {
@@ -289,6 +279,92 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        morningChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (morningChip.isChecked())
+                    timeFN = "FN";
+                else
+                    timeFN = "";
+                updateFilters();
+            }
+        });
+
+        afternoonChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (afternoonChip.isChecked())
+                    timeAN = "AN";
+                else
+                    timeAN = "";
+                updateFilters();
+            }
+        });
+
+        theoryChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (theoryChip.isChecked()) {
+                    courseTH = "TH";
+                    courseETH = "ETH";
+                    courseSS = "SS";
+                }else {
+                    courseTH = "";
+                    courseETH = "";
+                    courseSS = "";
+                }
+                updateFilters();
+            }
+        });
+
+        labChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (labChip.isChecked()) {
+                    courseELA = "ELA";
+                    courseLO = "LO";
+                }else {
+                    courseELA = "";
+                    courseLO = "";
+                }
+                updateFilters();
+            }
+        });
+
+        projectChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (projectChip.isChecked())
+                    courseEPJ = "EPJ";
+                else
+                    courseEPJ = "";
+                updateFilters();
+            }
+        });
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateFilters();
+//                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        facultyList = database.facultyDao().getData(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
+//                                courseTitleEditText.getText().toString().toUpperCase().trim() + "%");
+//
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Log.d(LOG_TAG, facultyList.toString());
+//                                adapter.updateAdapter(facultyList);
+//                            }
+//                        });
+//                    }
+//                });
             }
         });
 
@@ -405,4 +481,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateFilters(){
+        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (!(courseTH.isEmpty() && courseETH.isEmpty() && courseSS.isEmpty() && courseELA.isEmpty()
+                        && courseLO.isEmpty() && courseEPJ.isEmpty()) && !(timeFN.isEmpty() && timeAN.isEmpty())) {
+                    facultyList = database.facultyDao().loadAsPerFilterAND(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
+                            facultyNameEditText.getText().toString().toUpperCase().trim() + "%", courseTH, courseETH,
+                            courseELA, courseEPJ, courseSS, courseLO, timeFN, timeAN);
+                }else if (courseTH.isEmpty() && courseETH.isEmpty() && courseSS.isEmpty() && courseELA.isEmpty()
+                        && courseLO.isEmpty() && courseEPJ.isEmpty() && timeFN.isEmpty() && timeAN.isEmpty()){
+                    facultyList = database.facultyDao().loadData(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
+                            facultyNameEditText.getText().toString().toUpperCase().trim() + "%");
+                }else {
+                    facultyList = database.facultyDao().loadAsPerFilterOR(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
+                            facultyNameEditText.getText().toString().toUpperCase().trim() + "%", courseTH, courseETH,
+                            courseELA, courseEPJ, courseSS, courseLO, timeFN, timeAN);
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("Hellofilter", Integer.toString(facultyList.size()));
+                        if(facultyList.size()==0){
+                            animation.setVisibility(View.INVISIBLE);
+                            notFound.setVisibility(View.VISIBLE);
+                            errorText.setText("No Course Available");
+                            errorText.setVisibility(View.VISIBLE);
+                        } else {
+                            animation.setVisibility(View.INVISIBLE);
+                            notFound.setVisibility(View.INVISIBLE);
+                            errorText.setVisibility(View.INVISIBLE);
+                        }
+                        adapter.updateAdapter(facultyList);
+                    }
+                });
+            }
+        });
+
+    }
 }
