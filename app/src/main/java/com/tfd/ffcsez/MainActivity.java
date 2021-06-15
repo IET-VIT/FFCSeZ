@@ -46,14 +46,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
-import io.realm.mongodb.App;
-import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
-import io.realm.mongodb.sync.SyncConfiguration;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,10 +69,8 @@ public class MainActivity extends AppCompatActivity {
     public static HashMap<String, int[]> slotList = new HashMap<>();
     List<FacultyData> facultyList = new ArrayList<>();
     ArrayList<HashMap<String, String>> courseList = new ArrayList<>();
-    FacultyAdapter adapter;
-    Realm realm;
-    User user;
-    App app;
+    public static FacultyAdapter adapter;
+
     //@BindView(R.id.facultyRecyclerView) RecyclerView facultyRecyclerView;
     @BindView(R.id.button) Button button;
     @BindView(R.id.morningChip) Chip morningChip;
@@ -116,100 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 new LinearLayoutManager(MainActivity.this);
         facultyRecyclerView.setLayoutManager(layoutManager);
         facultyRecyclerView.setAdapter(adapter);
-
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.prasoonsoni.ffcs",
-                Context.MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("firstTime", true)) {
-            Log.d(LOG_TAG, "firstTime");
-            Realm.init(this);
-            app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
-
-            ProgressDialog progress = new ProgressDialog(this);
-            progress.setMessage("Retrieving data");
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            progress.setCancelable(false);
-            progress.show();
-
-            Credentials credentials = Credentials.anonymous();
-            app.loginAsync(credentials, result -> {
-                if (result.isSuccess()) {
-                    Log.d(LOG_TAG, "Successfully authenticated anonymously.");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progress.setMessage("Please restart the app to see the updated changes");
-                        }
-                    });
-
-                } else {
-                    Log.d(LOG_TAG, "Failed to authenticate anonymously. " + result.getError());
-                    progress.dismiss();
-                }
-            });
-
-            user = app.currentUser();
-            if (user != null) {
-                SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
-                        .waitForInitialRemoteData()
-                        .build();
-
-                Realm.getInstanceAsync(config, new Realm.Callback() {
-                    @Override
-                    public void onSuccess(Realm realm) {
-                        Log.d(LOG_TAG, "Realm created");
-                        MainActivity.this.realm = realm;
-
-                        RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                        data.addChangeListener(new RealmChangeListener<RealmResults<CourseData>>() {
-                            @Override
-                            public void onChange(RealmResults<CourseData> courseData) {
-                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        database.facultyDao().deleteAll();
-                                    }
-                                });
-                                for (CourseData course : data) {
-                                    FacultyData faculty = new FacultyData(course);
-                                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            database.facultyDao().insertDetail(faculty);
-                                        }
-                                    });
-                                }
-                                sharedPreferences.edit().putBoolean("firstTime", false).apply();
-                                int size = courseData.size();
-                                Log.d(LOG_TAG, Integer.toString(size));
-                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        List<CourseDetails> test = database.facultyDao().loadCourses();
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Log.d(LOG_TAG, Integer.toString(test.size()));
-                                                CourseACAdapter searchAdapter = new CourseACAdapter(MainActivity.this, test);
-                                                courseCodeEditText.setAdapter(searchAdapter);
-                                            }
-                                        });
-                                    }
-                                });
-                                progress.dismiss();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(Throwable exception) {
-                        super.onError(exception);
-                        progress.dismiss();
-                        Log.d(LOG_TAG, "Failed to create Realm" + exception.getMessage());
-                    }
-                });
-            }
-        }
 
         ExecutorClass.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -350,21 +247,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateFilters();
-//                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        facultyList = database.facultyDao().getData(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
-//                                courseTitleEditText.getText().toString().toUpperCase().trim() + "%");
-//
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Log.d(LOG_TAG, facultyList.toString());
-//                                adapter.updateAdapter(facultyList);
-//                            }
-//                        });
-//                    }
-//                });
             }
         });
 
@@ -463,24 +345,6 @@ public class MainActivity extends AppCompatActivity {
         slotList.put("V7", new int[]{60});
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (realm != null)
-            realm.close();
-
-        if (user != null) {
-            user.logOutAsync(result -> {
-                if (result.isSuccess()) {
-                    Log.d(LOG_TAG, "Successfully logged out.");
-                } else {
-                    Log.d(LOG_TAG, "Failed to log out, error: " + result.getError());
-                }
-            });
-        }
-    }
-
     private void updateFilters(){
         ExecutorClass.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -518,6 +382,5 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-
     }
 }
