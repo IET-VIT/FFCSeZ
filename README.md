@@ -31,11 +31,11 @@ The main features of the app are broken down into a technical task timeline.
   - [x] Build the UI for the slot display screen.
 
 - Task 3: Setting the Timetables
-  - [ ] Build the UI for the timetable display.
-  - [ ] Setup app navigation.
-  - [ ] Code for the database storage of timetables.
-  - [ ] Wrap up the code of Task 2 and the code of Task 3.
-  - [ ] Complete debug till Task 3. 
+  - [x] Build the UI for the timetable display.
+  - [x] Setup app navigation.
+  - [x] Code for the database storage of timetables.
+  - [x] Wrap up the code of Task 2 and the code of Task 3.
+  - [x] Complete debug till Task 3. 
 
 - Task 4: The Navigation Pane
   - [ ] Setup the functionality to add and display the existing timetables of the user.
