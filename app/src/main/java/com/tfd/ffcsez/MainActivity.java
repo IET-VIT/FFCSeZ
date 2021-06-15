@@ -29,6 +29,8 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.roacult.backdrop.BackdropLayout;
+import com.tfd.ffcsez.adapters.CourseACAdapter;
+import com.tfd.ffcsez.adapters.FacultyACAdapter;
 import com.tfd.ffcsez.adapters.FacultyAdapter;
 import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
 import com.tfd.ffcsez.database.ExecutorClass;
@@ -36,6 +38,7 @@ import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
+import com.tfd.ffcsez.models.FacultyDetails;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -285,92 +288,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-            }
-        });
-
-        morningChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (morningChip.isChecked())
-                    timeFN = "FN";
-                else
-                    timeFN = "";
-                updateFilters();
-            }
-        });
-
-        afternoonChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (afternoonChip.isChecked())
-                    timeAN = "AN";
-                else
-                    timeAN = "";
-                updateFilters();
-            }
-        });
-
-        theoryChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (theoryChip.isChecked()) {
-                    courseTH = "TH";
-                    courseETH = "ETH";
-                    courseSS = "SS";
-                } else {
-                    courseTH = "";
-                    courseETH = "";
-                    courseSS = "";
-                }
-                updateFilters();
-            }
-        });
-
-        labChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (labChip.isChecked()) {
-                    courseELA = "ELA";
-                    courseLO = "LO";
-                } else {
-                    courseELA = "";
-                    courseLO = "";
-                }
-                updateFilters();
-            }
-        });
-
-        projectChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (projectChip.isChecked())
-                    courseEPJ = "EPJ";
-                else
-                    courseEPJ = "";
-                updateFilters();
-            }
-        });
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateFilters();
-//                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        facultyList = database.facultyDao().getData(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
-//                                courseTitleEditText.getText().toString().toUpperCase().trim() + "%");
-//
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Log.d(LOG_TAG, facultyList.toString());
-//                                adapter.updateAdapter(facultyList);
-//                            }
-//                        });
-//                    }
-//                });
             }
         });
 
