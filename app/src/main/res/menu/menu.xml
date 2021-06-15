@@ -5,10 +5,10 @@
         android:icon="@drawable/ic_timetable"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom"/>
-    <item android:title="Create Timetable"
-        android:icon="@drawable/ic_add"
-        android:iconTint="@color/white"
-        app:showAsAction="ifRoom"/>
+    <item android:title="Full Screen"
+        android:icon="@drawable/ic_fullscreen"
+        app:showAsAction="ifRoom"
+        android:id="@+id/fullScreen"/>
     <item android:title="About Us"
         android:icon="@drawable/ic_info"
         android:iconTint="@color/white"

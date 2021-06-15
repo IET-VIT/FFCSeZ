@@ -1,6 +1,7 @@
 package com.tfd.ffcsez;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,12 +9,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -51,7 +54,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     BackdropLayout backdropLayout;
-
+    Toolbar toolbar;
     View back_layout;
     TabLayout tabLayout;
     ViewPager2 viewPager;
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.parseColor("#61cde9"));
-
+        toolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         backdropLayout = findViewById(R.id.container);
@@ -280,6 +283,18 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageSelected(position);
                 tabLayout.selectTab(tabLayout.getTabAt(position));
 
+            }
+        });
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.fullScreen:
+                        startActivity(new Intent(MainActivity.this, LandscapeActivity.class));
+                        return true;
+                }
+                return false;
             }
         });
     }
