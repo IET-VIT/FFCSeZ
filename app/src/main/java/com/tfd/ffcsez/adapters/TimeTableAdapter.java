@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -58,26 +59,32 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
             @Override
             public void onClick(View v) {
                 TimeTableData data = list.get(position);
-                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<TimeTableData> slots = database.timeTableDao().loadSlotDetails(data.getEmpName(), data.getSlot());
-                        for (TimeTableData timeTableData: slots){
-                            database.timeTableDao().deleteSlot(timeTableData);
-                            if (!timeTableData.isClash()){
-                                MainActivity.chosenSlots[timeTableData.getRow()][timeTableData.getColumn()] = 0;
-                            }else{
-                                List<TimeTableData> clashSlots = database.timeTableDao()
-                                        .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn());
-                                //clashSlots.removeAll(Collections.singleton(data));
-                                if (clashSlots.size() == 1){
-                                    clashSlots.get(0).setClash(false);
-                                    database.timeTableDao().updateDetail(clashSlots.get(0));
+                if (!data.getCourseType().equals("EPJ")) {
+                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<TimeTableData> slots = database.timeTableDao().loadSlotDetails(data.getEmpName(), data.getSlot());
+                            for (TimeTableData timeTableData : slots) {
+                                database.timeTableDao().deleteSlot(timeTableData);
+                                if (!timeTableData.isClash()) {
+                                    MainActivity.chosenSlots[timeTableData.getRow()][timeTableData.getColumn()] = 0;
+                                } else {
+                                    List<TimeTableData> clashSlots = database.timeTableDao()
+                                            .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn());
+                                    //clashSlots.removeAll(Collections.singleton(data));
+                                    if (clashSlots.size() == 1) {
+                                        clashSlots.get(0).setClash(false);
+                                        database.timeTableDao().updateDetail(clashSlots.get(0));
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+                }else{
+                    database.timeTableDao().deleteSlot(data);
+                }
+                MainActivity.adapter.notifyDataSetChanged();
+                Toast.makeText(context, "Course removed successfully - " + data.getCourseCode(), Toast.LENGTH_LONG).show();
             }
         });
         holder.longPress.setOnLongClickListener(v -> {

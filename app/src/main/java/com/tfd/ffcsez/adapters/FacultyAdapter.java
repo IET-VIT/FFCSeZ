@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.database.ExecutorClass;
@@ -45,7 +47,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         database = FacultyDatabase.getInstance(context.getApplicationContext());
-        SharedPreferences preferences = context.getSharedPreferences("com.prasoonsoni.ffcs",
+        SharedPreferences preferences = context.getSharedPreferences("com.tfd.ffcsez",
                 Context.MODE_PRIVATE);
         defaultTimeTable = preferences.getInt("defaultTT", 1);
 
@@ -55,9 +57,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-//        if(list.get(position).getCourseType().equals("ELA") || list.get(position).getCourseType().equals("LO")){
-//            holder.constraintLayout.setBackgroundColor(Color.parseColor("#333333"));
-//        }
+
         holder.courseCode.setText(list.get(position).getCourseCode());
         holder.courseTitle.setText(list.get(position).getCourseTitle());
         holder.courseType.setText(list.get(position).getCourseType());
@@ -172,104 +172,117 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     }
 
     public void setTTSlot(FacultyData facultyData){
-        String[] slot = facultyData.getSlot().split("[+]");
-        Pattern pattern = Pattern.compile("^L");
-        Matcher matcher;
-        exists = false;
+        if (!facultyData.getCourseType().equals("EPJ")) {
+            String[] slot = facultyData.getSlot().split("[+]");
+            Pattern pattern = Pattern.compile("^L");
+            Matcher matcher;
+            exists = false;
 
-        for (String slotNum: slot){
-            Log.d("Hellox", slotNum);
-            matcher = pattern.matcher(slotNum);
-            if (matcher.find()){
-                int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
-                TimeTableData data;
-                if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
-                    data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                            coord[1], slotNum, "x", "x", true);
-                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            List<TimeTableData> clashSlots = database.timeTableDao()
-                                    .loadClashSlots(coord[0], coord[1]);
-                            for (TimeTableData timeTableData : clashSlots) {
-                                if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
-                                    exists = true;
-                                    Log.d("Hellobool", String.valueOf(exists));
-                                    break;
-                                }
-                            }
-                            if (!exists) {
+            for (String slotNum : slot) {
+                Log.d("Hellox", slotNum);
+                matcher = pattern.matcher(slotNum);
+                if (matcher.find()) {
+                    int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
+                    TimeTableData data;
+                    if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                        data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                coord[1], slotNum, "x", "x", true);
+                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                List<TimeTableData> clashSlots = database.timeTableDao()
+                                        .loadClashSlots(coord[0], coord[1]);
                                 for (TimeTableData timeTableData : clashSlots) {
-                                    Log.d("Helloclash", timeTableData.getEmpName());
-                                    timeTableData.setClash(true);
-                                    database.timeTableDao().updateDetail(timeTableData);
+                                    if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                        exists = true;
+                                        Log.d("Hellobool", String.valueOf(exists));
+                                        break;
+                                    }
                                 }
-                                database.timeTableDao().insertSlot(data);
-                                MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
-                            }
-                        }
-                    });
-
-                }else{
-                    data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                            coord[1], slotNum, "x", "x", false);
-
-                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            database.timeTableDao().insertSlot(data);
-                            MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
-                        }
-                    });
-                }
-
-            }else{
-                if (MainActivity.slotList.get(slotNum) != null) {
-                    for (int i = 0; i < MainActivity.slotList.get(slotNum).length; i++) {
-                        int[] coord = getCoord(MainActivity.slotList.get(slotNum)[i]);
-                        TimeTableData data;
-                        if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
-                            data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                                    coord[1], slotNum, "x", "x", true);
-                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    List<TimeTableData> clashSlots = database.timeTableDao()
-                                            .loadClashSlots(coord[0], coord[1]);
+                                if (!exists) {
                                     for (TimeTableData timeTableData : clashSlots) {
-                                        if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
-                                            exists = true;
-                                            break;
-                                        }
+                                        Log.d("Helloclash", timeTableData.getEmpName());
+                                        timeTableData.setClash(true);
+                                        database.timeTableDao().updateDetail(timeTableData);
                                     }
-                                    if (!exists) {
-                                        for (TimeTableData timeTableData : clashSlots) {
-                                            Log.d("Helloclash", timeTableData.getEmpName());
-                                            timeTableData.setClash(true);
-                                            database.timeTableDao().updateDetail(timeTableData);
-                                        }
-                                        database.timeTableDao().insertSlot(data);
-                                        MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
-                                    }
-                                }
-                            });
-
-                        }else{
-                            data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                                    coord[1], slotNum, "x", "x", false);
-
-                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                @Override
-                                public void run() {
                                     database.timeTableDao().insertSlot(data);
                                     MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
                                 }
-                            });
+                            }
+                        });
+
+                    } else {
+                        data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                coord[1], slotNum, "x", "x", false);
+
+                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                database.timeTableDao().insertSlot(data);
+                                MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                            }
+                        });
+                    }
+
+                } else {
+                    if (MainActivity.slotList.get(slotNum) != null) {
+                        for (int i = 0; i < MainActivity.slotList.get(slotNum).length; i++) {
+                            int[] coord = getCoord(MainActivity.slotList.get(slotNum)[i]);
+                            TimeTableData data;
+                            if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                                data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                        coord[1], slotNum, "x", "x", true);
+                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        List<TimeTableData> clashSlots = database.timeTableDao()
+                                                .loadClashSlots(coord[0], coord[1]);
+                                        for (TimeTableData timeTableData : clashSlots) {
+                                            if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                                exists = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!exists) {
+                                            for (TimeTableData timeTableData : clashSlots) {
+                                                Log.d("Helloclash", timeTableData.getEmpName());
+                                                timeTableData.setClash(true);
+                                                database.timeTableDao().updateDetail(timeTableData);
+                                            }
+                                            database.timeTableDao().insertSlot(data);
+                                            MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                        }
+                                    }
+                                });
+
+                            } else {
+                                data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                        coord[1], slotNum, "x", "x", false);
+
+                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        database.timeTableDao().insertSlot(data);
+                                        MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                    }
+                                });
+                            }
                         }
                     }
                 }
             }
+        }else{
+            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    TimeTableData data = new TimeTableData(facultyData, defaultTimeTable, -1,
+                            -1, facultyData.getSlot(), "x", "x", false);
+                    database.timeTableDao().insertSlot(data);
+                }
+            });
         }
+        notifyDataSetChanged();
+        Toast.makeText(context, "Course added successfully - " + facultyData.getCourseCode(), Toast.LENGTH_LONG).show();
     }
 
     private int[] getCoord(int num){
