@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tfd.ffcsez">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,13 +13,16 @@
         android:theme="@style/Theme.FFCSeZ">
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".GetStartedActivity">
+        <activity android:name=".GetStartedActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
