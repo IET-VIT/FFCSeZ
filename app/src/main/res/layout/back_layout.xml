@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toggle">
 
         <AutoCompleteTextView
-            android:id="@+id/courseTitleEditText"
+            android:id="@+id/facultyNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:completionThreshold="1"

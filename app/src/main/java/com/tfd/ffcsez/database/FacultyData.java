@@ -4,6 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.tfd.ffcsez.models.CourseData;
 
 @Entity (tableName = "facultylist")
 public class FacultyData {
@@ -77,6 +78,26 @@ public class FacultyData {
         this.slot = slot;
         this.t = t;
         this.time = time;
+    }
+
+    @Ignore
+    public FacultyData(CourseData course) {
+        this.batch = course.getBatch();
+        this.c = course.getC();
+        this.classOption = course.getClassOption();
+        this.courseCode = course.getCourseCode();
+        this.courseStatus = course.getCourseStatus();
+        this.courseTitle = course.getCourseTitle();
+        this.courseType = course.getCourseType();
+        this.empName = course.getEmpName();
+        this.empSchool = course.getEmpSchool();
+        this.j = course.getJ();
+        this.l = course.getL();
+        this.p = course.getP();
+        this.roomNumber = course.getRoomNumber();
+        this.slot = course.getSlot();
+        this.t = course.getT();
+        this.time = course.getTime();
     }
 
     // Standard getters & setters
