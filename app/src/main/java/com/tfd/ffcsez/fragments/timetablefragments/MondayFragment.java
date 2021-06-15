@@ -45,6 +45,23 @@ public class MondayFragment extends Fragment {
         mondayRecyclerView.setLayoutManager(layoutManager);
         mondayRecyclerView.setAdapter(adapter);
 
+        LiveData<List<TimeTableData>> monTimeTable = database.timeTableDao().loadTTDetails(1, 0, 5);
+        monTimeTable.observe(getActivity(), new Observer<List<TimeTableData>>() {
+            @Override
+            public void onChanged(List<TimeTableData> timeTableData) {
+                adapter.updateAdapter(timeTableData);
+                Log.d("Helloex", Integer.toString(timeTableData.size()));
+                if (timeTableData.size() != 0){
+                    mondayAnimation.cancelAnimation();
+                    mondayAnimation.setVisibility(View.GONE);
+                    mondayText.setVisibility(View.GONE);
+                }else{
+                    mondayAnimation.playAnimation();
+                    mondayAnimation.setVisibility(View.VISIBLE);
+                    mondayText.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         return view;
     }
 }
