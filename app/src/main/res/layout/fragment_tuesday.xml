@@ -41,7 +41,7 @@
         android:fontFamily="@font/poppins"
         android:text="No Slot Added"
         android:textColor="@color/black"
-        android:textSize="35sp"
+        android:textSize="38sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
