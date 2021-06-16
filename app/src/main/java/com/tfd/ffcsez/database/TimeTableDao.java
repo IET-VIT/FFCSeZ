@@ -8,6 +8,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.tfd.ffcsez.models.Coord;
+
 import java.util.List;
 
 @Dao
@@ -21,6 +23,9 @@ public interface TimeTableDao {
 
     @Query("SELECT * FROM timetable WHERE `row` = :row AND `column` = :column")
     List<TimeTableData> loadClashSlots(int row, int column);
+
+    @Query("SELECT `row`, `column` FROM timetable WHERE timeTableId = :timeTableId")
+    List<Coord> getChosenSlots(int timeTableId);
 
     @Insert
     void insertSlot(TimeTableData timeTableData);

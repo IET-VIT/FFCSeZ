@@ -38,6 +38,7 @@ import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
+import com.tfd.ffcsez.models.Coord;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
 import com.tfd.ffcsez.models.FacultyDetails;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> courseList = new ArrayList<>();
     public static FacultyAdapter adapter;
 
-    //@BindView(R.id.facultyRecyclerView) RecyclerView facultyRecyclerView;
+    @BindView(R.id.facultyRecyclerView) RecyclerView facultyRecyclerView;
     @BindView(R.id.button) Button button;
     @BindView(R.id.morningChip) Chip morningChip;
     @BindView(R.id.afternoonChip) Chip afternoonChip;
@@ -101,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         initialize();
-        database = FacultyDatabase.getInstance(getApplicationContext());
+
         back_layout = backdropLayout.getChildAt(0);
         courseCodeEditText = back_layout.findViewById(R.id.courseCodeEditText);
-        RecyclerView facultyRecyclerView = back_layout.findViewById(R.id.facultyRecyclerView);
+        //RecyclerView facultyRecyclerView = back_layout.findViewById(R.id.facultyRecyclerView);
         adapter = new FacultyAdapter(facultyList, this);
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(MainActivity.this);
@@ -309,12 +310,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        database = FacultyDatabase.getInstance(getApplicationContext());
+
         chosenSlots = new int[10][6];
         for (int i = 0; i < 10; i++){
             for(int j = 0; j < 6; j++){
                 chosenSlots[i][j] = 0;
             }
         }
+        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                List<Coord> coords = database.timeTableDao().getChosenSlots(1);
+                for (Coord coord: coords){
+                    chosenSlots[coord.getRow()][coord.getColumn()] = 1;
+                }
+            }
+        });
 
         slotList.clear();
         slotList.put("A1", new int[]{1, 14});

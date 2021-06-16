@@ -73,8 +73,10 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         String clashString = checkSlot(list.get(position).getSlot());
         if(clashString.isEmpty()){
             holder.clash.setVisibility(View.GONE);
+        }else{
+            holder.clash.setVisibility(View.VISIBLE);
+            holder.clash.setText(clashString);
         }
-        holder.clash.setText(clashString);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +121,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     }
 
     private String checkSlot(String slots){
+        //Log.d("Hellofac", name);
         String[] slot = slots.split("[+]");
         String clash = "";
         Pattern pattern = Pattern.compile("^L");
@@ -141,7 +144,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                 }
             }
         }
-        Log.d("Hellox", clash);
+        Log.d("Helloclash", clash);
         if (!clash.isEmpty()){
             return "Clash with " + clash;
         }
@@ -179,7 +182,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             exists = false;
 
             for (String slotNum : slot) {
-                Log.d("Hellox", slotNum);
+                //Log.d("Hellox", slotNum);
                 matcher = pattern.matcher(slotNum);
                 if (matcher.find()) {
                     int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
@@ -288,7 +291,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     private int[] getCoord(int num){
         int[] coord = new int[2];
         int r, c;
-        Log.d("Hellonum", Integer.toString(num));
+        //Log.d("Hellonum", Integer.toString(num));
 
         if (num%6 == 0){
             r = num/6 - 1;
@@ -297,9 +300,9 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             r = num/6;
             c = num%6 - 1;
         }
-        Log.d("Hellor", Integer.toString(r));
+        /*Log.d("Hellor", Integer.toString(r));
         Log.d("Helloc", Integer.toString(c));
-        Log.d("Helloslot", Integer.toString(MainActivity.chosenSlots[r][c]));
+        Log.d("Helloslot", Integer.toString(MainActivity.chosenSlots[r][c]));*/
         coord[0] = r;
         coord[1] = c;
 

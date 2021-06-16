@@ -14,11 +14,13 @@
         <activity
             android:name=".LandscapeActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".GetStartedActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
