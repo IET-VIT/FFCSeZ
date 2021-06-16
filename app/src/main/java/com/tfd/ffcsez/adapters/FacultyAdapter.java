@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.database.ExecutorClass;
@@ -143,9 +144,9 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                     clash += slotNum + " ";
                 }
             }else{
-                if (MainActivity.slotList.get(slotNum) != null) {
-                    for (int i = 0; i < MainActivity.slotList.get(slotNum).length; i++) {
-                        if (isClashing(MainActivity.slotList.get(slotNum)[i])) {
+                if (ConstantsActivity.getSlotList().get(slotNum) != null) {
+                    for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
+                        if (isClashing(ConstantsActivity.getSlotList().get(slotNum)[i])) {
                             clash += slotNum + " ";
                             break;
                         }
@@ -237,9 +238,9 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                     }
 
                 } else {
-                    if (MainActivity.slotList.get(slotNum) != null) {
-                        for (int i = 0; i < MainActivity.slotList.get(slotNum).length; i++) {
-                            int[] coord = getCoord(MainActivity.slotList.get(slotNum)[i]);
+                    if (ConstantsActivity.getSlotList().get(slotNum) != null) {
+                        for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
+                            int[] coord = getCoord(ConstantsActivity.getSlotList().get(slotNum)[i]);
                             TimeTableData data;
                             if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
                                 data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
