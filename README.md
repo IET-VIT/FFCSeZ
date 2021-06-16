@@ -29,6 +29,7 @@ The main features of the app are broken down into a technical task timeline.
   - [x] Adding query methods from the database for the selection. 
   - [x] Add chips and set up a filter system.
   - [x] Build the UI for the slot display screen.
+  - [x] Build UI for Full TimeTable Screen. 
 
 - <strong><em> Task 3: Setting the Timetables </em></strong>
   - [x] Build the UI for the timetable display.
