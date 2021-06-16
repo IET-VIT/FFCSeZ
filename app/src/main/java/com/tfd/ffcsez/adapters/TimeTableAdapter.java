@@ -51,10 +51,22 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
         holder.slotNumber.setText(model.getCurrentSlot());
         holder.courseCode.setText(model.getCourseCode() + " - " + model.getCourseType());
         holder.roomNumber.setText(model.getRoomNumber());
-        if (list.get(position).isClash())
-            holder.typeSelector.setBackgroundColor(Color.parseColor("#B00020"));
-        else
-            holder.typeSelector.setBackgroundResource(R.color.orange);
+        if (list.get(position).isClash()) {
+            holder.typeSelector.setBackgroundColor(context.getColor(R.color.blood_red));
+            holder.slotNumber.setTextColor(context.getColor(R.color.blood_red));
+        }else {
+            if (list.get(position).getCourseType().equals("LO") || list.get(position).getCourseType().equals("ELA")) {
+                holder.typeSelector.setBackgroundColor(context.getColor(R.color.teal_500));
+                holder.slotNumber.setTextColor(context.getColor(R.color.teal_500));
+            }else if (list.get(position).getCourseType().equals("EPJ")){
+                holder.typeSelector.setBackgroundColor(context.getColor(R.color.dark_blue));
+                holder.slotNumber.setTextColor(context.getColor(R.color.dark_blue));
+            }else{
+                holder.typeSelector.setBackgroundColor(context.getColor(R.color.orange));
+                holder.slotNumber.setTextColor(context.getColor(R.color.orange));
+            }
+        }
+
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,10 +93,15 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
                         }
                     });
                 }else{
-                    database.timeTableDao().deleteSlot(data);
+                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            database.timeTableDao().deleteSlot(data);
+                        }
+                    });
                 }
                 MainActivity.adapter.notifyDataSetChanged();
-                Toast.makeText(context, "Course removed successfully - " + data.getCourseCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(), Toast.LENGTH_LONG).show();
             }
         });
         holder.longPress.setOnLongClickListener(v -> {

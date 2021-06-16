@@ -3,11 +3,15 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+    <color name="teal_100">#CCF4E6</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="teal_500">#00D8D8</color>
 
 
     <color name="light_light_blue">#8ab6d6</color>
+    <color name="sky_blue">#DAF0FF</color>
+    <color name="light_dark_blue">#1E3F66</color>
     <color name="light_blue">#61cde9</color>
     <color name="dark_blue">#3554d1</color>
     <color name="black">#232323</color>
@@ -17,11 +21,14 @@
     <color name="light_grey">#bdc7c9</color>
     <color name="light_violet">#867ae9</color>
     <color name="light_pink">#fc92e3</color>
+    <color name="light_light_pink">#fae2e3</color>
     <color name="orange">#fea82f</color>
+    <color name="light_orange">#feddb6</color>
     <color name="light_green">#91c788</color>
     <color name="grey">#928a97</color>
     <color name="cyan">#a0ffe6</color>
     <color name="blue">#03256c</color>
+    <color name="blood_red">#B00020</color>
 
     <color name="mtrl_textinput_default_box_stroke_color">#fff5eb</color>
 

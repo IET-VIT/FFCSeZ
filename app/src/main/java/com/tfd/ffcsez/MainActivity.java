@@ -323,7 +323,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 List<Coord> coords = database.timeTableDao().getChosenSlots(1);
                 for (Coord coord: coords){
-                    chosenSlots[coord.getRow()][coord.getColumn()] = 1;
+                    if (coord.getRow() != -1)
+                        chosenSlots[coord.getRow()][coord.getColumn()] = 1;
                 }
             }
         });

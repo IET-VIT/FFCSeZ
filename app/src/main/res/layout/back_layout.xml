@@ -203,7 +203,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:thumbTint="@color/blue"
-        android:trackTint="@color/light_grey"
+        android:trackTint="@color/light_dark_blue"
         app:layout_constraintEnd_toEndOf="@+id/filterGroup"
         app:layout_constraintStart_toStartOf="@+id/filterGroup"
         app:layout_constraintTop_toBottomOf="@+id/filterGroup" />
