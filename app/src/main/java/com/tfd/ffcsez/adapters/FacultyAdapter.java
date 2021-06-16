@@ -73,9 +73,17 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         String clashString = checkSlot(list.get(position).getSlot());
         if(clashString.isEmpty()){
             holder.clash.setVisibility(View.GONE);
+            if (list.get(position).getCourseType().equals("LO") || list.get(position).getCourseType().equals("ELA")) {
+                holder.cardView.setCardBackgroundColor(context.getColor(R.color.teal_100));
+            }else if (list.get(position).getCourseType().equals("EPJ")){
+                holder.cardView.setCardBackgroundColor(context.getColor(R.color.sky_blue));
+            }else{
+                holder.cardView.setCardBackgroundColor(context.getColor(R.color.light_orange));
+            }
         }else{
             holder.clash.setVisibility(View.VISIBLE);
             holder.clash.setText(clashString);
+            holder.cardView.setCardBackgroundColor(context.getColor(R.color.light_light_pink));
         }
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -285,7 +293,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             });
         }
         notifyDataSetChanged();
-        Toast.makeText(context, "Course added successfully - " + facultyData.getCourseCode(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(), Toast.LENGTH_LONG).show();
     }
 
     private int[] getCoord(int num){

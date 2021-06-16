@@ -51,91 +51,96 @@ public class SplashActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffczez",
                 Context.MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("firstTime", true)) {
-            Log.d(LOG_TAG, "firstTime");
-            Realm.init(this);
-            app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (sharedPreferences.getBoolean("firstTime", true)) {
+                    Log.d(LOG_TAG, "firstTime");
+                    Realm.init(SplashActivity.this);
+                    app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
 
-            loadLayout.setVisibility(View.VISIBLE);
-            loadAnimation.playAnimation();
-            loadText.setText("Setting up for first time use...");
+                    loadLayout.setVisibility(View.VISIBLE);
+                    loadAnimation.playAnimation();
+                    loadText.setText("Setting up for first time use...");
 
-            Credentials credentials = Credentials.anonymous();
-            app.loginAsync(credentials, result -> {
-                if (result.isSuccess()) {
-                    Log.d(LOG_TAG, "Successfully authenticated anonymously.");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadText.setText("Please restart the app to see the updated changes");
+                    Credentials credentials = Credentials.anonymous();
+                    app.loginAsync(credentials, result -> {
+                        if (result.isSuccess()) {
+                            Log.d(LOG_TAG, "Successfully authenticated anonymously.");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    loadText.setText("Please restart the app to see the updated changes");
+                                }
+                            });
+
+                        } else {
+                            loadText.setText(result.getError().toString());
                         }
                     });
 
-                } else {
-                    loadText.setText(result.getError().toString());
-                }
-            });
+                    user = app.currentUser();
+                    if (user != null) {
+                        SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
+                                .waitForInitialRemoteData()
+                                .build();
 
-            user = app.currentUser();
-            if (user != null) {
-                SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
-                        .waitForInitialRemoteData()
-                        .build();
-
-                Realm.getInstanceAsync(config, new Realm.Callback() {
-                    @Override
-                    public void onSuccess(Realm realm) {
-                        Log.d(LOG_TAG, "Realm created");
-                        SplashActivity.this.realm = realm;
-
-                        RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                        data.addChangeListener(new RealmChangeListener<RealmResults<CourseData>>() {
+                        Realm.getInstanceAsync(config, new Realm.Callback() {
                             @Override
-                            public void onChange(RealmResults<CourseData> courseData) {
-                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                            public void onSuccess(Realm realm) {
+                                Log.d(LOG_TAG, "Realm created");
+                                SplashActivity.this.realm = realm;
+
+                                RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                                data.addChangeListener(new RealmChangeListener<RealmResults<CourseData>>() {
                                     @Override
-                                    public void run() {
-                                        database.facultyDao().deleteAll();
+                                    public void onChange(RealmResults<CourseData> courseData) {
+                                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                database.facultyDao().deleteAll();
+                                            }
+                                        });
+                                        for (CourseData course : data) {
+                                            FacultyData faculty = new FacultyData(course);
+                                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    database.facultyDao().insertDetail(faculty);
+                                                }
+                                            });
+                                        }
+                                        sharedPreferences.edit().putBoolean("firstTime", false).apply();
+                                        int size = courseData.size();
+                                        Log.d(LOG_TAG, Integer.toString(size));
+                                        loadAnimation.cancelAnimation();
+                                        loadLayout.setVisibility(View.GONE);
+                                        startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
+                                        finish();
                                     }
                                 });
-                                for (CourseData course : data) {
-                                    FacultyData faculty = new FacultyData(course);
-                                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            database.facultyDao().insertDetail(faculty);
-                                        }
-                                    });
-                                }
-                                sharedPreferences.edit().putBoolean("firstTime", false).apply();
-                                int size = courseData.size();
-                                Log.d(LOG_TAG, Integer.toString(size));
-                                loadAnimation.cancelAnimation();
-                                loadLayout.setVisibility(View.GONE);
-                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
-                                finish();
+                            }
+
+                            @Override
+                            public void onError(Throwable exception) {
+                                super.onError(exception);
+                                loadText.setText(exception.getMessage());
+                                Log.d(LOG_TAG, "Failed to create Realm" + exception.getMessage());
                             }
                         });
                     }
-
-                    @Override
-                    public void onError(Throwable exception) {
-                        super.onError(exception);
-                        loadText.setText(exception.getMessage());
-                        Log.d(LOG_TAG, "Failed to create Realm" + exception.getMessage());
-                    }
-                });
-            }
-        }else{
-            loadLayout.setVisibility(View.GONE);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    finish();
+                }else{
+                    loadLayout.setVisibility(View.GONE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            finish();
+                        }
+                    }, 1000);
                 }
-            }, 2100);
-        }
+            }
+        }, 1100);
     }
 
     @Override
