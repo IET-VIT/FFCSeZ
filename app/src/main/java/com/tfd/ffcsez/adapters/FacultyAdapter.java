@@ -2,6 +2,7 @@ package com.tfd.ffcsez.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,7 +90,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setTTSlot(list.get(position));
+                setTTSlot(list.get(position),v);
             }
         });
 
@@ -182,7 +183,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         notifyDataSetChanged();
     }
 
-    public void setTTSlot(FacultyData facultyData){
+    public void setTTSlot(FacultyData facultyData, View v){
         if (!facultyData.getCourseType().equals("EPJ")) {
             String[] slot = facultyData.getSlot().split("[+]");
             Pattern pattern = Pattern.compile("^L");
@@ -293,7 +294,12 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             });
         }
         notifyDataSetChanged();
-        Toast.makeText(context, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(), Toast.LENGTH_LONG).show();
+        Snackbar.make(v, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(),
+                Snackbar.LENGTH_LONG)
+                .setBackgroundTint(Color.parseColor("#232323"))
+                .setTextColor(Color.parseColor("#fff5eb"))
+                .show();
+        //Toast.makeText(context, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(), Toast.LENGTH_LONG).show();
     }
 
     private int[] getCoord(int num){

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.database.ExecutorClass;
@@ -101,7 +102,12 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
                     });
                 }
                 MainActivity.adapter.notifyDataSetChanged();
-                Toast.makeText(context, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(), Toast.LENGTH_LONG).show();
+                Snackbar.make(v, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(),
+                        Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(Color.parseColor("#232323"))
+                        .setTextColor(Color.parseColor("#fff5eb"))
+                        .show();
+                //Toast.makeText(context, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(), Toast.LENGTH_LONG).show();
             }
         });
         holder.longPress.setOnLongClickListener(v -> {
