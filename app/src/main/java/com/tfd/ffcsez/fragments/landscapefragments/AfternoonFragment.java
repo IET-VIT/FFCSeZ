@@ -45,7 +45,7 @@ public class AfternoonFragment extends Fragment {
                     slotHolder = view.findViewById(getResources().
                             getIdentifier("text" + num, "id",
                                     getActivity().getPackageName()));
-                    slots = "";
+                    slots = slotHolder.getText().toString();
                     if (slots.isEmpty()){
                         slots += ConstantsActivity.getNumList().get(num);
                     }
