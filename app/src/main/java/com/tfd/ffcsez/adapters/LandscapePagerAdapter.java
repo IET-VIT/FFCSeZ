@@ -11,8 +11,8 @@ import com.tfd.ffcsez.fragments.landscapefragments.MorningFragment;
 
 
 
-public class LandscapeAdapter extends FragmentStateAdapter {
-    public LandscapeAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+public class LandscapePagerAdapter extends FragmentStateAdapter {
+    public LandscapePagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 

@@ -7,10 +7,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.airbnb.lottie.L;
 import com.google.android.material.tabs.TabLayout;
-import com.tfd.ffcsez.adapters.LandscapeAdapter;
-import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
+import com.tfd.ffcsez.adapters.LandscapePagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +18,7 @@ public class LandscapeActivity extends AppCompatActivity {
     TabLayout landscapeTabLayout;
     @BindView(R.id.landscapeContainer)
     ViewPager2 container;
-    LandscapeAdapter landscapeAdapter;
+    LandscapePagerAdapter landscapePagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +27,8 @@ public class LandscapeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         FragmentManager fm = getSupportFragmentManager();
-        landscapeAdapter = new LandscapeAdapter(fm, getLifecycle());
-        container.setAdapter(landscapeAdapter);
+        landscapePagerAdapter = new LandscapePagerAdapter(fm, getLifecycle());
+        container.setAdapter(landscapePagerAdapter);
 
 
         landscapeTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

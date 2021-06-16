@@ -39,6 +39,6 @@ public class TimetablePagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 7;
+        return 8;
     }
 }
