@@ -30,7 +30,7 @@
             android:gravity="center"
             android:text="B2 / L37"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -82,7 +82,7 @@
             android:gravity="center"
             android:text="TB2 / L34"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -103,12 +103,12 @@
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
+            android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="THURSDAY"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -160,7 +160,7 @@
             android:gravity="center"
             android:text="E2 / L39"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -181,12 +181,12 @@
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
+            android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="TUESDAY"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -212,7 +212,7 @@
             android:gravity="center"
             android:text="G2 / L38"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -259,12 +259,12 @@
             android:id="@+id/textView11"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
+            android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="THEORY\nHOURS"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -316,7 +316,7 @@
             android:gravity="center"
             android:text="TD2 / L59"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -342,7 +342,7 @@
             android:gravity="center"
             android:text="G2 / L51"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -368,7 +368,7 @@
             android:gravity="center"
             android:text="A2 / L31"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -394,7 +394,7 @@
             android:gravity="center"
             android:text="TAA2 / L41"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -493,12 +493,12 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
+            android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="MONDAY"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -524,7 +524,7 @@
             android:gravity="center"
             android:text="C2 / L56"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -550,7 +550,7 @@
             android:gravity="center"
             android:text="V5 / L48"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -576,7 +576,7 @@
             android:gravity="center"
             android:text="TF2 / L58"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -602,7 +602,7 @@
             android:gravity="center"
             android:text="TG2 / L35"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -628,7 +628,7 @@
             android:gravity="center"
             android:text="F2 / L32"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -654,7 +654,7 @@
             android:gravity="center"
             android:text="B2 / L50"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -680,7 +680,7 @@
             android:gravity="center"
             android:text="C2 / L43"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -706,7 +706,7 @@
             android:gravity="center"
             android:text="A2 / L44"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -732,7 +732,7 @@
             android:gravity="center"
             android:text="TE2 / L52"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -784,7 +784,7 @@
             android:gravity="center"
             android:text="V7 / L60"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -810,7 +810,7 @@
             android:gravity="center"
             android:text="TA2 / L57"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -836,7 +836,7 @@
             android:gravity="center"
             android:text="TD2/ L46"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -914,7 +914,7 @@
             android:gravity="center"
             android:text="V6 / L54"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -940,7 +940,7 @@
             android:gravity="center"
             android:text="TBB2 / L47"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1003,7 +1003,7 @@
             android:gravity="center"
             android:text="V4 / L42"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1029,7 +1029,7 @@
             android:gravity="center"
             android:text="F2 / L45"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1055,7 +1055,7 @@
             android:gravity="center"
             android:text="V3 / L36"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1081,7 +1081,7 @@
             android:gravity="center"
             android:text="D2 / L33"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1102,12 +1102,12 @@
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
+            android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="WEDNESDAY"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1128,12 +1128,12 @@
             android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
+            android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="FRIDAY"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1159,7 +1159,7 @@
             android:gravity="center"
             android:text="D2 / L49"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1211,7 +1211,7 @@
             android:gravity="center"
             android:text="TCC2 / L53"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1237,7 +1237,7 @@
             android:gravity="center"
             android:text="E2 / L55"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1258,12 +1258,12 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
+            android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="LAB\nHOURS"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1289,6 +1289,6 @@
             android:gravity="center"
             android:text="TC2 / L40"
             android:textColor="#948d83"
-            android:textSize="14sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.tfd.ffcsez.fragments.landscapefragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -57,9 +58,11 @@ public class MorningFragment extends Fragment {
                     slotHolder.setText(slots);
 
                     if (tableData.isClash()){
-                        slotHolder.setBackgroundColor(getActivity().getColor(R.color.blood_red));
+                        slotHolder.setBackgroundColor(Color.parseColor("#ff0000"));
+                        slotHolder.setTextColor(Color.parseColor("#fff5eb"));
                     }else{
-                        slotHolder.setBackgroundColor(getActivity().getColor(R.color.light_green));
+                        slotHolder.setBackgroundColor(Color.parseColor("#ccff33"));
+                        slotHolder.setTextColor(Color.parseColor("#232323"));
                     }
                 }
             }
