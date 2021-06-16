@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,43 +31,37 @@ public class MorningFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_morning, container, false);
 
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
-        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+        LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(1, 0, 4);
+        data.observe(getActivity(), new Observer<List<TimeTableData>>() {
             @Override
-            public void run() {
-                LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(1);
-                data.observe(getActivity(), new Observer<List<TimeTableData>>() {
-                    @Override
-                    public void onChanged(List<TimeTableData> timeTableData) {
-                        TextView slotHolder;
-                        String slots;
-                        for (TimeTableData tableData: timeTableData){
-                            int r, c, num;
-                            if (tableData.getRow() != -1){
-                                if(tableData.getColumn() == 5){
-                                    num = ((tableData.getRow() + 1)*6);
-                                }else{
-                                    num = ((tableData.getRow())*6) + (tableData.getColumn() + 1);
-                                }
-                                slotHolder = view.findViewById(getResources().
-                                        getIdentifier("text" + num, "id",
-                                                getActivity().getPackageName()));
-                                slots = "";
-                                if (slots.isEmpty()){
-                                    slots += ConstantsActivity.getNumList().get(num);
-                                }
-                                slots += ("\n" + tableData.getCourseCode() + "-" + tableData.getCourseType());
-
-                                slotHolder.setText(slots);
-
-                                if (tableData.isClash()){
-                                    slotHolder.setBackgroundColor(getActivity().getColor(R.color.blood_red));
-                                }else{
-                                    slotHolder.setBackgroundColor(getActivity().getColor(R.color.light_green));
-                                }
-                            }
-                        }
+            public void onChanged(List<TimeTableData> timeTableData) {
+                TextView slotHolder;
+                String slots;
+                for (TimeTableData tableData: timeTableData){
+                    int num;
+                    if(tableData.getColumn() == 5){
+                        num = ((tableData.getRow() + 1)*6);
+                    }else{
+                        num = ((tableData.getRow())*6) + (tableData.getColumn() + 1);
                     }
-                });
+                    Log.d("Hellonumb", Integer.toString(num));
+                    slotHolder = view.findViewById(getResources().
+                            getIdentifier("text" + num, "id",
+                                    getActivity().getPackageName()));
+                    slots = "";
+                    if (slots.isEmpty()){
+                        slots += ConstantsActivity.getNumList().get(num);
+                    }
+                    slots += ("\n" + tableData.getCourseCode() + "-" + tableData.getCourseType());
+
+                    slotHolder.setText(slots);
+
+                    if (tableData.isClash()){
+                        slotHolder.setBackgroundColor(getActivity().getColor(R.color.blood_red));
+                    }else{
+                        slotHolder.setBackgroundColor(getActivity().getColor(R.color.light_green));
+                    }
+                }
             }
         });
         return view;

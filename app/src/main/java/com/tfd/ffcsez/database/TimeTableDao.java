@@ -15,8 +15,8 @@ import java.util.List;
 @Dao
 public interface TimeTableDao {
 
-    @Query("SELECT * FROM timetable WHERE timeTableId = :timeTableId")
-    LiveData<List<TimeTableData>> loadTT(int timeTableId);
+    @Query("SELECT * FROM timetable WHERE timeTableId = :timeTableId AND `row` >= :row1 AND `row` <= :row2")
+    LiveData<List<TimeTableData>> loadTT(int timeTableId, int row1, int row2);
 
     @Query("SELECT * FROM timetable WHERE timeTableId = :timeTableId AND (`row` = :row1 OR `row` = :row2) ORDER BY `column`")
     LiveData<List<TimeTableData>> loadTTDetails(int timeTableId, int row1, int row2);
