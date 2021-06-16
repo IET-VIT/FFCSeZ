@@ -23,7 +23,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView52">
 
         <TextView
-            android:id="@+id/textView40"
+            android:id="@+id/text6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView55">
 
         <TextView
-            android:id="@+id/textView62"
+            android:id="@+id/text18"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -127,7 +127,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView56">
 
         <TextView
-            android:id="@+id/textView63"
+            android:id="@+id/text24"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -153,7 +153,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView57">
 
         <TextView
-            android:id="@+id/textView76"
+            android:id="@+id/text30"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -179,7 +179,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView54">
 
         <TextView
-            android:id="@+id/textView43"
+            android:id="@+id/text12"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -205,7 +205,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView45">
 
         <TextView
-            android:id="@+id/textView39"
+            android:id="@+id/text5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -283,7 +283,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView48">
 
         <TextView
-            android:id="@+id/textView58"
+            android:id="@+id/text17"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -309,7 +309,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView49">
 
         <TextView
-            android:id="@+id/textView64"
+            android:id="@+id/text23"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -335,7 +335,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView50">
 
         <TextView
-            android:id="@+id/textView75"
+            android:id="@+id/text29"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -361,7 +361,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView47">
 
         <TextView
-            android:id="@+id/textView44"
+            android:id="@+id/text11"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -387,7 +387,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView37">
 
         <TextView
-            android:id="@+id/textView38"
+            android:id="@+id/text4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -465,7 +465,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView40">
 
         <TextView
-            android:id="@+id/textView54"
+            android:id="@+id/text16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -491,7 +491,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView41">
 
         <TextView
-            android:id="@+id/textView65"
+            android:id="@+id/text22"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -517,7 +517,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView42">
 
         <TextView
-            android:id="@+id/textView74"
+            android:id="@+id/text28"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -543,7 +543,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView39">
 
         <TextView
-            android:id="@+id/textView45"
+            android:id="@+id/text10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -569,7 +569,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView30">
 
         <TextView
-            android:id="@+id/textView37"
+            android:id="@+id/text3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -647,7 +647,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView33">
 
         <TextView
-            android:id="@+id/textView52"
+            android:id="@+id/text15"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -673,7 +673,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView34">
 
         <TextView
-            android:id="@+id/textView66"
+            android:id="@+id/text21"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -699,7 +699,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView35">
 
         <TextView
-            android:id="@+id/textView73"
+            android:id="@+id/text27"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -725,7 +725,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView32">
 
         <TextView
-            android:id="@+id/textView46"
+            android:id="@+id/text9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -751,7 +751,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView23">
 
         <TextView
-            android:id="@+id/textView36"
+            android:id="@+id/text2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -829,7 +829,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView26">
 
         <TextView
-            android:id="@+id/textView51"
+            android:id="@+id/text14"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -855,7 +855,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView27">
 
         <TextView
-            android:id="@+id/textView68"
+            android:id="@+id/text20"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -881,7 +881,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView28">
 
         <TextView
-            android:id="@+id/textView72"
+            android:id="@+id/text26"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -907,7 +907,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView25">
 
         <TextView
-            android:id="@+id/textView47"
+            android:id="@+id/text8"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -933,7 +933,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView16">
 
         <TextView
-            android:id="@+id/textView35"
+            android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -942,6 +942,7 @@
             android:text="A1 / L1"
             android:textColor="#948d83"
             android:textSize="14sp" />
+
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1011,7 +1012,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView19">
 
         <TextView
-            android:id="@+id/textView49"
+            android:id="@+id/text13"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -1037,7 +1038,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView20">
 
         <TextView
-            android:id="@+id/textView70"
+            android:id="@+id/text19"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -1063,7 +1064,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView21">
 
         <TextView
-            android:id="@+id/textView71"
+            android:id="@+id/text25"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
@@ -1089,7 +1090,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView18">
 
         <TextView
-            android:id="@+id/textView48"
+            android:id="@+id/text7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffcc"
