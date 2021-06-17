@@ -6,14 +6,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.tfd.ffcsez.fragments.timetablefragments.FridayFragment;
-import com.tfd.ffcsez.fragments.timetablefragments.MondayFragment;
-import com.tfd.ffcsez.fragments.timetablefragments.ProjectFragment;
-import com.tfd.ffcsez.fragments.timetablefragments.SaturdayFragment;
-import com.tfd.ffcsez.fragments.timetablefragments.SundayFragment;
-import com.tfd.ffcsez.fragments.timetablefragments.ThursdayFragment;
-import com.tfd.ffcsez.fragments.timetablefragments.TuesdayFragment;
-import com.tfd.ffcsez.fragments.timetablefragments.WednesdayFragment;
+import com.tfd.ffcsez.fragments.timetable.MondayFragment;
+import com.tfd.ffcsez.fragments.timetable.ProjectFragment;
+import com.tfd.ffcsez.fragments.timetable.SaturdayFragment;
+import com.tfd.ffcsez.fragments.timetable.SundayFragment;
+import com.tfd.ffcsez.fragments.timetable.ThursdayFragment;
+import com.tfd.ffcsez.fragments.timetable.TuesdayFragment;
+import com.tfd.ffcsez.fragments.timetable.WednesdayFragment;
+import com.tfd.ffcsez.fragments.timetable.FridayFragment;
 
 
 public class TimetablePagerAdapter extends FragmentStateAdapter {

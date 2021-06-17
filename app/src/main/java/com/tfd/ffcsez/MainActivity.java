@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,12 +25,14 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -43,6 +46,7 @@ import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TimeTableData;
+import com.tfd.ffcsez.fragments.BottomSheetFragment;
 import com.tfd.ffcsez.models.Coord;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
@@ -217,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 .setView(dialogView)
                 .setCancelable(true)
                 .create();
+        customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         customButton.setOnClickListener(v -> {
             int flag = 0;
@@ -274,6 +279,8 @@ public class MainActivity extends AppCompatActivity {
 
         setupTimeTable();
 
+        // Bottom Sheet
+
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()){
 
@@ -287,6 +294,10 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.refresh:
                     refreshRealm();
+                    return true;
+                case R.id.timetable:
+                    BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                    bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                     return true;
             }
             return false;

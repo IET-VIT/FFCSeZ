@@ -1,4 +1,4 @@
-package com.tfd.ffcsez.fragments.timetablefragments;
+package com.tfd.ffcsez.fragments.timetable;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

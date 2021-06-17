@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.tfd.ffcsez.fragments.getstartedfragments.FragmentA;
-import com.tfd.ffcsez.fragments.getstartedfragments.FragmentB;
-import com.tfd.ffcsez.fragments.getstartedfragments.FragmentC;
-import com.tfd.ffcsez.fragments.getstartedfragments.FragmentD;
-import com.tfd.ffcsez.fragments.getstartedfragments.FragmentE;
+import com.tfd.ffcsez.fragments.getstarted.FragmentA;
+import com.tfd.ffcsez.fragments.getstarted.FragmentB;
+import com.tfd.ffcsez.fragments.getstarted.FragmentC;
+import com.tfd.ffcsez.fragments.getstarted.FragmentD;
+import com.tfd.ffcsez.fragments.getstarted.FragmentE;
 
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {

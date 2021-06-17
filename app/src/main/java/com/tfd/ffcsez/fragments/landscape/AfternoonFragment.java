@@ -1,4 +1,4 @@
-package com.tfd.ffcsez.fragments.landscapefragments;
+package com.tfd.ffcsez.fragments.landscape;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,14 +18,15 @@ import com.tfd.ffcsez.database.TimeTableData;
 import java.util.List;
 
 
-public class MorningFragment extends Fragment {
+public class AfternoonFragment extends Fragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_morning, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_afternoon, container, false);
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
-        LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(1, 0, 4);
+        LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(1, 5, 9);
         data.observe(getActivity(), timeTableData -> {
             TextView slotHolder;
             String slots;

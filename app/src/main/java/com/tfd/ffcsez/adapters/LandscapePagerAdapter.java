@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.tfd.ffcsez.fragments.landscapefragments.AfternoonFragment;
-import com.tfd.ffcsez.fragments.landscapefragments.MorningFragment;
+import com.tfd.ffcsez.fragments.landscape.AfternoonFragment;
+import com.tfd.ffcsez.fragments.landscape.MorningFragment;
 
 
 public class LandscapePagerAdapter extends FragmentStateAdapter {

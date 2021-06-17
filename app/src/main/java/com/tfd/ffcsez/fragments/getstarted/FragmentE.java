@@ -1,4 +1,4 @@
-package com.tfd.ffcsez.fragments.getstartedfragments;
+package com.tfd.ffcsez.fragments.getstarted;
 
 import android.content.Intent;
 import android.os.Bundle;

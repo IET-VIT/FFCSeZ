@@ -1,4 +1,4 @@
-package com.tfd.ffcsez.fragments.getstartedfragments;
+package com.tfd.ffcsez.fragments.getstarted;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,18 +11,18 @@ import com.tfd.ffcsez.GetStartedActivity;
 import com.tfd.ffcsez.R;
 
 
-public class FragmentB extends Fragment {
+public class FragmentC extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_b, container, false);
+        return inflater.inflate(R.layout.fragment_c, container, false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ((GetStartedActivity)getActivity()).updateStatusBarColor("#fc92e3");
+        ((GetStartedActivity)getActivity()).updateStatusBarColor("#11cbd7");
     }
 }

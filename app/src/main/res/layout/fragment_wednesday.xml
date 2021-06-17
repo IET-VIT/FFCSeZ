@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".fragments.timetablefragments.WednesdayFragment">
+    tools:context=".fragments.timetable.WednesdayFragment">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/wednesdayAnimation"

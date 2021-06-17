@@ -1,4 +1,4 @@
-package com.tfd.ffcsez.fragments.timetablefragments;
+package com.tfd.ffcsez.fragments.timetable;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,36 +24,36 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MondayFragment extends Fragment {
+public class FridayFragment extends Fragment {
 
-    @BindView(R.id.mondayRecyclerView) RecyclerView mondayRecyclerView;
-    @BindView(R.id.mondayAnimation) LottieAnimationView mondayAnimation;
-    @BindView(R.id.mondayText) TextView mondayText;
+    @BindView(R.id.fridayRecyclerView) RecyclerView fridayRecyclerView;
+    @BindView(R.id.fridayAnimation) LottieAnimationView fridayAnimation;
+    @BindView(R.id.fridayText) TextView fridayText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_monday, container, false);
+        View view = inflater.inflate(R.layout.fragment_friday, container, false);
         ButterKnife.bind(this, view);
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
-        List<TimeTableData> monTimeTable = new ArrayList<>();
-        TimeTableAdapter adapter = new TimeTableAdapter(monTimeTable, getContext());
+        List<TimeTableData> friTimeTable = new ArrayList<>();
+        TimeTableAdapter adapter = new TimeTableAdapter(friTimeTable, getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mondayRecyclerView.setLayoutManager(layoutManager);
-        mondayRecyclerView.setAdapter(adapter);
+        fridayRecyclerView.setLayoutManager(layoutManager);
+        fridayRecyclerView.setAdapter(adapter);
 
-        LiveData<List<TimeTableData>> monTimeTableLD = database.timeTableDao().loadTTDetails(1, 0, 5);
-        monTimeTableLD.observe(getActivity(), timeTableData -> {
+        LiveData<List<TimeTableData>> friTimeTableLD = database.timeTableDao().loadTTDetails(1, 4, 9);
+        friTimeTableLD.observe(getActivity(), timeTableData -> {
             adapter.updateAdapter(timeTableData);
 
             if (timeTableData.size() != 0){
-                mondayAnimation.cancelAnimation();
-                mondayAnimation.setVisibility(View.GONE);
-                mondayText.setVisibility(View.GONE);
+                fridayAnimation.cancelAnimation();
+                fridayAnimation.setVisibility(View.GONE);
+                fridayText.setVisibility(View.GONE);
             }else{
-                mondayAnimation.playAnimation();
-                mondayAnimation.setVisibility(View.VISIBLE);
-                mondayText.setVisibility(View.VISIBLE);
+                fridayAnimation.playAnimation();
+                fridayAnimation.setVisibility(View.VISIBLE);
+                fridayText.setVisibility(View.VISIBLE);
             }
         });
         return view;
