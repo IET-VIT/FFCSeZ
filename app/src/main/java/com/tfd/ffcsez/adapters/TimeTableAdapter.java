@@ -126,6 +126,19 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.MyVi
             TextView digCourseCode = view.findViewById(R.id.digCourseCode);
             TextView digCourseType = view.findViewById(R.id.digCourseType);
             TextView digRoomNo = view.findViewById(R.id.digRoomNo);
+            CardView cardView = view.findViewById(R.id.customDialogCardView);
+
+            if (list.get(position).isClash()) {
+                cardView.setCardBackgroundColor(context.getColor(R.color.light_light_pink));
+            }else {
+                if (list.get(position).getCourseType().equals("LO") || list.get(position).getCourseType().equals("ELA")) {
+                    cardView.setCardBackgroundColor(context.getColor(R.color.teal_100));
+                }else if (list.get(position).getCourseType().equals("EPJ")){
+                    cardView.setCardBackgroundColor(context.getColor(R.color.sky_blue));
+                }else{
+                    cardView.setCardBackgroundColor(context.getColor(R.color.light_orange));
+                }
+            }
 
             facultyName.setText(model.getEmpName());
             facultySchool.setText(model.getEmpSchool());

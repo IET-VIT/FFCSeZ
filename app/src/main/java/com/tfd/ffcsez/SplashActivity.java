@@ -126,6 +126,8 @@ public class SplashActivity extends AppCompatActivity {
                                 super.onError(exception);
                                 loadText.setText(exception.getMessage());
                                 Log.d(LOG_TAG, "Failed to create Realm" + exception.getMessage());
+                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
+                                finish();
                             }
                         });
                     }

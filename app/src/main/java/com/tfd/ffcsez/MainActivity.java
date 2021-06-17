@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,11 +26,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
@@ -38,6 +42,7 @@ import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
+import com.tfd.ffcsez.database.TimeTableData;
 import com.tfd.ffcsez.models.Coord;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
@@ -47,6 +52,8 @@ import com.roacult.backdrop.BackdropLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     TimetablePagerAdapter timetablePagerAdapter;
     AutoCompleteTextView courseCodeEditText, facultyNameEditText;
     Switch toggle;
+    int flag = 0;
     TextView cText, fText;
     TextInputLayout courseCodeLayout, facultyNameLayout;
     String courseTH = "", courseETH = "", courseELA = "", courseEPJ = "", courseSS = "",
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public static int[][] chosenSlots;
     List<FacultyData> facultyList = new ArrayList<>();
     public static FacultyAdapter adapter;
-
+    private boolean exists;
     @BindView(R.id.facultyRecyclerView) RecyclerView facultyRecyclerView;
     @BindView(R.id.button) Button button;
     @BindView(R.id.morningChip) Chip morningChip;
@@ -82,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.animation) LottieAnimationView animation;
     @BindView(R.id.animation2) LottieAnimationView notFound;
     @BindView(R.id.errorText) TextView errorText;
+    EditText customSlot;
 
 
     @Override
@@ -108,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
                 new LinearLayoutManager(MainActivity.this);
         facultyRecyclerView.setLayoutManager(layoutManager);
         facultyRecyclerView.setAdapter(adapter);
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_course_dialog, null);
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                .setView(view)
+                .setCancelable(true)
+                .create();
 
         ExecutorClass.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -147,7 +161,58 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        EditText customCourseCode = view.findViewById(R.id.customCourseCode);
+        EditText customCourseType = view.findViewById(R.id.customCourseType);
+        EditText customEmpName = view.findViewById(R.id.customEmpName);
+        customSlot = view.findViewById(R.id.customSlot);
+        EditText customRoomNum = view.findViewById(R.id.customRoomNum);
+        EditText customCredits = view.findViewById(R.id.customCredits);
+        Button customButton = view.findViewById(R.id.customButton);
 
+        customButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag = 0;
+                customSlot.setError(null);
+                FacultyData data = new FacultyData();
+                data.setCourseCode(customCourseCode.getText().toString().toUpperCase().trim());
+                data.setCourseType(customCourseType.getText().toString().toUpperCase().trim());
+                data.setEmpName(customEmpName.getText().toString().toUpperCase().trim());
+                data.setC(customCredits.getText().toString());
+                data.setRoomNumber(customRoomNum.getText().toString().toUpperCase().trim());
+                data.setSlot(customSlot.getText().toString().toUpperCase().trim());
+                String[] customSlots = data.getSlot().split("[+]");
+                for (String slots: customSlots){
+                    slots = slots.trim();
+                    Pattern pattern = Pattern.compile("^L");
+                    Matcher matcher = pattern.matcher(slots);
+                    if (matcher.find()){
+                        try {
+                            if (!(1 <= Integer.parseInt(slots.substring(1)) && Integer.parseInt(slots.substring(1)) <= 60)) {
+                                customSlot.setError("Invalid slot(s)");
+                                flag = 1;
+                                break;
+                            }
+                        }catch (Exception e){
+                            customSlot.setError("Invalid slot(s)");
+                            flag = 1;
+                            break;
+                        }
+                    }else{
+                        if (!(ConstantsActivity.getSlotList().containsKey(slots))){
+                            customSlot.setError("Invalid slot(s)");
+                            flag = 1;
+                            break;
+                        }
+                    }
+                }
+                if (flag != 1){
+                    alertDialog.dismiss();
+                    data.setSlot(customSlot.getText().toString().toUpperCase().trim());
+                    setTTSlot(data, back_layout);
+                }
+            }
+        });
 
         courseCodeEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -247,7 +312,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateFilters();
+                //updateFilters();
+                alertDialog.show();
             }
         });
 
@@ -367,4 +433,146 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void setTTSlot(FacultyData facultyData, View v){
+        if (!facultyData.getCourseType().equals("EPJ")) {
+            String[] slot = facultyData.getSlot().split("[+]");
+            Pattern pattern = Pattern.compile("^L");
+            Matcher matcher;
+            exists = false;
+
+            for (String slotNum : slot) {
+                //Log.d("Hellox", slotNum);
+                slotNum = slotNum.trim();
+                matcher = pattern.matcher(slotNum);
+                if (matcher.find()) {
+                    int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
+                    TimeTableData data;
+                    if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                        data = new TimeTableData(facultyData, 1, coord[0],
+                                coord[1], slotNum, "x", "x", true);
+                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                List<TimeTableData> clashSlots = database.timeTableDao()
+                                        .loadClashSlots(coord[0], coord[1]);
+                                for (TimeTableData timeTableData : clashSlots) {
+                                    if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                        exists = true;
+                                        Log.d("Hellobool", String.valueOf(exists));
+                                        break;
+                                    }
+                                }
+                                if (!exists) {
+                                    for (TimeTableData timeTableData : clashSlots) {
+                                        Log.d("Helloclash", timeTableData.getEmpName());
+                                        timeTableData.setClash(true);
+                                        database.timeTableDao().updateDetail(timeTableData);
+                                    }
+                                    database.timeTableDao().insertSlot(data);
+                                    MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                }
+                            }
+                        });
+
+                    } else {
+                        data = new TimeTableData(facultyData, 1, coord[0],
+                                coord[1], slotNum, "x", "x", false);
+
+                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                database.timeTableDao().insertSlot(data);
+                                MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                            }
+                        });
+                    }
+
+                } else {
+                    if (ConstantsActivity.getSlotList().get(slotNum) != null) {
+                        for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
+                            int[] coord = getCoord(ConstantsActivity.getSlotList().get(slotNum)[i]);
+                            TimeTableData data;
+                            if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                                data = new TimeTableData(facultyData, 1, coord[0],
+                                        coord[1], slotNum, "x", "x", true);
+                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        List<TimeTableData> clashSlots = database.timeTableDao()
+                                                .loadClashSlots(coord[0], coord[1]);
+                                        for (TimeTableData timeTableData : clashSlots) {
+                                            if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                                exists = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!exists) {
+                                            for (TimeTableData timeTableData : clashSlots) {
+                                                Log.d("Helloclash", timeTableData.getEmpName());
+                                                timeTableData.setClash(true);
+                                                database.timeTableDao().updateDetail(timeTableData);
+                                            }
+                                            database.timeTableDao().insertSlot(data);
+                                            MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                        }
+                                    }
+                                });
+
+                            } else {
+                                data = new TimeTableData(facultyData, 1, coord[0],
+                                        coord[1], slotNum, "x", "x", false);
+
+                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        database.timeTableDao().insertSlot(data);
+                                        MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }else{
+            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    TimeTableData data = new TimeTableData(facultyData, 1, -1,
+                            -1, facultyData.getSlot(), "x", "x", false);
+                    database.timeTableDao().insertSlot(data);
+                }
+            });
+        }
+        adapter.notifyDataSetChanged();
+        Snackbar.make(v, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(),
+                Snackbar.LENGTH_LONG)
+                .setBackgroundTint(Color.parseColor("#232323"))
+                .setTextColor(Color.parseColor("#fff5eb"))
+                .show();
+        //Toast.makeText(context, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(), Toast.LENGTH_LONG).show();
+    }
+
+    private int[] getCoord(int num){
+        int[] coord = new int[2];
+        int r, c;
+        //Log.d("Hellonum", Integer.toString(num));
+
+        if (num%6 == 0){
+            r = num/6 - 1;
+            c = 5;
+        }else{
+            r = num/6;
+            c = num%6 - 1;
+        }
+        /*Log.d("Hellor", Integer.toString(r));
+        Log.d("Helloc", Integer.toString(c));
+        Log.d("Helloslot", Integer.toString(MainActivity.chosenSlots[r][c]));*/
+        coord[0] = r;
+        coord[1] = c;
+
+        return coord;
+    }
+
 }
