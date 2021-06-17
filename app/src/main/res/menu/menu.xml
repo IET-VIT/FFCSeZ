@@ -2,27 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:title="Add Custom Course"
-        android:icon="@drawable/ic_timetable"
+        android:icon="@drawable/ic_add"
         android:iconTint="@color/white"
         app:showAsAction="always"
         android:id="@+id/custom"/>
+
     <item android:title="My Timetable"
         android:icon="@drawable/ic_timetable"
         android:iconTint="@color/white"
         app:showAsAction="always"
         android:id="@+id/timetable"/>
+
     <item android:title="Refresh"
         android:icon="@drawable/ic_refresh"
         android:iconTint="@color/white"
         app:showAsAction="always"
         android:id="@+id/refresh"/>
+
     <item android:title="Full Screen"
         android:icon="@drawable/ic_fullscreen"
         app:showAsAction="always"
         android:id="@+id/fullScreen"/>
+
     <item android:title="About"
         android:icon="@drawable/ic_info"
         android:iconTint="@color/white"
         app:showAsAction="ifRoom"/>
-
 </menu>
