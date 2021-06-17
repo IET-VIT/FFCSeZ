@@ -1,6 +1,5 @@
 package com.tfd.ffcsez;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,21 +9,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.tfd.ffcsez.adapters.CourseACAdapter;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.models.CourseData;
-import com.tfd.ffcsez.models.CourseDetails;
 
-import java.util.List;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -34,28 +31,28 @@ import io.realm.mongodb.sync.SyncConfiguration;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "Hello";
-    Realm realm;
-    User user;
-    App app;
+    private Realm realm;
+    private User user;
+    private App app;
+
+    @BindView(R.id.loadAnimation) LottieAnimationView loadAnimation;
+    @BindView(R.id.loadTextView) TextView loadText;
+    @BindView(R.id.loadLayout) LinearLayout loadLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        LottieAnimationView loadAnimation = findViewById(R.id.loadAnimation);
-        LinearLayout loadLayout = findViewById(R.id.loadLayout);
-        TextView loadText = findViewById(R.id.loadTextView);
+        ButterKnife.bind(this);
         FacultyDatabase database = FacultyDatabase.getInstance(getApplicationContext());
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffczez",
-                Context.MODE_PRIVATE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (sharedPreferences.getBoolean("firstTime", true)) {
-                    Log.d(LOG_TAG, "firstTime");
+                    Log.d("Hello", "firstTime");
                     Realm.init(SplashActivity.this);
                     app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
 
@@ -66,79 +63,80 @@ public class SplashActivity extends AppCompatActivity {
                     Credentials credentials = Credentials.anonymous();
                     app.loginAsync(credentials, result -> {
                         if (result.isSuccess()) {
-                            Log.d(LOG_TAG, "Successfully authenticated anonymously.");
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    loadText.setText("Please restart the app to see the updated changes");
+                            Log.d("Hello", "Successfully authenticated anonymously.");
+
+                            runOnUiThread(() -> {
+                                Log.d("Hello", "afterlogin");
+                                user = app.currentUser();
+                                Log.d("Hello", user.toString());
+
+                                if (user != null) {
+                                    SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
+                                            .waitForInitialRemoteData()
+                                            .build();
+                                    Log.d("Hello", "config");
+
+                                    Realm.getInstanceAsync(config, new Realm.Callback() {
+                                        @Override
+                                        public void onSuccess(Realm realm) {
+                                            Log.d("Hello", "Realm created");
+                                            SplashActivity.this.realm = realm;
+
+                                            RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                                            data.addChangeListener(courseData -> {
+                                                ExecutorClass.getInstance().diskIO().execute(() ->
+                                                        database.facultyDao().deleteAll());
+
+                                                for (CourseData course : data) {
+                                                    FacultyData faculty = new FacultyData(course);
+                                                    ExecutorClass.getInstance().diskIO().execute(() ->
+                                                            database.facultyDao().insertDetail(faculty));
+                                                }
+
+                                                int size = courseData.size();
+                                                Log.d("Hello", Integer.toString(size));
+
+                                                if (data.size() > 0) {
+                                                    sharedPreferences.edit().putBoolean("firstTime", false).apply();
+                                                    loadAnimation.cancelAnimation();
+                                                    loadLayout.setVisibility(View.GONE);
+
+                                                    startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
+                                                    finish();
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable exception) {
+                                            super.onError(exception);
+                                            loadText.setText(exception.getMessage());
+                                            Log.d("Hello", "Failed to create Realm" + exception.getMessage());
+                                            Toast.makeText(SplashActivity.this,
+                                                    "Couldn't login securely to the server. " + exception.getMessage(),
+                                                    Toast.LENGTH_LONG).show();
+
+                                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                                            finish();
+                                        }
+                                    });
                                 }
                             });
 
                         } else {
-                            loadText.setText(result.getError().toString());
-                        }
-                    });
-
-                    user = app.currentUser();
-                    if (user != null) {
-                        SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
-                                .waitForInitialRemoteData()
-                                .build();
-
-                        Realm.getInstanceAsync(config, new Realm.Callback() {
-                            @Override
-                            public void onSuccess(Realm realm) {
-                                Log.d(LOG_TAG, "Realm created");
-                                SplashActivity.this.realm = realm;
-
-                                RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                                data.addChangeListener(new RealmChangeListener<RealmResults<CourseData>>() {
-                                    @Override
-                                    public void onChange(RealmResults<CourseData> courseData) {
-                                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                database.facultyDao().deleteAll();
-                                            }
-                                        });
-                                        for (CourseData course : data) {
-                                            FacultyData faculty = new FacultyData(course);
-                                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    database.facultyDao().insertDetail(faculty);
-                                                }
-                                            });
-                                        }
-                                        sharedPreferences.edit().putBoolean("firstTime", false).apply();
-                                        int size = courseData.size();
-                                        Log.d(LOG_TAG, Integer.toString(size));
-                                        loadAnimation.cancelAnimation();
-                                        loadLayout.setVisibility(View.GONE);
-                                        startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
-                                        finish();
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onError(Throwable exception) {
-                                super.onError(exception);
-                                loadText.setText(exception.getMessage());
-                                Log.d(LOG_TAG, "Failed to create Realm" + exception.getMessage());
-                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
-                                finish();
-                            }
-                        });
-                    }
-                }else{
-                    loadLayout.setVisibility(View.GONE);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                            Toast.makeText(SplashActivity.this,
+                                    "Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.",
+                                    Toast.LENGTH_LONG).show();
                             startActivity(new Intent(SplashActivity.this, MainActivity.class));
                             finish();
                         }
+                    });
+                }else {
+                    loadLayout.setVisibility(View.GONE);
+
+                    new Handler().postDelayed(() -> {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
                     }, 1000);
                 }
             }
@@ -155,12 +153,11 @@ public class SplashActivity extends AppCompatActivity {
         if (user != null) {
             user.logOutAsync(result -> {
                 if (result.isSuccess()) {
-                    Log.d(LOG_TAG, "Successfully logged out.");
+                    Log.d("Hello", "Successfully logged out.");
                 } else {
-                    Log.d(LOG_TAG, "Failed to log out, error: " + result.getError());
+                    Log.d("Hello", "Failed to log out, error: " + result.getError());
                 }
             });
         }
     }
-
 }
