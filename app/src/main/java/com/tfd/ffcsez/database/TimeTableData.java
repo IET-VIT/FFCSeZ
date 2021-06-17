@@ -33,10 +33,11 @@ public class TimeTableData {
     private String currentSlot;
     private boolean isClash;
 
+    // Constructors
     @Ignore
     public TimeTableData(){
 
-    };
+    }
 
     @Ignore
     public TimeTableData(int row, int column, int timeTableId, String batch, String classOption, String courseCode,
@@ -129,6 +130,7 @@ public class TimeTableData {
         this.isClash = isClash;
     }
 
+    // Standard getters & setters
     public int getId() {
         return id;
     }

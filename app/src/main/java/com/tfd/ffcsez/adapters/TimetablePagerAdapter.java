@@ -24,7 +24,6 @@ public class TimetablePagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-
         switch (position){
             case 1: return new TuesdayFragment();
             case 2: return new WednesdayFragment();

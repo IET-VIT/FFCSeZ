@@ -10,7 +10,6 @@ import com.tfd.ffcsez.fragments.landscapefragments.AfternoonFragment;
 import com.tfd.ffcsez.fragments.landscapefragments.MorningFragment;
 
 
-
 public class LandscapePagerAdapter extends FragmentStateAdapter {
     public LandscapePagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);

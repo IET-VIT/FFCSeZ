@@ -4,7 +4,8 @@
     <item android:title="My Timetable"
         android:icon="@drawable/ic_timetable"
         android:iconTint="@color/white"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:id="@+id/timetable"/>
     <item android:title="Full Screen"
         android:icon="@drawable/ic_fullscreen"
         app:showAsAction="ifRoom"

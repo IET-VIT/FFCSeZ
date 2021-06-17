@@ -28,7 +28,7 @@ public class FacultyData {
     private String t;
     private String time;
 
-    //Constructors
+    // Constructors
     @Ignore
     public FacultyData(){
 

@@ -3,16 +3,13 @@ package com.tfd.ffcsez.adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -31,14 +28,10 @@ import java.util.regex.Pattern;
 public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.RecyclerViewHolder> {
 
     private List<FacultyData> list;
-    private Context context;
+    private final Context context;
     private FacultyDatabase database;
     private int defaultTimeTable;
     private boolean exists;
-
-    public FacultyAdapter() {
-
-    }
 
     public FacultyAdapter(List<FacultyData> list, Context context) {
         this.list = list;
@@ -49,12 +42,39 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         database = FacultyDatabase.getInstance(context.getApplicationContext());
+
         SharedPreferences preferences = context.getSharedPreferences("com.tfd.ffcsez",
                 Context.MODE_PRIVATE);
         defaultTimeTable = preferences.getInt("defaultTT", 1);
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.courses_list_layout, parent, false);
         return new RecyclerViewHolder(view);
+    }
+
+    public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView courseCode, courseTitle, courseType, empName, empSchool,
+                slot, roomNumber, l, t, p, j, c, clash;
+        private final CardView cardView;
+
+        public RecyclerViewHolder(@NonNull View view) {
+            super(view);
+
+            courseCode = view.findViewById(R.id.courseCode);
+            courseTitle = view.findViewById(R.id.courseTitle);
+            courseType = view.findViewById(R.id.courseType);
+            l = view.findViewById(R.id.lhrs);
+            t = view.findViewById(R.id.thrs);
+            p = view.findViewById(R.id.phrs);
+            j = view.findViewById(R.id.jhrs);
+            c = view.findViewById(R.id.credits);
+            empName = view.findViewById(R.id.empName);
+            empSchool = view.findViewById(R.id.empSchool);
+            slot = view.findViewById(R.id.slot);
+            roomNumber = view.findViewById(R.id.roomNumber);
+            clash = view.findViewById(R.id.clash);
+            cardView = view.findViewById(R.id.cardView);
+        }
     }
 
     @Override
@@ -72,80 +92,61 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         holder.p.setText(list.get(position).getP());
         holder.j.setText(list.get(position).getJ());
         holder.c.setText(list.get(position).getC());
+
         String clashString = checkSlot(list.get(position).getSlot());
         if(clashString.isEmpty()){
             holder.clash.setVisibility(View.GONE);
+
             if (list.get(position).getCourseType().equals("LO") || list.get(position).getCourseType().equals("ELA")) {
                 holder.cardView.setCardBackgroundColor(context.getColor(R.color.teal_100));
+
             }else if (list.get(position).getCourseType().equals("EPJ")){
                 holder.cardView.setCardBackgroundColor(context.getColor(R.color.sky_blue));
+
             }else{
                 holder.cardView.setCardBackgroundColor(context.getColor(R.color.light_orange));
             }
+
         }else{
             holder.clash.setVisibility(View.VISIBLE);
             holder.clash.setText(clashString);
             holder.cardView.setCardBackgroundColor(context.getColor(R.color.light_light_pink));
         }
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setTTSlot(list.get(position),v);
-            }
-        });
+        holder.cardView.setOnClickListener(v -> setTTSlot(list.get(position),v));
 
     }
 
     @Override
     public int getItemCount() {
-        //Log.d("Hellox", Integer.toString(list.size()));
         return list.size();
     }
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-
-        private final TextView courseCode, courseTitle, courseType, empName, empSchool,
-                slot, roomNumber, l, t, p, j, c, clash;
-        private CardView cardView;
-        private ConstraintLayout constraintLayout;
-
-        public RecyclerViewHolder(@NonNull View view) {
-            super(view);
-            courseCode = view.findViewById(R.id.courseCode);
-            courseTitle = view.findViewById(R.id.courseTitle);
-            courseType = view.findViewById(R.id.courseType);
-            l = view.findViewById(R.id.lhrs);
-            t = view.findViewById(R.id.thrs);
-            p = view.findViewById(R.id.phrs);
-            j = view.findViewById(R.id.jhrs);
-            c = view.findViewById(R.id.credits);
-            empName = view.findViewById(R.id.empName);
-            empSchool = view.findViewById(R.id.empSchool);
-            slot = view.findViewById(R.id.slot);
-            roomNumber = view.findViewById(R.id.roomNumber);
-            clash = view.findViewById(R.id.clash);
-            cardView = view.findViewById(R.id.cardView);
-            constraintLayout = view.findViewById(R.id.constraintLayout);
-        }
+    public void updateAdapter(List<FacultyData> list){
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     private String checkSlot(String slots){
-        //Log.d("Hellofac", name);
         String[] slot = slots.split("[+]");
         String clash = "";
         Pattern pattern = Pattern.compile("^L");
         Matcher matcher;
+
         for (String slotNum: slot){
-            Log.d("Hellox", slotNum);
             matcher = pattern.matcher(slotNum);
+
             if (matcher.find()){
+
                 if (isClashing(Integer.parseInt(slotNum.substring(1)))){
                     clash += slotNum + " ";
                 }
+
             }else{
+
                 if (ConstantsActivity.getSlotList().get(slotNum) != null) {
                     for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
+
                         if (isClashing(ConstantsActivity.getSlotList().get(slotNum)[i])) {
                             clash += slotNum + " ";
                             break;
@@ -154,7 +155,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                 }
             }
         }
-        Log.d("Helloclash", clash);
+
         if (!clash.isEmpty()){
             return "Clash with " + clash;
         }
@@ -163,28 +164,21 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
     private boolean isClashing(int num){
         int r, c;
-        Log.d("Hellonum", Integer.toString(num));
 
         if (num%6 == 0){
             r = num/6 - 1;
             c = 5;
+
         }else{
             r = num/6;
             c = num%6 - 1;
         }
-        Log.d("Hellor", Integer.toString(r));
-        Log.d("Helloc", Integer.toString(c));
-        Log.d("Helloslot", Integer.toString(MainActivity.chosenSlots[r][c]));
 
         return MainActivity.chosenSlots[r][c] == 1;
     }
 
-    public void updateAdapter(List<FacultyData> list){
-        this.list = list;
-        notifyDataSetChanged();
-    }
-
     public void setTTSlot(FacultyData facultyData, View v){
+
         if (!facultyData.getCourseType().equals("EPJ")) {
             String[] slot = facultyData.getSlot().split("[+]");
             Pattern pattern = Pattern.compile("^L");
@@ -192,79 +186,77 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             exists = false;
 
             for (String slotNum : slot) {
-                //Log.d("Hellox", slotNum);
                 matcher = pattern.matcher(slotNum);
+
                 if (matcher.find()) {
                     int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
                     TimeTableData data;
+
                     if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
                         data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
                                 coord[1], slotNum, "x", "x", true);
-                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                List<TimeTableData> clashSlots = database.timeTableDao()
-                                        .loadClashSlots(coord[0], coord[1]);
-                                for (TimeTableData timeTableData : clashSlots) {
-                                    if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
-                                        exists = true;
-                                        Log.d("Hellobool", String.valueOf(exists));
-                                        break;
-                                    }
-                                }
-                                if (!exists) {
-                                    for (TimeTableData timeTableData : clashSlots) {
-                                        Log.d("Helloclash", timeTableData.getEmpName());
-                                        timeTableData.setClash(true);
-                                        database.timeTableDao().updateDetail(timeTableData);
-                                    }
-                                    database.timeTableDao().insertSlot(data);
-                                    MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+
+                        ExecutorClass.getInstance().diskIO().execute(() -> {
+                            List<TimeTableData> clashSlots = database.timeTableDao()
+                                    .loadClashSlots(coord[0], coord[1]);
+
+                            for (TimeTableData timeTableData : clashSlots) {
+                                if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                    exists = true;
+                                    break;
                                 }
                             }
-                        });
 
-                    } else {
-                        data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                                coord[1], slotNum, "x", "x", false);
+                            if (!exists) {
+                                for (TimeTableData timeTableData : clashSlots) {
+                                    timeTableData.setClash(true);
+                                    database.timeTableDao().updateDetail(timeTableData);
+                                }
 
-                        ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
                                 database.timeTableDao().insertSlot(data);
                                 MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
                             }
                         });
+
+                    }else {
+                        data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                coord[1], slotNum, "x", "x", false);
+
+                        ExecutorClass.getInstance().diskIO().execute(() -> {
+                            database.timeTableDao().insertSlot(data);
+                            MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                        });
                     }
 
-                } else {
+                }else {
                     if (ConstantsActivity.getSlotList().get(slotNum) != null) {
                         for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
                             int[] coord = getCoord(ConstantsActivity.getSlotList().get(slotNum)[i]);
                             TimeTableData data;
+
                             if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
                                 data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
                                         coord[1], slotNum, "x", "x", true);
-                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        List<TimeTableData> clashSlots = database.timeTableDao()
-                                                .loadClashSlots(coord[0], coord[1]);
+
+                                ExecutorClass.getInstance().diskIO().execute(() -> {
+                                    List<TimeTableData> clashSlots = database.timeTableDao()
+                                            .loadClashSlots(coord[0], coord[1]);
+
+                                    for (TimeTableData timeTableData : clashSlots) {
+                                        if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
+                                            exists = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!exists) {
                                         for (TimeTableData timeTableData : clashSlots) {
-                                            if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
-                                                exists = true;
-                                                break;
-                                            }
+                                            timeTableData.setClash(true);
+                                            database.timeTableDao().updateDetail(timeTableData);
                                         }
-                                        if (!exists) {
-                                            for (TimeTableData timeTableData : clashSlots) {
-                                                Log.d("Helloclash", timeTableData.getEmpName());
-                                                timeTableData.setClash(true);
-                                                database.timeTableDao().updateDetail(timeTableData);
-                                            }
-                                            database.timeTableDao().insertSlot(data);
-                                            MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
-                                        }
+
+                                        database.timeTableDao().insertSlot(data);
+                                        MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
                                     }
                                 });
 
@@ -272,12 +264,9 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                                 data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
                                         coord[1], slotNum, "x", "x", false);
 
-                                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        database.timeTableDao().insertSlot(data);
-                                        MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
-                                    }
+                                ExecutorClass.getInstance().diskIO().execute(() -> {
+                                    database.timeTableDao().insertSlot(data);
+                                    MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
                                 });
                             }
                         }
@@ -285,28 +274,24 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                 }
             }
         }else{
-            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    TimeTableData data = new TimeTableData(facultyData, defaultTimeTable, -1,
-                            -1, facultyData.getSlot(), "x", "x", false);
-                    database.timeTableDao().insertSlot(data);
-                }
+            ExecutorClass.getInstance().diskIO().execute(() -> {
+                TimeTableData data = new TimeTableData(facultyData, defaultTimeTable, -1,
+                        -1, facultyData.getSlot(), "x", "x", false);
+                database.timeTableDao().insertSlot(data);
             });
         }
+
         notifyDataSetChanged();
         Snackbar.make(v, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(),
                 Snackbar.LENGTH_LONG)
                 .setBackgroundTint(Color.parseColor("#232323"))
                 .setTextColor(Color.parseColor("#fff5eb"))
                 .show();
-        //Toast.makeText(context, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(), Toast.LENGTH_LONG).show();
     }
 
     private int[] getCoord(int num){
         int[] coord = new int[2];
         int r, c;
-        //Log.d("Hellonum", Integer.toString(num));
 
         if (num%6 == 0){
             r = num/6 - 1;
@@ -315,12 +300,9 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             r = num/6;
             c = num%6 - 1;
         }
-        /*Log.d("Hellor", Integer.toString(r));
-        Log.d("Helloc", Integer.toString(c));
-        Log.d("Helloslot", Integer.toString(MainActivity.chosenSlots[r][c]));*/
+
         coord[0] = r;
         coord[1] = c;
-
         return coord;
     }
 }

@@ -1,7 +1,6 @@
 package com.tfd.ffcsez.fragments.timetablefragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,44 +20,40 @@ import com.tfd.ffcsez.database.TimeTableData;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MondayFragment extends Fragment {
-    RecyclerView mondayRecyclerView;
-    LottieAnimationView mondayAnimation;
-    TextView mondayText;
-    List<TimeTableData> monTimeTable = new ArrayList<>();
+
+    @BindView(R.id.mondayRecyclerView) RecyclerView mondayRecyclerView;
+    @BindView(R.id.mondayAnimation) LottieAnimationView mondayAnimation;
+    @BindView(R.id.mondayText) TextView mondayText;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_monday, container, false);
+        ButterKnife.bind(this, view);
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
-        View view = inflater.inflate(R.layout.fragment_monday, container, false);
-        mondayAnimation = view.findViewById(R.id.mondayAnimation);
-        mondayRecyclerView = view.findViewById(R.id.mondayRecyclerView);
-        mondayText = view.findViewById(R.id.mondayText);
-
+        List<TimeTableData> monTimeTable = new ArrayList<>();
         TimeTableAdapter adapter = new TimeTableAdapter(monTimeTable, getContext());
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mondayRecyclerView.setLayoutManager(layoutManager);
         mondayRecyclerView.setAdapter(adapter);
 
-        LiveData<List<TimeTableData>> monTimeTable = database.timeTableDao().loadTTDetails(1, 0, 5);
-        monTimeTable.observe(getActivity(), new Observer<List<TimeTableData>>() {
-            @Override
-            public void onChanged(List<TimeTableData> timeTableData) {
-                adapter.updateAdapter(timeTableData);
-                Log.d("Helloex", Integer.toString(timeTableData.size()));
-                if (timeTableData.size() != 0){
-                    mondayAnimation.cancelAnimation();
-                    mondayAnimation.setVisibility(View.GONE);
-                    mondayText.setVisibility(View.GONE);
-                }else{
-                    mondayAnimation.playAnimation();
-                    mondayAnimation.setVisibility(View.VISIBLE);
-                    mondayText.setVisibility(View.VISIBLE);
-                }
+        LiveData<List<TimeTableData>> monTimeTableLD = database.timeTableDao().loadTTDetails(1, 0, 5);
+        monTimeTableLD.observe(getActivity(), timeTableData -> {
+            adapter.updateAdapter(timeTableData);
+
+            if (timeTableData.size() != 0){
+                mondayAnimation.cancelAnimation();
+                mondayAnimation.setVisibility(View.GONE);
+                mondayText.setVisibility(View.GONE);
+            }else{
+                mondayAnimation.playAnimation();
+                mondayAnimation.setVisibility(View.VISIBLE);
+                mondayText.setVisibility(View.VISIBLE);
             }
         });
         return view;

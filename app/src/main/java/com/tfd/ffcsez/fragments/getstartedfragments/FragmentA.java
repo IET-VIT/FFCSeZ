@@ -13,13 +13,18 @@ import com.tfd.ffcsez.GetStartedActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FragmentA extends Fragment {
 
-    private TextView skipButton;
+    @BindView(R.id.skipButton1) TextView skipButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_a, container, false);
-        skipButton = view.findViewById(R.id.skipButton1);
+        ButterKnife.bind(this, view);
+
         skipButton.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), MainActivity.class));
             getActivity().finish();

@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.tfd.ffcsez.R;
+import com.tfd.ffcsez.database.TimeTableData;
+import com.tfd.ffcsez.models.CourseDetails;
 import com.tfd.ffcsez.models.FacultyDetails;
 
 import java.util.ArrayList;
@@ -20,9 +22,7 @@ import java.util.List;
 
 public class FacultyACAdapter extends ArrayAdapter<FacultyDetails> {
     private List<FacultyDetails> facultyDetailsList;
-    private TextView text1, text2;
-
-
+    
     public FacultyACAdapter(@NonNull Context context, @NonNull List<FacultyDetails> facultyList) {
         super(context, 0, facultyList);
         facultyDetailsList = new ArrayList<>(facultyList);
@@ -42,8 +42,8 @@ public class FacultyACAdapter extends ArrayAdapter<FacultyDetails> {
             );
         }
 
-        text1 = convertView.findViewById(R.id.textView);
-        text2 = convertView.findViewById(R.id.textView2);
+        TextView text1 = convertView.findViewById(R.id.textView);
+        TextView text2 = convertView.findViewById(R.id.textView2);
 
         FacultyDetails faculty = getItem(position);
 
@@ -92,4 +92,9 @@ public class FacultyACAdapter extends ArrayAdapter<FacultyDetails> {
             return ((FacultyDetails) resultValue).getEmpName();
         }
     };
+
+    public void updateAdapter(List<FacultyDetails> list){
+        this.facultyDetailsList = list;
+        notifyDataSetChanged();
+    }
 }

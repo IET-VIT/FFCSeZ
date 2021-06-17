@@ -14,22 +14,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LandscapeActivity extends AppCompatActivity {
-    @BindView(R.id.landscapeTabLayout)
-    TabLayout landscapeTabLayout;
-    @BindView(R.id.landscapeContainer)
-    ViewPager2 container;
-    LandscapePagerAdapter landscapePagerAdapter;
+
+    @BindView(R.id.landscapeTabLayout) TabLayout landscapeTabLayout;
+    @BindView(R.id.landscapeContainer) ViewPager2 container;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_landscape);
         ButterKnife.bind(this);
 
-        FragmentManager fm = getSupportFragmentManager();
-        landscapePagerAdapter = new LandscapePagerAdapter(fm, getLifecycle());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        LandscapePagerAdapter landscapePagerAdapter = new LandscapePagerAdapter(fragmentManager, getLifecycle());
         container.setAdapter(landscapePagerAdapter);
-
 
         landscapeTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -38,14 +37,10 @@ public class LandscapeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
 
         container.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -56,6 +51,5 @@ public class LandscapeActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }

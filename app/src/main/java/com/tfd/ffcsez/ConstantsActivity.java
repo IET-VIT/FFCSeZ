@@ -57,12 +57,14 @@ public class ConstantsActivity {
             slotList.put("V6", new int[]{54});
             slotList.put("V7", new int[]{60});
         }
+
         return slotList;
     }
 
     public static HashMap<Integer, String> getNumList() {
 
         if (numList == null){
+
             numList = new HashMap<>();
             numList.put(1, "A1 / L1");
             numList.put(2, "F1 / L2");

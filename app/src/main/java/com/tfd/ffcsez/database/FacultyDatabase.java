@@ -28,6 +28,6 @@ public abstract class FacultyDatabase extends RoomDatabase {
     }
 
     public abstract FacultyDao facultyDao();
-    public abstract TimeTableDao timeTableDao();
 
+    public abstract TimeTableDao timeTableDao();
 }

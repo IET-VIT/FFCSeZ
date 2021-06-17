@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.tfd.ffcsez.GetStartedActivity;
 import com.tfd.ffcsez.R;
 
+
 public class FragmentC extends Fragment {
 
     @Override

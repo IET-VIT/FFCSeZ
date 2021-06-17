@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.models.CourseDetails;
+import com.tfd.ffcsez.models.FacultyDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,6 @@ import java.util.List;
 
 public class CourseACAdapter extends ArrayAdapter<CourseDetails> {
     private List<CourseDetails> courseDetailsList;
-    private TextView text1, text2;
-
 
     public CourseACAdapter(@NonNull Context context, @NonNull List<CourseDetails> courseList) {
         super(context, 0, courseList);
@@ -42,8 +41,8 @@ public class CourseACAdapter extends ArrayAdapter<CourseDetails> {
                     .inflate(R.layout.autocomplete_layout, parent, false);
         }
 
-        text1 = convertView.findViewById(R.id.textView);
-        text2 = convertView.findViewById(R.id.textView2);
+        TextView text1 = convertView.findViewById(R.id.textView);
+        TextView text2 = convertView.findViewById(R.id.textView2);
 
         CourseDetails course = getItem(position);
 
@@ -92,4 +91,9 @@ public class CourseACAdapter extends ArrayAdapter<CourseDetails> {
             return ((CourseDetails) resultValue).getCourseCode();
         }
     };
+
+    public void updateAdapter(List<CourseDetails> list){
+        this.courseDetailsList = list;
+        notifyDataSetChanged();
+    }
 }
