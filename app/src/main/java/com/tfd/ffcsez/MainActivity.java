@@ -60,6 +60,7 @@ import io.realm.RealmResults;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 
@@ -280,8 +281,12 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, LandscapeActivity.class));
                     return true;
 
-                case R.id.timetable:
+                case R.id.custom:
                     customDialog.show();
+                    return true;
+
+                case R.id.refresh:
+                    refreshRealm();
                     return true;
             }
             return false;
@@ -539,5 +544,84 @@ public class MainActivity extends AppCompatActivity {
         coord[0] = r;
         coord[1] = c;
         return coord;
+    }
+
+    private void refreshRealm() {
+        Realm.init(this);
+        App app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+
+        Snackbar.make(backdropLayout, "Fetching the latest data from the server...",
+                Snackbar.LENGTH_LONG)
+                .setBackgroundTint(Color.parseColor("#232323"))
+                .setTextColor(Color.parseColor("#fff5eb"))
+                .show();
+
+        Credentials credentials = Credentials.anonymous();
+        app.loginAsync(credentials, result -> {
+            if (result.isSuccess()) {
+                Log.d("Hello", "Successfully authenticated anonymously.");
+
+                runOnUiThread(() -> {
+                    Log.d("Hello", "afterlogin");
+                    User user = app.currentUser();
+                    Log.d("Hello", user.toString());
+
+                    if (user != null) {
+                        SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
+                                .waitForInitialRemoteData()
+                                .build();
+                        Log.d("Hello", "config");
+
+                        Realm.getInstanceAsync(config, new Realm.Callback() {
+                            @Override
+                            public void onSuccess(Realm realm) {
+                                Log.d("Hello", "Realm created");
+
+                                RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                                data.addChangeListener(courseData -> {
+                                    ExecutorClass.getInstance().diskIO().execute(() ->
+                                            database.facultyDao().deleteAll());
+
+                                    for (CourseData course : data) {
+                                        FacultyData faculty = new FacultyData(course);
+                                        ExecutorClass.getInstance().diskIO().execute(() ->
+                                                database.facultyDao().insertDetail(faculty));
+                                    }
+
+                                    int size = courseData.size();
+                                    Log.d("Hello", Integer.toString(size));
+
+                                    if (data.size() > 0) {
+                                        Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+                                                Snackbar.LENGTH_LONG)
+                                                .setBackgroundTint(Color.parseColor("#232323"))
+                                                .setTextColor(Color.parseColor("#fff5eb"))
+                                                .show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError(Throwable exception) {
+                                super.onError(exception);
+                                Log.d("Hello", "Failed to create Realm" + exception.getMessage());
+                                Snackbar.make(backdropLayout, exception.getMessage(),
+                                        Snackbar.LENGTH_LONG)
+                                        .setBackgroundTint(Color.parseColor("#232323"))
+                                        .setTextColor(Color.parseColor("#fff5eb"))
+                                        .show();
+                            }
+                        });
+                    }
+                });
+
+            } else {
+                Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
+                        Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(Color.parseColor("#232323"))
+                        .setTextColor(Color.parseColor("#fff5eb"))
+                        .show();
+            }
+        });
     }
 }
