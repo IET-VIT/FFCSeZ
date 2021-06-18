@@ -2,6 +2,9 @@ package com.tfd.ffcsez;
 
 import android.content.SharedPreferences;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.HashMap;
 
 public class ConstantsActivity {
@@ -10,17 +13,17 @@ public class ConstantsActivity {
     public static HashMap<Integer, String> numList;
     public static HashMap<Integer, String[]> labTiming;
     public static HashMap<Integer, String[]> theoryTiming;
-
-    public static int selectedTimeTableId = -1;
+    public static int[][] chosenSlots;
+    public static MutableLiveData<Integer> timeTableId;
 
     public ConstantsActivity() { }
 
-    public static int getSelectedTimeTableId() {
-        return selectedTimeTableId;
-    }
+    public static MutableLiveData<Integer> getTimeTableId() {
+        if (timeTableId == null){
+            timeTableId = new MutableLiveData<>();
+        }
 
-    public static void setSelectedTimeTableId(int selectedTimeTableId) {
-        ConstantsActivity.selectedTimeTableId = selectedTimeTableId;
+        return timeTableId;
     }
 
     public static HashMap<Integer, String[]> getTheoryTiming(){
@@ -306,4 +309,17 @@ public class ConstantsActivity {
         return numList;
     }
 
+    public static int[][] getChosenSlots() {
+        if (chosenSlots == null){
+            chosenSlots = new int[10][6];
+
+            for (int i = 0; i < 10; i++){
+                for(int j = 0; j < 6; j++){
+                    chosenSlots[i][j] = 0;
+                }
+            }
+        }
+
+        return chosenSlots;
+    }
 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,6 @@ public class WednesdayFragment extends Fragment {
     @BindView(R.id.wednesdayRecyclerView) RecyclerView wednesdayRecyclerView;
     @BindView(R.id.wednesdayAnimation) LottieAnimationView wednesdayAnimation;
     @BindView(R.id.wednesdayText) TextView wednesdayText;
-    public static TimeTableAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,23 +39,28 @@ public class WednesdayFragment extends Fragment {
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
         List<TimeTableData> wedTimeTable = new ArrayList<>();
-        adapter = new TimeTableAdapter(wedTimeTable, getContext());
+        TimeTableAdapter adapter = new TimeTableAdapter(wedTimeTable, getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         wednesdayRecyclerView.setLayoutManager(layoutManager);
         wednesdayRecyclerView.setAdapter(adapter);
 
-        LiveData<List<TimeTableData>> wedTimeTableLD = database.timeTableDao().loadTTDetails(ConstantsActivity.getSelectedTimeTableId(), 2, 7);
-        wedTimeTableLD.observe(getActivity(), timeTableData -> {
-            adapter.updateAdapter(timeTableData);
+        ConstantsActivity.getTimeTableId().observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                LiveData<List<TimeTableData>> wedTimeTableLD = database.timeTableDao().loadTTDetails(integer, 2, 7);
+                wedTimeTableLD.observe(getActivity(), timeTableData -> {
+                    adapter.updateAdapter(timeTableData);
 
-            if (timeTableData.size() != 0){
-                wednesdayAnimation.cancelAnimation();
-                wednesdayAnimation.setVisibility(View.GONE);
-                wednesdayText.setVisibility(View.GONE);
-            }else{
-                wednesdayAnimation.playAnimation();
-                wednesdayAnimation.setVisibility(View.VISIBLE);
-                wednesdayText.setVisibility(View.VISIBLE);
+                    if (timeTableData.size() != 0){
+                        wednesdayAnimation.cancelAnimation();
+                        wednesdayAnimation.setVisibility(View.GONE);
+                        wednesdayText.setVisibility(View.GONE);
+                    }else{
+                        wednesdayAnimation.playAnimation();
+                        wednesdayAnimation.setVisibility(View.VISIBLE);
+                        wednesdayText.setVisibility(View.VISIBLE);
+                    }
+                });
             }
         });
         return view;

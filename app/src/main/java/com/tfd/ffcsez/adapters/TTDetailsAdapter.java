@@ -1,6 +1,5 @@
 package com.tfd.ffcsez.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -21,16 +20,8 @@ import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.database.ExecutorClass;
-import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TTDetails;
-import com.tfd.ffcsez.database.TimeTableData;
-import com.tfd.ffcsez.fragments.timetable.FridayFragment;
-import com.tfd.ffcsez.fragments.timetable.MondayFragment;
-import com.tfd.ffcsez.fragments.timetable.ProjectFragment;
-import com.tfd.ffcsez.fragments.timetable.ThursdayFragment;
-import com.tfd.ffcsez.fragments.timetable.TuesdayFragment;
-import com.tfd.ffcsez.fragments.timetable.WednesdayFragment;
 import com.tfd.ffcsez.models.Coord;
 
 import java.util.List;
@@ -89,7 +80,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
             holder.ttEditButton.setVisibility(View.VISIBLE);
         }
 
-        if (details.getTimeTableId() == ConstantsActivity.getSelectedTimeTableId())
+        if (details.getTimeTableId() == ConstantsActivity.getTimeTableId().getValue())
             holder.selectedImageView.setVisibility(View.VISIBLE);
         else
             holder.selectedImageView.setVisibility(View.GONE);
@@ -97,6 +88,10 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         holder.ttDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (details.getTimeTableId() == ConstantsActivity.getTimeTableId().getValue()){
+                    ConstantsActivity.getTimeTableId().setValue(1);
+                }
+
                 ExecutorClass.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -104,38 +99,33 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                         database.ttDetailsDao().deleteTimeTable(details);
                     }
                 });
+
+                Snackbar.make(v, "Timetable deleted",
+                        Snackbar.LENGTH_SHORT)
+                        .setBackgroundTint(Color.parseColor("#232323"))
+                        .setTextColor(Color.parseColor("#fff5eb"))
+                        .show();
+
             }
         });
 
         holder.timeTableInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConstantsActivity.setSelectedTimeTableId(details.getTimeTableId());
-                preferences.edit().putInt("lastTT", ConstantsActivity.getSelectedTimeTableId()).apply();
-                if (MondayFragment.adapter != null)
-                    MondayFragment.adapter.notifyDataSetChanged();
-                if (TuesdayFragment.adapter != null)
-                    TuesdayFragment.adapter.notifyDataSetChanged();
-                if (WednesdayFragment.adapter != null)
-                    WednesdayFragment.adapter.notifyDataSetChanged();
-                if (ThursdayFragment.adapter != null)
-                    ThursdayFragment.adapter.notifyDataSetChanged();
-                if (FridayFragment.adapter != null)
-                    FridayFragment.adapter.notifyDataSetChanged();
-                if (ProjectFragment.adapter != null)
-                    ProjectFragment.adapter.notifyDataSetChanged();
+                ConstantsActivity.getTimeTableId().setValue(details.getTimeTableId());
+                preferences.edit().putInt("lastTT", ConstantsActivity.getTimeTableId().getValue()).apply();
 
                 for (int i = 0; i < 10; i++){
                     for(int j = 0; j < 6; j++){
-                        MainActivity.chosenSlots[i][j] = 0;
+                        ConstantsActivity.getChosenSlots()[i][j] = 0;
                     }
                 }
 
                 ExecutorClass.getInstance().diskIO().execute(() -> {
-                    List<Coord> coords = database.timeTableDao().getChosenSlots(ConstantsActivity.getSelectedTimeTableId());
+                    List<Coord> coords = database.timeTableDao().getChosenSlots(ConstantsActivity.getTimeTableId().getValue());
                     for (Coord coord: coords){
                         if (coord.getRow() != -1)
-                            MainActivity.chosenSlots[coord.getRow()][coord.getColumn()] = 1;
+                            ConstantsActivity.getChosenSlots()[coord.getRow()][coord.getColumn()] = 1;
                     }
                 });
                 MainActivity.facultyAdapter.notifyDataSetChanged();

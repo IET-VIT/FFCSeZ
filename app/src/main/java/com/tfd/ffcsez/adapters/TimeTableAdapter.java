@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.database.ExecutorClass;
@@ -104,7 +105,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                         database.timeTableDao().deleteSlot(timeTableData);
 
                         if (!timeTableData.isClash()) {
-                            MainActivity.chosenSlots[timeTableData.getRow()][timeTableData.getColumn()] = 0;
+                            ConstantsActivity.getChosenSlots()[timeTableData.getRow()][timeTableData.getColumn()] = 0;
                         } else {
                             List<TimeTableData> clashSlots = database.timeTableDao()
                                     .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn());

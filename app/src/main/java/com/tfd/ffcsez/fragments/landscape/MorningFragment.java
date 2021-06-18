@@ -25,7 +25,7 @@ public class MorningFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_morning, container, false);
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
-        LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(ConstantsActivity.getSelectedTimeTableId(), 0, 4);
+        LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(ConstantsActivity.getTimeTableId().getValue(), 0, 4);
         data.observe(getActivity(), timeTableData -> {
             TextView slotHolder;
             String slots;

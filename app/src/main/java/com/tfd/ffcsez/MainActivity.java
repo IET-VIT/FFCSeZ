@@ -45,6 +45,7 @@ import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TimeTableData;
 import com.tfd.ffcsez.fragments.BottomSheetFragment;
+import com.tfd.ffcsez.fragments.timetable.MondayFragment;
 import com.tfd.ffcsez.models.Coord;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Database
     private FacultyDatabase database;
-    public static int[][] chosenSlots;
     private List<FacultyData> facultyList = new ArrayList<>();
     private List<CourseDetails> allCourses = new ArrayList<>();
     private List<FacultyDetails> allFaculties = new ArrayList<>();
@@ -274,8 +274,6 @@ public class MainActivity extends AppCompatActivity {
         TimetablePagerAdapter timetablePagerAdapter = new TimetablePagerAdapter(fragmentManager, getLifecycle());
         viewPager.setAdapter(timetablePagerAdapter);
 
-        int lastTTId = preferences.getInt("lastTT", 1);
-        ConstantsActivity.setSelectedTimeTableId(lastTTId);
         setupTimeTable();
 
         // Bottom Sheet
@@ -315,19 +313,14 @@ public class MainActivity extends AppCompatActivity {
     private void initialize() {
         preferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
         database = FacultyDatabase.getInstance(getApplicationContext());
-
-        chosenSlots = new int[10][6];
-        for (int i = 0; i < 10; i++){
-            for(int j = 0; j < 6; j++){
-                chosenSlots[i][j] = 0;
-            }
-        }
+        int lastTTId = preferences.getInt("lastTT", 1);
+        ConstantsActivity.getTimeTableId().setValue(lastTTId);
 
         ExecutorClass.getInstance().diskIO().execute(() -> {
-            List<Coord> coords = database.timeTableDao().getChosenSlots(ConstantsActivity.getSelectedTimeTableId());
+            List<Coord> coords = database.timeTableDao().getChosenSlots(ConstantsActivity.getTimeTableId().getValue());
             for (Coord coord: coords){
                 if (coord.getRow() != -1)
-                    chosenSlots[coord.getRow()][coord.getColumn()] = 1;
+                    ConstantsActivity.getChosenSlots()[coord.getRow()][coord.getColumn()] = 1;
             }
         });
     }
@@ -442,11 +435,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if (matcher.find()) {
                     int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
+                    int num;
+                    if(coord[1] == 5){
+                        num = ((coord[0] + 1)*6);
+                    }else{
+                        num = ((coord[0])*6) + (coord[1] + 1);
+                    }
                     TimeTableData data;
 
-                    if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                    if (ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] == 1) {
                         data = new TimeTableData(facultyData, 1, coord[0],
-                                coord[1], slotNum, "x", "x", true);
+                                coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], true);
 
                         ExecutorClass.getInstance().diskIO().execute(() -> {
                             List<TimeTableData> clashSlots = database.timeTableDao()
@@ -465,17 +464,17 @@ public class MainActivity extends AppCompatActivity {
                                     database.timeTableDao().updateDetail(timeTableData);
                                 }
                                 database.timeTableDao().insertSlot(data);
-                                MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
                             }
                         });
                     }else {
 
                         data = new TimeTableData(facultyData, 1, coord[0],
-                                coord[1], slotNum, "x", "x", false);
+                                coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], false);
 
                         ExecutorClass.getInstance().diskIO().execute(() -> {
                             database.timeTableDao().insertSlot(data);
-                            MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                            ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
                         });
                     }
                 }else {
@@ -483,11 +482,17 @@ public class MainActivity extends AppCompatActivity {
                     if (ConstantsActivity.getSlotList().get(slotNum) != null) {
                         for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
                             int[] coord = getCoord(ConstantsActivity.getSlotList().get(slotNum)[i]);
+                            int num;
+                            if(coord[1] == 5){
+                                num = ((coord[0] + 1)*6);
+                            }else{
+                                num = ((coord[0])*6) + (coord[1] + 1);
+                            }
                             TimeTableData data;
 
-                            if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+                            if (ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] == 1) {
                                 data = new TimeTableData(facultyData, 1, coord[0],
-                                        coord[1], slotNum, "x", "x", true);
+                                        coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], true);
 
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
                                     List<TimeTableData> clashSlots = database.timeTableDao()
@@ -507,16 +512,16 @@ public class MainActivity extends AppCompatActivity {
                                         }
 
                                         database.timeTableDao().insertSlot(data);
-                                        MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                        ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
                                     }
                                 });
                             } else {
                                 data = new TimeTableData(facultyData, 1, coord[0],
-                                        coord[1], slotNum, "x", "x", false);
+                                        coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], false);
 
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
                                     database.timeTableDao().insertSlot(data);
-                                    MainActivity.chosenSlots[coord[0]][coord[1]] = 1;
+                                    ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
                                 });
                             }
                         }
@@ -526,7 +531,7 @@ public class MainActivity extends AppCompatActivity {
         }else {
             ExecutorClass.getInstance().diskIO().execute(() -> {
                 TimeTableData data = new TimeTableData(facultyData, 1, -1,
-                        -1, facultyData.getSlot(), "x", "x", false);
+                        -1, facultyData.getSlot(), "-:-", "-:-", false);
                 database.timeTableDao().insertSlot(data);
             });
         }

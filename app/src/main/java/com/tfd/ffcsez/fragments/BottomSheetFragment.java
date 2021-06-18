@@ -2,6 +2,7 @@ package com.tfd.ffcsez.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
@@ -70,31 +72,28 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                     public void run() {
                         TTDetails details = new TTDetails("Timetable " + r.nextInt(50));
                         database.ttDetailsDao().insertTimeTable(details);
-                        List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
-                        preferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
-                        ConstantsActivity.setSelectedTimeTableId(preferences.getInt("lastTT", 1));
 
-                        if (MondayFragment.adapter != null)
-                            MondayFragment.adapter.notifyDataSetChanged();
-                        if (TuesdayFragment.adapter != null)
-                            TuesdayFragment.adapter.notifyDataSetChanged();
-                        if (WednesdayFragment.adapter != null)
-                            WednesdayFragment.adapter.notifyDataSetChanged();
-                        if (ThursdayFragment.adapter != null)
-                            ThursdayFragment.adapter.notifyDataSetChanged();
-                        if (FridayFragment.adapter != null)
-                            FridayFragment.adapter.notifyDataSetChanged();
-                        if (ProjectFragment.adapter != null)
-                            ProjectFragment.adapter.notifyDataSetChanged();
+                        List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
 
                         for (int i = 0; i < 10; i++){
                             for(int j = 0; j < 6; j++){
-                                MainActivity.chosenSlots[i][j] = 0;
+                                ConstantsActivity.getChosenSlots()[i][j] = 0;
                             }
                         }
 
-                        MainActivity.facultyAdapter.notifyDataSetChanged();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ConstantsActivity.getTimeTableId().setValue(timeTable.get(0).getTimeTableId());
+                                preferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
 
+                                Snackbar.make(view, "Created new timetable",
+                                        Snackbar.LENGTH_SHORT)
+                                        .setBackgroundTint(Color.parseColor("#232323"))
+                                        .setTextColor(Color.parseColor("#fff5eb"))
+                                        .show();
+                            }
+                        });
                     }
                 });
             }

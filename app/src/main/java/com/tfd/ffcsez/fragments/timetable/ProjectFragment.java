@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,6 @@ public class ProjectFragment extends Fragment {
     @BindView(R.id.projectRecyclerView) RecyclerView projectRecyclerView;
     @BindView(R.id.projectAnimation) LottieAnimationView projectAnimation;
     @BindView(R.id.projectText) TextView projectText;
-    public static TimeTableAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,23 +39,28 @@ public class ProjectFragment extends Fragment {
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
         List<TimeTableData> projectTimeTable = new ArrayList<>();
-        adapter = new TimeTableAdapter(projectTimeTable, getContext());
+        TimeTableAdapter adapter = new TimeTableAdapter(projectTimeTable, getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         projectRecyclerView.setLayoutManager(layoutManager);
         projectRecyclerView.setAdapter(adapter);
 
-        LiveData<List<TimeTableData>> projectTimeTableLD = database.timeTableDao().loadTTDetails(ConstantsActivity.getSelectedTimeTableId(), -1, -1);
-        projectTimeTableLD.observe(getActivity(), timeTableData -> {
-            adapter.updateAdapter(timeTableData);
+        ConstantsActivity.getTimeTableId().observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                LiveData<List<TimeTableData>> projectTimeTableLD = database.timeTableDao().loadTTDetails(integer, -1, -1);
+                projectTimeTableLD.observe(getActivity(), timeTableData -> {
+                    adapter.updateAdapter(timeTableData);
 
-            if (timeTableData.size() != 0){
-                projectAnimation.cancelAnimation();
-                projectAnimation.setVisibility(View.GONE);
-                projectText.setVisibility(View.GONE);
-            }else{
-                projectAnimation.playAnimation();
-                projectAnimation.setVisibility(View.VISIBLE);
-                projectText.setVisibility(View.VISIBLE);
+                    if (timeTableData.size() != 0){
+                        projectAnimation.cancelAnimation();
+                        projectAnimation.setVisibility(View.GONE);
+                        projectText.setVisibility(View.GONE);
+                    }else{
+                        projectAnimation.playAnimation();
+                        projectAnimation.setVisibility(View.VISIBLE);
+                        projectText.setVisibility(View.VISIBLE);
+                    }
+                });
             }
         });
         return view;
