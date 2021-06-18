@@ -190,11 +190,18 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
                 if (matcher.find()) {
                     int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
+                    int num;
+                    if(coord[1] == 5){
+                        num = ((coord[0] + 1)*6);
+                    }else{
+                        num = ((coord[0])*6) + (coord[1] + 1);
+                    }
                     TimeTableData data;
 
                     if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+
                         data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                                coord[1], slotNum, "x", "x", true);
+                                coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], true);
 
                         ExecutorClass.getInstance().diskIO().execute(() -> {
                             List<TimeTableData> clashSlots = database.timeTableDao()
@@ -220,7 +227,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
                     }else {
                         data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                                coord[1], slotNum, "x", "x", false);
+                                coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], false);
 
                         ExecutorClass.getInstance().diskIO().execute(() -> {
                             database.timeTableDao().insertSlot(data);
@@ -232,11 +239,18 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                     if (ConstantsActivity.getSlotList().get(slotNum) != null) {
                         for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
                             int[] coord = getCoord(ConstantsActivity.getSlotList().get(slotNum)[i]);
+                            int num;
+                            if(coord[1] == 5){
+                                num = ((coord[0] + 1)*6);
+                            }else{
+                                num = ((coord[0])*6) + (coord[1] + 1);
+                            }
                             TimeTableData data;
 
                             if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
+
                                 data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                                        coord[1], slotNum, "x", "x", true);
+                                        coord[1], slotNum, ConstantsActivity.getTheoryTiming().get(num)[0], ConstantsActivity.getTheoryTiming().get(num)[1], true);
 
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
                                     List<TimeTableData> clashSlots = database.timeTableDao()
@@ -262,7 +276,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
                             } else {
                                 data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
-                                        coord[1], slotNum, "x", "x", false);
+                                        coord[1], slotNum, ConstantsActivity.getTheoryTiming().get(num)[0], ConstantsActivity.getTheoryTiming().get(num)[1], false);
 
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
                                     database.timeTableDao().insertSlot(data);
@@ -276,7 +290,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         }else{
             ExecutorClass.getInstance().diskIO().execute(() -> {
                 TimeTableData data = new TimeTableData(facultyData, defaultTimeTable, -1,
-                        -1, facultyData.getSlot(), "x", "x", false);
+                        -1, facultyData.getSlot(), "--", "--", false);
                 database.timeTableDao().insertSlot(data);
             });
         }
