@@ -17,7 +17,10 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
+import com.tfd.ffcsez.database.TTDetails;
 import com.tfd.ffcsez.models.CourseData;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +56,18 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 if (sharedPreferences.getBoolean("firstTime", true)) {
                     Log.d("Hello", "firstTime");
+
+                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            TTDetails details = new TTDetails("XXDefault TimetableXX");
+                            database.ttDetailsDao().insertTimeTable(details);
+                            List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
+                            sharedPreferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
+                            ConstantsActivity.setSelectedTimeTableId(sharedPreferences.getInt("lastTT", 1));
+                        }
+                    });
+
                     Realm.init(SplashActivity.this);
                     app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
 

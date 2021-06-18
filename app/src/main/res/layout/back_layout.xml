@@ -75,7 +75,7 @@
         app:helperTextTextAppearance="@style/helper_text"
         app:helperTextTextColor="@color/blue"
         app:hintTextColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/searchButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggle">
 
@@ -120,7 +120,7 @@
         app:helperTextTextAppearance="@style/helper_text"
         app:helperTextTextColor="@color/blue"
         app:hintTextColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/searchButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggle">
 
@@ -235,9 +235,9 @@
         app:layout_constraintTop_toTopOf="@+id/toggle" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/searchButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"

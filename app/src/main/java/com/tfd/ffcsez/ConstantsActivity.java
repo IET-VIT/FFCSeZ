@@ -1,5 +1,7 @@
 package com.tfd.ffcsez;
 
+import android.content.SharedPreferences;
+
 import java.util.HashMap;
 
 public class ConstantsActivity {
@@ -9,14 +11,24 @@ public class ConstantsActivity {
     public static HashMap<Integer, String[]> labTiming;
     public static HashMap<Integer, String[]> theoryTiming;
 
-    public ConstantsActivity() {
+    public static int selectedTimeTableId = -1;
+
+    public ConstantsActivity() { }
+
+    public static int getSelectedTimeTableId() {
+        return selectedTimeTableId;
     }
+
+    public static void setSelectedTimeTableId(int selectedTimeTableId) {
+        ConstantsActivity.selectedTimeTableId = selectedTimeTableId;
+    }
+
     public static HashMap<Integer, String[]> getTheoryTiming(){
 
-        if(theoryTiming==null){
+        if(theoryTiming == null){
             theoryTiming = new HashMap<>();
 
-            //Morning
+            // Morning
             theoryTiming.put(1, new String[]{"8:00 AM","8:45 AM"});
             theoryTiming.put(2, new String[]{"9:00 AM","9:45 AM"});
             theoryTiming.put(3, new String[]{"10:00 AM","10:45 AM"});
@@ -94,9 +106,10 @@ public class ConstantsActivity {
     }
     public static HashMap<Integer, String[]> getLabTiming(){
 
-        if(labTiming==null){
+        if(labTiming == null){
             labTiming = new HashMap<>();
-            //Morning
+
+            // Morning
             labTiming.put(1, new String[]{"8:00 AM","8:45 AM"});
             labTiming.put(2, new String[]{"8:46 AM","9:30 AM"});
             labTiming.put(3, new String[]{"10:00 AM","10:45 AM"});
@@ -132,7 +145,7 @@ public class ConstantsActivity {
             labTiming.put(29, new String[]{"11:31 AM","12:15 PM"});
             labTiming.put(30, new String[]{"12:16 PM","1:00 PM"});
 
-            //Afternoon
+            // Afternoon
             labTiming.put(31, new String[]{"2:00 PM","2:45 PM"});
             labTiming.put(32, new String[]{"2:46 PM","3:30 AM"});
             labTiming.put(33, new String[]{"4:00 PM","4:45 PM"});

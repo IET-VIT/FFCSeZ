@@ -138,6 +138,7 @@
                 android:elevation="8dp"
                 android:padding="4dp"
                 android:scaleType="fitCenter"
+                app:rippleColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

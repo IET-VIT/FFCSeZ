@@ -3,6 +3,7 @@ package com.tfd.ffcsez;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -20,19 +21,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
     @BindView(R.id.facultyRecyclerView) RecyclerView facultyRecyclerView;
-    @BindView(R.id.button) Button searchButton;
+    @BindView(R.id.searchButton) Button searchButton;
     @BindView(R.id.toggle) Switch toggle;
     @BindView(R.id.viewPager) ViewPager2 viewPager;
     @BindView(R.id.animation) LottieAnimationView animation;
@@ -90,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.fText) TextView fText;
     @BindView(R.id.errorText) TextView errorText;
 
-    // EditTexts
-
     // Chips
     @BindView(R.id.morningChip) Chip morningChip;
     @BindView(R.id.afternoonChip) Chip afternoonChip;
@@ -104,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     private String courseLO = "", timeFN = "", timeAN = "";
     private boolean exists;
     private AlertDialog customDialog;
+    private SharedPreferences preferences;
 
     // Database
     private FacultyDatabase database;
@@ -277,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
         TimetablePagerAdapter timetablePagerAdapter = new TimetablePagerAdapter(fragmentManager, getLifecycle());
         viewPager.setAdapter(timetablePagerAdapter);
 
+        int lastTTId = preferences.getInt("lastTT", 1);
+        ConstantsActivity.setSelectedTimeTableId(lastTTId);
         setupTimeTable();
 
         // Bottom Sheet
@@ -314,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        preferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
         database = FacultyDatabase.getInstance(getApplicationContext());
 
         chosenSlots = new int[10][6];
@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ExecutorClass.getInstance().diskIO().execute(() -> {
-            List<Coord> coords = database.timeTableDao().getChosenSlots(1);
+            List<Coord> coords = database.timeTableDao().getChosenSlots(ConstantsActivity.getSelectedTimeTableId());
             for (Coord coord: coords){
                 if (coord.getRow() != -1)
                     chosenSlots[coord.getRow()][coord.getColumn()] = 1;

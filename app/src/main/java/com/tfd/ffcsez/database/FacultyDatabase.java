@@ -7,7 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {FacultyData.class, TimeTableData.class}, version = 1, exportSchema = false)
+@Database(entities = {FacultyData.class, TimeTableData.class, TTDetails.class}, version = 1, exportSchema = false)
 public abstract class FacultyDatabase extends RoomDatabase {
 
     private static final String LOG_TAG = FacultyDatabase.class.getSimpleName();
@@ -30,4 +30,6 @@ public abstract class FacultyDatabase extends RoomDatabase {
     public abstract FacultyDao facultyDao();
 
     public abstract TimeTableDao timeTableDao();
+
+    public abstract TTDetailsDao ttDetailsDao();
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.adapters.TimeTableAdapter;
 import com.tfd.ffcsez.database.FacultyDatabase;
@@ -29,6 +30,7 @@ public class ThursdayFragment extends Fragment {
     @BindView(R.id.thursdayRecyclerView) RecyclerView thursdayRecyclerView;
     @BindView(R.id.thursdayAnimation) LottieAnimationView thursdayAnimation;
     @BindView(R.id.thursdayText) TextView thursdayText;
+    public static TimeTableAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,12 +39,12 @@ public class ThursdayFragment extends Fragment {
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
         List<TimeTableData> thuTimeTable = new ArrayList<>();
-        TimeTableAdapter adapter = new TimeTableAdapter(thuTimeTable, getContext());
+        adapter = new TimeTableAdapter(thuTimeTable, getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         thursdayRecyclerView.setLayoutManager(layoutManager);
         thursdayRecyclerView.setAdapter(adapter);
 
-        LiveData<List<TimeTableData>> thuTimeTableLD = database.timeTableDao().loadTTDetails(1, 3, 8);
+        LiveData<List<TimeTableData>> thuTimeTableLD = database.timeTableDao().loadTTDetails(ConstantsActivity.getSelectedTimeTableId(), 3, 8);
         thuTimeTableLD.observe(getActivity(), timeTableData -> {
             adapter.updateAdapter(timeTableData);
 

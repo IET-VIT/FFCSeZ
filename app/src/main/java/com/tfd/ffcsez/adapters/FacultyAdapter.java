@@ -30,7 +30,6 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     private List<FacultyData> list;
     private final Context context;
     private FacultyDatabase database;
-    private int defaultTimeTable;
     private boolean exists;
 
     public FacultyAdapter(List<FacultyData> list, Context context) {
@@ -42,10 +41,6 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         database = FacultyDatabase.getInstance(context.getApplicationContext());
-
-        SharedPreferences preferences = context.getSharedPreferences("com.tfd.ffcsez",
-                Context.MODE_PRIVATE);
-        defaultTimeTable = preferences.getInt("defaultTT", 1);
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.courses_list_layout, parent, false);
         return new RecyclerViewHolder(view);
@@ -200,7 +195,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
                     if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
 
-                        data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                        data = new TimeTableData(facultyData, ConstantsActivity.getSelectedTimeTableId(), coord[0],
                                 coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], true);
 
                         ExecutorClass.getInstance().diskIO().execute(() -> {
@@ -226,7 +221,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                         });
 
                     }else {
-                        data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                        data = new TimeTableData(facultyData, ConstantsActivity.getSelectedTimeTableId(), coord[0],
                                 coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], false);
 
                         ExecutorClass.getInstance().diskIO().execute(() -> {
@@ -249,7 +244,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
                             if (MainActivity.chosenSlots[coord[0]][coord[1]] == 1) {
 
-                                data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                data = new TimeTableData(facultyData, ConstantsActivity.getSelectedTimeTableId(), coord[0],
                                         coord[1], slotNum, ConstantsActivity.getTheoryTiming().get(num)[0], ConstantsActivity.getTheoryTiming().get(num)[1], true);
 
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
@@ -275,7 +270,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                                 });
 
                             } else {
-                                data = new TimeTableData(facultyData, defaultTimeTable, coord[0],
+                                data = new TimeTableData(facultyData, ConstantsActivity.getSelectedTimeTableId(), coord[0],
                                         coord[1], slotNum, ConstantsActivity.getTheoryTiming().get(num)[0], ConstantsActivity.getTheoryTiming().get(num)[1], false);
 
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
@@ -289,8 +284,8 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             }
         }else{
             ExecutorClass.getInstance().diskIO().execute(() -> {
-                TimeTableData data = new TimeTableData(facultyData, defaultTimeTable, -1,
-                        -1, facultyData.getSlot(), "--", "--", false);
+                TimeTableData data = new TimeTableData(facultyData, ConstantsActivity.getSelectedTimeTableId(), -1,
+                        -1, facultyData.getSlot(), "-:-", "-:-", false);
                 database.timeTableDao().insertSlot(data);
             });
         }
