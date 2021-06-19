@@ -41,7 +41,7 @@
                 android:id="@+id/cardView43"
                 android:layout_width="72dp"
                 android:layout_height="0dp"
-                app:cardBackgroundColor="@color/light_violet"
+                app:cardBackgroundColor="@color/slot_time_bg"
                 app:cardElevation="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

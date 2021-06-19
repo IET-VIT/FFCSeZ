@@ -7,6 +7,7 @@
     <color name="back_text1" tools:ignore="MissingDefaultResource">@color/blue</color>
 
     <color name="home_timetable" tools:ignore="MissingDefaultResource">#ffffff</color>
+    <color name="slot_time_bg" tools:ignore="MissingDefaultResource">@color/light_violet</color>
 
     <color name="custom_course_bg" tools:ignore="MissingDefaultResource">@color/white</color>
     <color name="custom_course_text" tools:ignore="MissingDefaultResource">@color/black</color>
@@ -20,4 +21,6 @@
     <color name="clash_color" tools:ignore="MissingDefaultResource">@color/blood_red</color>
 
     <color name="project_color" tools:ignore="MissingDefaultResource">@color/dark_blue</color>
+    <color name="theory_color" tools:ignore="MissingDefaultResource">@color/orange</color>
+    <color name="lab_color" tools:ignore="MissingDefaultResource">@color/teal_500</color>
 </resources>

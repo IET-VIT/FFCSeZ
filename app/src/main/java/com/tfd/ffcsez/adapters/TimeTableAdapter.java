@@ -81,16 +81,16 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         }else {
 
             if (list.get(position).getCourseType().equals("LO") || list.get(position).getCourseType().equals("ELA")) {
-                holder.typeSelector.setBackgroundColor(context.getColor(R.color.teal_500));
-                holder.slotNumber.setTextColor(context.getColor(R.color.teal_500));
+                holder.typeSelector.setBackgroundColor(context.getColor(R.color.lab_color));
+                holder.slotNumber.setTextColor(context.getColor(R.color.lab_color));
 
             }else if (list.get(position).getCourseType().equals("EPJ")){
                 holder.typeSelector.setBackgroundColor(context.getColor(R.color.project_color));
                 holder.slotNumber.setTextColor(context.getColor(R.color.project_color));
 
             }else{
-                holder.typeSelector.setBackgroundColor(context.getColor(R.color.orange));
-                holder.slotNumber.setTextColor(context.getColor(R.color.orange));
+                holder.typeSelector.setBackgroundColor(context.getColor(R.color.theory_color));
+                holder.slotNumber.setTextColor(context.getColor(R.color.theory_color));
             }
         }
 
