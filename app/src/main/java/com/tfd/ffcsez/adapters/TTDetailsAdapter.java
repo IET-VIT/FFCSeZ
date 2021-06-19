@@ -102,8 +102,8 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
 
                 Snackbar.make(v, "Timetable deleted",
                         Snackbar.LENGTH_SHORT)
-                        .setBackgroundTint(Color.parseColor("#232323"))
-                        .setTextColor(Color.parseColor("#fff5eb"))
+                        .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
+                        .setTextColor(context.getResources().getColor(R.color.snackbar_text))
                         .show();
 
             }

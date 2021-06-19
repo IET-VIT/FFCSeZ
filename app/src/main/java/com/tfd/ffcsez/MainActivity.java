@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initialize();
 
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#61cde9"));
+//        Window window = getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.setStatusBarColor(Color.parseColor("#61cde9"));
 
         // Back Layout
         View back_layout = backdropLayout.getChildAt(0);
@@ -136,13 +136,13 @@ public class MainActivity extends AppCompatActivity {
                 courseCodeLayout.setVisibility(View.INVISIBLE);
                 facultyNameLayout.setVisibility(View.VISIBLE);
                 cText.setTextColor(Color.parseColor("#fff5eb"));
-                fText.setTextColor(Color.parseColor("#03256c"));
+                fText.setTextColor(Color.parseColor("#F54748"));
 
             } else {
                 courseCodeLayout.setVisibility(View.VISIBLE);
                 facultyNameLayout.setVisibility(View.INVISIBLE);
                 fText.setTextColor(Color.parseColor("#fff5eb"));
-                cText.setTextColor(Color.parseColor("#03256c"));
+                cText.setTextColor(Color.parseColor("#F54748"));
             }
         });
 
@@ -580,8 +580,8 @@ public class MainActivity extends AppCompatActivity {
 
         Snackbar.make(v, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(),
                 Snackbar.LENGTH_LONG)
-                .setBackgroundTint(Color.parseColor("#232323"))
-                .setTextColor(Color.parseColor("#fff5eb"))
+                .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                .setTextColor(getResources().getColor(R.color.snackbar_text))
                 .show();
     }
 
@@ -608,8 +608,8 @@ public class MainActivity extends AppCompatActivity {
 
         Snackbar.make(backdropLayout, "Fetching the latest data from the server...",
                 Snackbar.LENGTH_LONG)
-                .setBackgroundTint(Color.parseColor("#232323"))
-                .setTextColor(Color.parseColor("#fff5eb"))
+                .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                .setTextColor(getResources().getColor(R.color.snackbar_text))
                 .show();
 
         Credentials credentials = Credentials.anonymous();
@@ -650,8 +650,8 @@ public class MainActivity extends AppCompatActivity {
                                     if (data.size() > 0) {
                                         Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
                                                 Snackbar.LENGTH_LONG)
-                                                .setBackgroundTint(Color.parseColor("#232323"))
-                                                .setTextColor(Color.parseColor("#fff5eb"))
+                                                .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                .setTextColor(getResources().getColor(R.color.snackbar_text))
                                                 .show();
                                     }
                                 });
@@ -663,8 +663,8 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("Hello", "Failed to create Realm" + exception.getMessage());
                                 Snackbar.make(backdropLayout, exception.getMessage(),
                                         Snackbar.LENGTH_LONG)
-                                        .setBackgroundTint(Color.parseColor("#232323"))
-                                        .setTextColor(Color.parseColor("#fff5eb"))
+                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
                                         .show();
                             }
                         });
@@ -674,8 +674,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
                         Snackbar.LENGTH_LONG)
-                        .setBackgroundTint(Color.parseColor("#232323"))
-                        .setTextColor(Color.parseColor("#fff5eb"))
+                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                        .setTextColor(getResources().getColor(R.color.snackbar_text))
                         .show();
             }
         });

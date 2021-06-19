@@ -293,8 +293,8 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         notifyDataSetChanged();
         Snackbar.make(v, "Course added successfully - " + facultyData.getCourseCode() + " - " + facultyData.getCourseType(),
                 Snackbar.LENGTH_LONG)
-                .setBackgroundTint(Color.parseColor("#232323"))
-                .setTextColor(Color.parseColor("#fff5eb"))
+                .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
+                .setTextColor(context.getResources().getColor(R.color.snackbar_text))
                 .show();
     }
 

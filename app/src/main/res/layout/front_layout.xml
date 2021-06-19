@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/background">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="@color/light_blue"
+        android:background="@color/toolbar_bg"
         android:elevation="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -25,7 +25,7 @@
         app:tabPaddingStart="20dp"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/tab_layout_text"
-        app:tabTextColor="@color/blue">
+        app:tabTextColor="@color/tab_text">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

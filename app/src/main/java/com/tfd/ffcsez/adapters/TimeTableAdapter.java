@@ -75,8 +75,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         holder.roomNumber.setText(model.getRoomNumber());
 
         if (list.get(position).isClash()) {
-            holder.typeSelector.setBackgroundColor(context.getColor(R.color.blood_red));
-            holder.slotNumber.setTextColor(context.getColor(R.color.blood_red));
+            holder.typeSelector.setBackgroundColor(context.getColor(R.color.clash_color));
+            holder.slotNumber.setTextColor(context.getColor(R.color.clash_color));
 
         }else {
 
@@ -85,8 +85,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                 holder.slotNumber.setTextColor(context.getColor(R.color.teal_500));
 
             }else if (list.get(position).getCourseType().equals("EPJ")){
-                holder.typeSelector.setBackgroundColor(context.getColor(R.color.dark_blue));
-                holder.slotNumber.setTextColor(context.getColor(R.color.dark_blue));
+                holder.typeSelector.setBackgroundColor(context.getColor(R.color.project_color));
+                holder.slotNumber.setTextColor(context.getColor(R.color.project_color));
 
             }else{
                 holder.typeSelector.setBackgroundColor(context.getColor(R.color.orange));
@@ -125,8 +125,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
             MainActivity.facultyAdapter.notifyDataSetChanged();
             Snackbar.make(v, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(),
                     Snackbar.LENGTH_LONG)
-                    .setBackgroundTint(Color.parseColor("#232323"))
-                    .setTextColor(Color.parseColor("#fff5eb"))
+                    .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
+                    .setTextColor(context.getResources().getColor(R.color.snackbar_text))
                     .show();
         });
 

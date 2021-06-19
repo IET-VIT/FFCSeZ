@@ -63,8 +63,11 @@ public class SplashActivity extends AppCompatActivity {
                             TTDetails details = new TTDetails("XXDefault TimetableXX");
                             database.ttDetailsDao().insertTimeTable(details);
                             List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
-                            sharedPreferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
-                            ConstantsActivity.getTimeTableId().setValue(sharedPreferences.getInt("lastTT", 1));
+                            runOnUiThread(() -> {
+                                sharedPreferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
+                                ConstantsActivity.getTimeTableId().setValue(sharedPreferences.getInt("lastTT", 1));
+                            });
+
                         }
                     });
 

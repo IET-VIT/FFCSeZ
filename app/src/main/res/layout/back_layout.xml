@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@color/light_blue">
+    android:background="@color/toolbar_bg">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation2"
@@ -44,10 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:alpha="0.6"
         android:fontFamily="@font/poppins"
         android:text="Search to view courses"
-        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +116,7 @@
         app:endIconTint="@color/white"
         app:helperText="Example - CSE2011 or Data Structure and Algorithms"
         app:helperTextTextAppearance="@style/helper_text"
-        app:helperTextTextColor="@color/blue"
+        app:helperTextTextColor="@color/back_text1"
         app:hintTextColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/searchButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -202,8 +200,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:thumbTint="@color/blue"
-        android:trackTint="@color/light_dark_blue"
+        android:thumbTint="#F54748"
         app:layout_constraintEnd_toEndOf="@+id/filterGroup"
         app:layout_constraintStart_toStartOf="@+id/filterGroup"
         app:layout_constraintTop_toBottomOf="@+id/filterGroup" />
@@ -215,7 +212,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/poppins_medium"
         android:text="SEARCH BY COURSE"
-        android:textColor="@color/blue"
+        android:textColor="#F54748"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/toggle"
         app:layout_constraintEnd_toStartOf="@+id/toggle"
@@ -244,19 +241,19 @@
         android:fontFamily="@font/poppins"
         android:pointerIcon="top_right_diagonal_double_arrow"
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/back_btn"
         android:textSize="10sp"
         android:textStyle="bold"
         app:cornerRadius="15dp"
         app:icon="@drawable/ic_next"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
-        app:iconTint="@color/black"
+        app:iconTint="@color/back_btn"
         app:layout_constraintBottom_toBottomOf="@+id/facultyNameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/facultyNameLayout"
         app:rippleColor="@color/white"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/back_btn"
         app:strokeWidth="2dp" />
 
     <androidx.recyclerview.widget.RecyclerView

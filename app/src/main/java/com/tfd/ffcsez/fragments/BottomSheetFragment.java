@@ -89,8 +89,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
                                 Snackbar.make(view, "Created new timetable",
                                         Snackbar.LENGTH_SHORT)
-                                        .setBackgroundTint(Color.parseColor("#232323"))
-                                        .setTextColor(Color.parseColor("#fff5eb"))
+                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
                                         .show();
                             }
                         });

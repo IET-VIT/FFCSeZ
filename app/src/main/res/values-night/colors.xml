@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="toolbar_bg" tools:ignore="MissingDefaultResource">@color/blue</color>
+    <color name="tab_text" tools:ignore="MissingDefaultResource">@color/light_blue</color>
+    <color name="background" tools:ignore="MissingDefaultResource">@color/black</color>
+
+    <color name="back_text1" tools:ignore="MissingDefaultResource">@color/light_blue</color>
+
+    <color name="home_timetable" tools:ignore="MissingDefaultResource">@color/cardview_dark_background</color>
+
+    <color name="custom_course_bg" tools:ignore="MissingDefaultResource">@color/black</color>
+    <color name="custom_course_text" tools:ignore="MissingDefaultResource">@color/white</color>
+    <color name="custom_course_btn" tools:ignore="MissingDefaultResource">@color/blue</color>
+
+    <color name="back_btn" tools:ignore="MissingDefaultResource">@color/light_grey</color>
+
+    <color name="snackbar_bg" tools:ignore="MissingDefaultResource">@color/white</color>
+    <color name="snackbar_text" tools:ignore="MissingDefaultResource">@color/black</color>
+
+    <color name="clash_color" tools:ignore="MissingDefaultResource">#FF616D</color>
+    <color name="project_color" tools:ignore="MissingDefaultResource">#B6C9F0</color>
+</resources>
