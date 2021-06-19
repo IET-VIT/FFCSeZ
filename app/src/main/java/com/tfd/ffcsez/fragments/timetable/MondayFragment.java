@@ -50,19 +50,21 @@ public class MondayFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 LiveData<List<TimeTableData>> monTimeTableLD = database.timeTableDao().loadTTDetails(integer, 0, 5);
-                monTimeTableLD.observe(getActivity(), timeTableData -> {
-                    adapter.updateAdapter(timeTableData);
+                if (getActivity() != null) {
+                    monTimeTableLD.observe(getActivity(), timeTableData -> {
+                        adapter.updateAdapter(timeTableData);
 
-                    if (timeTableData.size() != 0){
-                        mondayAnimation.cancelAnimation();
-                        mondayAnimation.setVisibility(View.GONE);
-                        mondayText.setVisibility(View.GONE);
-                    }else{
-                        mondayAnimation.playAnimation();
-                        mondayAnimation.setVisibility(View.VISIBLE);
-                        mondayText.setVisibility(View.VISIBLE);
-                    }
-                });
+                        if (timeTableData.size() != 0) {
+                            mondayAnimation.cancelAnimation();
+                            mondayAnimation.setVisibility(View.GONE);
+                            mondayText.setVisibility(View.GONE);
+                        } else {
+                            mondayAnimation.playAnimation();
+                            mondayAnimation.setVisibility(View.VISIBLE);
+                            mondayText.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
             }
         });
         return view;

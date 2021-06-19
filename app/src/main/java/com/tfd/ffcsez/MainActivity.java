@@ -202,7 +202,9 @@ public class MainActivity extends AppCompatActivity {
             updateFilters();
         });
 
-        searchButton.setOnClickListener(v -> updateFilters());
+        searchButton.setOnClickListener(v -> {
+            updateFilters();
+        });
 
         // Custom Dialog
         View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_course_dialog, null);
@@ -344,12 +346,50 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 facultyNameEditText.setText("");
+                courseTH = "";
+                courseETH = "";
+                courseELA = "";
+                courseEPJ = "";
+                courseSS = "";
+                courseLO = "";
+                timeFN = "";
+                timeAN = "";
+                morningChip.setChecked(false);
+                afternoonChip.setChecked(false);
+                theoryChip.setChecked(false);
+                labChip.setChecked(false);
+                projectChip.setChecked(false);
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
                 ExecutorClass.getInstance().diskIO().execute(() -> {
                     allFaculties = database.facultyDao().loadFaculties(s.toString().toUpperCase() + "%");
 
                     runOnUiThread(() -> facAdapter.updateAdapter(allFaculties));
                 });
+            }
+        });
+
+        facultyNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                courseTH = "";
+                courseETH = "";
+                courseELA = "";
+                courseEPJ = "";
+                courseSS = "";
+                courseLO = "";
+                timeFN = "";
+                timeAN = "";
+                morningChip.setChecked(false);
+                afternoonChip.setChecked(false);
+                theoryChip.setChecked(false);
+                labChip.setChecked(false);
+                projectChip.setChecked(false);
             }
 
             @Override

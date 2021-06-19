@@ -48,19 +48,21 @@ public class ProjectFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 LiveData<List<TimeTableData>> projectTimeTableLD = database.timeTableDao().loadTTDetails(integer, -1, -1);
-                projectTimeTableLD.observe(getActivity(), timeTableData -> {
-                    adapter.updateAdapter(timeTableData);
+                if (getActivity() != null) {
+                    projectTimeTableLD.observe(getActivity(), timeTableData -> {
+                        adapter.updateAdapter(timeTableData);
 
-                    if (timeTableData.size() != 0){
-                        projectAnimation.cancelAnimation();
-                        projectAnimation.setVisibility(View.GONE);
-                        projectText.setVisibility(View.GONE);
-                    }else{
-                        projectAnimation.playAnimation();
-                        projectAnimation.setVisibility(View.VISIBLE);
-                        projectText.setVisibility(View.VISIBLE);
-                    }
-                });
+                        if (timeTableData.size() != 0) {
+                            projectAnimation.cancelAnimation();
+                            projectAnimation.setVisibility(View.GONE);
+                            projectText.setVisibility(View.GONE);
+                        } else {
+                            projectAnimation.playAnimation();
+                            projectAnimation.setVisibility(View.VISIBLE);
+                            projectText.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
             }
         });
         return view;

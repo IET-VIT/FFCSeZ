@@ -48,19 +48,21 @@ public class FridayFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 LiveData<List<TimeTableData>> friTimeTableLD = database.timeTableDao().loadTTDetails(ConstantsActivity.getTimeTableId().getValue(), 4, 9);
-                friTimeTableLD.observe(getActivity(), timeTableData -> {
-                    adapter.updateAdapter(timeTableData);
+                if (getActivity() != null) {
+                    friTimeTableLD.observe(getActivity(), timeTableData -> {
+                        adapter.updateAdapter(timeTableData);
 
-                    if (timeTableData.size() != 0){
-                        fridayAnimation.cancelAnimation();
-                        fridayAnimation.setVisibility(View.GONE);
-                        fridayText.setVisibility(View.GONE);
-                    }else{
-                        fridayAnimation.playAnimation();
-                        fridayAnimation.setVisibility(View.VISIBLE);
-                        fridayText.setVisibility(View.VISIBLE);
-                    }
-                });
+                        if (timeTableData.size() != 0) {
+                            fridayAnimation.cancelAnimation();
+                            fridayAnimation.setVisibility(View.GONE);
+                            fridayText.setVisibility(View.GONE);
+                        } else {
+                            fridayAnimation.playAnimation();
+                            fridayAnimation.setVisibility(View.VISIBLE);
+                            fridayText.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
             }
         });
         return view;

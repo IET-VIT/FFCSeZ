@@ -27,7 +27,7 @@ public interface FacultyDao {
     @Query("DELETE FROM facultylist")
     void deleteAll();
 
-    @Query("SELECT * FROM facultylist WHERE courseCode LIKE :courseCode AND empName LIKE :empName ORDER BY empName")
+    @Query("SELECT * FROM facultylist WHERE courseCode LIKE :courseCode AND empName LIKE :empName ORDER BY empName, slot")
     List<FacultyData> loadData(String courseCode, String empName);
 
     @Insert
@@ -41,14 +41,14 @@ public interface FacultyDao {
 
     @Query("SELECT * FROM facultylist WHERE courseCode LIKE :courseCode AND empName LIKE :empName " +
             "AND (courseType in (:courseTH,:courseETH,:courseELA,:courseEPJ,:courseSS,:courseLO) " +
-            "AND time in (:timeFN, :timeAN)) ORDER BY empName")
+            "AND time in (:timeFN, :timeAN)) ORDER BY empName, slot")
     List<FacultyData> loadAsPerFilterAND(String courseCode, String empName, String courseTH,
                                       String courseETH, String courseELA, String courseEPJ,
                                       String courseSS, String courseLO, String timeFN, String timeAN);
 
     @Query("SELECT * FROM facultylist WHERE courseCode LIKE :courseCode AND empName LIKE :empName " +
             "AND (courseType in (:courseTH,:courseETH,:courseELA,:courseEPJ,:courseSS,:courseLO) " +
-            "OR time in (:timeFN, :timeAN)) ORDER BY empName")
+            "OR time in (:timeFN, :timeAN)) ORDER BY empName, slot")
     List<FacultyData> loadAsPerFilterOR(String courseCode, String empName, String courseTH,
                                       String courseETH, String courseELA, String courseEPJ,
                                       String courseSS, String courseLO, String timeFN, String timeAN);

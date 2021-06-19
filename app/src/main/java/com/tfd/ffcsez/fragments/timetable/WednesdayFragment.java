@@ -48,19 +48,21 @@ public class WednesdayFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 LiveData<List<TimeTableData>> wedTimeTableLD = database.timeTableDao().loadTTDetails(integer, 2, 7);
-                wedTimeTableLD.observe(getActivity(), timeTableData -> {
-                    adapter.updateAdapter(timeTableData);
+                if (getActivity() != null) {
+                    wedTimeTableLD.observe(getActivity(), timeTableData -> {
+                        adapter.updateAdapter(timeTableData);
 
-                    if (timeTableData.size() != 0){
-                        wednesdayAnimation.cancelAnimation();
-                        wednesdayAnimation.setVisibility(View.GONE);
-                        wednesdayText.setVisibility(View.GONE);
-                    }else{
-                        wednesdayAnimation.playAnimation();
-                        wednesdayAnimation.setVisibility(View.VISIBLE);
-                        wednesdayText.setVisibility(View.VISIBLE);
-                    }
-                });
+                        if (timeTableData.size() != 0) {
+                            wednesdayAnimation.cancelAnimation();
+                            wednesdayAnimation.setVisibility(View.GONE);
+                            wednesdayText.setVisibility(View.GONE);
+                        } else {
+                            wednesdayAnimation.playAnimation();
+                            wednesdayAnimation.setVisibility(View.VISIBLE);
+                            wednesdayText.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
             }
         });
         return view;

@@ -48,19 +48,21 @@ public class TuesdayFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 LiveData<List<TimeTableData>> tueTimeTableLD = database.timeTableDao().loadTTDetails(integer, 1, 6);
-                tueTimeTableLD.observe(getActivity(), timeTableData -> {
-                    adapter.updateAdapter(timeTableData);
+                if (getActivity() != null) {
+                    tueTimeTableLD.observe(getActivity(), timeTableData -> {
+                        adapter.updateAdapter(timeTableData);
 
-                    if (timeTableData.size() != 0){
-                        tuesdayAnimation.cancelAnimation();
-                        tuesdayAnimation.setVisibility(View.GONE);
-                        tuesdayText.setVisibility(View.GONE);
-                    }else{
-                        tuesdayAnimation.playAnimation();
-                        tuesdayAnimation.setVisibility(View.VISIBLE);
-                        tuesdayText.setVisibility(View.VISIBLE);
-                    }
-                });
+                        if (timeTableData.size() != 0) {
+                            tuesdayAnimation.cancelAnimation();
+                            tuesdayAnimation.setVisibility(View.GONE);
+                            tuesdayText.setVisibility(View.GONE);
+                        } else {
+                            tuesdayAnimation.playAnimation();
+                            tuesdayAnimation.setVisibility(View.VISIBLE);
+                            tuesdayText.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
             }
         });
         return view;
