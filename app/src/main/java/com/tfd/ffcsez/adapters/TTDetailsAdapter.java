@@ -1,21 +1,28 @@
 package com.tfd.ffcsez.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
@@ -47,7 +54,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         return new RecyclerViewHolder(view);
     }
 
-    public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder{
         private final TextView timeTableName;
         private final ImageButton ttDeleteButton, ttEditButton;
         private final ImageView selectedImageView;
@@ -84,6 +91,60 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
             holder.selectedImageView.setVisibility(View.VISIBLE);
         else
             holder.selectedImageView.setVisibility(View.GONE);
+
+        holder.ttEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View dialogView = LayoutInflater.from(context).inflate(R.layout.custom_new_timetable, null);
+                EditText timeTableNameEditText = dialogView.findViewById(R.id.timeTableNameText);
+                Button doneButton = dialogView.findViewById(R.id.doneButton);
+                Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+
+                timeTableNameEditText.setText(details.getTimeTableName());
+
+                AlertDialog newTTDialog = new AlertDialog.Builder(context)
+                        .setView(dialogView)
+                        .setCancelable(true)
+                        .create();
+                newTTDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                newTTDialog.show();
+
+                newTTDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(timeTableNameEditText.getWindowToken(), 0);
+                    }
+                });
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        newTTDialog.cancel();
+                    }
+                });
+
+                doneButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        timeTableNameEditText.setError(null);
+                        if (timeTableNameEditText.getText().toString().trim().isEmpty()) {
+                            timeTableNameEditText.setError("Timetable name cannot be empty");
+                        } else {
+                            timeTableNameEditText.setEnabled(false);
+                            newTTDialog.cancel();
+                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    details.setTimeTableName(timeTableNameEditText.getText().toString().trim());
+                                    database.ttDetailsDao().updateTimeTable(details);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
 
         holder.ttDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

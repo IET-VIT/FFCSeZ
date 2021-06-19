@@ -1,8 +1,11 @@
 package com.tfd.ffcsez.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,12 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
@@ -66,34 +73,74 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         createTTButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Random r = new Random();
-                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.custom_new_timetable, null);
+                EditText timeTableName = dialogView.findViewById(R.id.timeTableNameText);
+                Button doneButton = dialogView.findViewById(R.id.doneButton);
+                Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+
+                AlertDialog newTTDialog = new AlertDialog.Builder(getActivity())
+                        .setView(dialogView)
+                        .setCancelable(true)
+                        .create();
+                newTTDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                newTTDialog.show();
+
+                newTTDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
-                    public void run() {
-                        TTDetails details = new TTDetails("Timetable " + r.nextInt(50));
-                        database.ttDetailsDao().insertTimeTable(details);
+                    public void onCancel(DialogInterface dialog) {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(timeTableName.getWindowToken(), 0);
+                    }
+                });
 
-                        List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        newTTDialog.cancel();
+                    }
+                });
 
-                        for (int i = 0; i < 10; i++){
-                            for(int j = 0; j < 6; j++){
-                                ConstantsActivity.getChosenSlots()[i][j] = 0;
-                            }
+                doneButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        timeTableName.setError(null);
+                        if (timeTableName.getText().toString().trim().isEmpty()){
+                            timeTableName.setError("Timetable name cannot be empty");
+                        }else{
+                            timeTableName.setEnabled(false);
+                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TTDetails details = new TTDetails(timeTableName.getText().toString().trim());
+                                    database.ttDetailsDao().insertTimeTable(details);
+
+                                    List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
+
+                                    for (int i = 0; i < 10; i++){
+                                        for(int j = 0; j < 6; j++){
+                                            ConstantsActivity.getChosenSlots()[i][j] = 0;
+                                        }
+                                    }
+
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ConstantsActivity.getTimeTableId().setValue(timeTable.get(0).getTimeTableId());
+                                                preferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
+
+                                                newTTDialog.cancel();
+                                                Snackbar.make(view, "Created new timetable",
+                                                        Snackbar.LENGTH_SHORT)
+                                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                                        .show();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
                         }
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ConstantsActivity.getTimeTableId().setValue(timeTable.get(0).getTimeTableId());
-                                preferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
-
-                                Snackbar.make(view, "Created new timetable",
-                                        Snackbar.LENGTH_SHORT)
-                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
-                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
-                                        .show();
-                            }
-                        });
                     }
                 });
             }
