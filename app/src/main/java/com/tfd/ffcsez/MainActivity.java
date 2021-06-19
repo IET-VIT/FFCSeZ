@@ -21,10 +21,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +35,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.viewPager) ViewPager2 viewPager;
     @BindView(R.id.animation) LottieAnimationView animation;
     @BindView(R.id.animation2) LottieAnimationView notFound;
+    @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
 
     // TextViews
     @BindView(R.id.courseCodeEditText) AutoCompleteTextView courseCodeEditText;
@@ -279,6 +284,8 @@ public class MainActivity extends AppCompatActivity {
         setupTimeTable();
 
         // Bottom Sheet
+        NavigationView navigationView = findViewById(R.id.navigationView);
+
 
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()){
@@ -298,6 +305,9 @@ public class MainActivity extends AppCompatActivity {
                     BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                     bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                     return true;
+                case R.id.registered:
+                    drawerLayout.openDrawer(GravityCompat.END);
+
             }
             return false;
         });

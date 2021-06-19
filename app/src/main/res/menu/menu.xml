@@ -13,19 +13,24 @@
         app:showAsAction="always"
         android:id="@+id/timetable"/>
 
-    <item android:title="Refresh"
-        android:icon="@drawable/ic_refresh"
-        android:iconTint="@color/white"
-        app:showAsAction="always"
-        android:id="@+id/refresh"/>
-
     <item android:title="Full Screen"
         android:icon="@drawable/ic_fullscreen"
         app:showAsAction="always"
         android:id="@+id/fullScreen"/>
 
-    <item android:title="About"
+    <item android:title="Registered Courses"
+        android:id="@+id/registered"
         android:icon="@drawable/ic_info"
         android:iconTint="@color/white"
+        app:showAsAction="always"/>
+
+    <item android:title="Refresh"
+        android:icon="@drawable/ic_refresh"
+        android:iconTint="@color/white"
+        app:showAsAction="ifRoom"
+        android:id="@+id/refresh"/>
+
+    <item android:title="About"
         app:showAsAction="ifRoom"/>
+
 </menu>
