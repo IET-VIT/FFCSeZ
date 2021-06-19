@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="#ccf4e6"
+        app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Srivani A"
+                    android:text="Faculty Name"
                     android:textColor="@color/dark_blue"
                     android:textSize="16sp" />
 
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="SCOPE"
+                    android:text="School"
                     android:textColor="@color/dark_blue"
                     android:textSize="16sp" />
 
@@ -73,7 +74,7 @@
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
-                android:text="Problem Solving and Object Oriented Programming"
+                android:text="Course Name"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -227,7 +228,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="L35+L36/L39+L40/L59+L60"
+                android:text="Slot Number"
                 android:textColor="#ff6174"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/digCourseName"
@@ -251,7 +252,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="CSE1002"
+                    android:text="Code"
                     android:textColor="#fe5e33" />
 
                 <TextView
@@ -267,7 +268,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="LO"
+                    android:text="Type"
                     android:textColor="#fe5e33" />
 
                 <TextView
@@ -283,7 +284,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="SJT1202"
+                    android:text="Room"
                     android:textColor="#fe5e33" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

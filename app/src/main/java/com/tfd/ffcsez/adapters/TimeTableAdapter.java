@@ -3,6 +3,7 @@ package com.tfd.ffcsez.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,6 +181,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                     .setView(facultyView)
                     .setCancelable(true)
                     .create();
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             alertDialog.show();
 
             return true;

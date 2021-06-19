@@ -60,7 +60,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="8:00 AM"
+                        android:text="Start Time"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toTopOf="@+id/endTime"
@@ -78,7 +78,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/poppins"
-                        android:text="8:45 AM"
+                        android:text="End Time"
                         android:textColor="@color/light_grey"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="A1"
+                android:text="SLOT"
                 android:textColor="@color/orange"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="@+id/typeSelector"
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="CSE2011"
+                android:text="Code"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/roomNoHome"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="SJT322"
+                android:text="Room"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/slotNumberHome"
                 app:layout_constraintStart_toEndOf="@+id/slotNumberHome"
@@ -139,7 +139,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_delete"
-                app:tint="@color/white" />
+                app:tint="#ffffff" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

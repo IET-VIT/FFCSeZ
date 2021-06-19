@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 
 import com.google.android.material.tabs.TabLayout;
 import com.tfd.ffcsez.adapters.LandscapePagerAdapter;
@@ -17,6 +19,7 @@ public class LandscapeActivity extends AppCompatActivity {
 
     @BindView(R.id.landscapeTabLayout) TabLayout landscapeTabLayout;
     @BindView(R.id.landscapeContainer) ViewPager2 container;
+    @BindView(R.id.backToHome) ImageButton backToHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,11 @@ public class LandscapeActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         LandscapePagerAdapter landscapePagerAdapter = new LandscapePagerAdapter(fragmentManager, getLifecycle());
         container.setAdapter(landscapePagerAdapter);
+
+        backToHome.setOnClickListener(v -> {
+            startActivity(new Intent(LandscapeActivity.this, MainActivity.class));
+            finish();
+        });
 
         landscapeTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

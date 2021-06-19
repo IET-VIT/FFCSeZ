@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Srivani A"
+                    android:text="Faculty Name"
                     android:textColor="#fe5e33"
                     android:textSize="14sp" />
 
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="SCOPE"
+                    android:text="School"
                     android:textColor="#fe5e33"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="L35+L36/L39+L40/L59+L60"
+                    android:text="Slot Number"
                     android:textColor="#ff6174"
                     android:textSize="14sp" />
 
@@ -114,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="PLBG04"
+                    android:text="Room Number"
                     android:textColor="#ff6174"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="3"
+                    android:text="0"
                     android:textColor="#255e29" />
             </LinearLayout>
 
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:text="CSE1002"
+                    android:text="Code"
                     android:textColor="@color/dark_blue"
                     android:textSize="16sp" />
 
@@ -250,7 +250,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="LO"
+                    android:text="Type"
                     android:textColor="@color/dark_blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -263,7 +263,7 @@
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:gravity="center"
-                android:text="Problem Solving and Object Oriented Programming"
+                android:text="Course Name"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
