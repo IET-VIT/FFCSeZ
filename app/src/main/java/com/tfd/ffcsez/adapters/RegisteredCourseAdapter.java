@@ -42,6 +42,11 @@ public class RegisteredCourseAdapter extends RecyclerView.Adapter<RegisteredCour
         return list.size();
     }
 
+    public void updateAdapter(List<RegisteredCourses> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView rCode, rType, rCredits;
         public MyViewHolder(@NonNull View view) {

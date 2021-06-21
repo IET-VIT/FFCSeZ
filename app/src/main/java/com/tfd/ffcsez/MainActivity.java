@@ -29,6 +29,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -43,6 +45,7 @@ import com.roacult.backdrop.BackdropLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
 import com.tfd.ffcsez.adapters.FacultyACAdapter;
 import com.tfd.ffcsez.adapters.FacultyAdapter;
+import com.tfd.ffcsez.adapters.RegisteredCourseAdapter;
 import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
@@ -54,6 +57,7 @@ import com.tfd.ffcsez.models.Coord;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
 import com.tfd.ffcsez.models.FacultyDetails;
+import com.tfd.ffcsez.models.RegisteredCourses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -284,8 +288,20 @@ public class MainActivity extends AppCompatActivity {
         setupTimeTable();
 
         // Bottom Sheet
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        RecyclerView registeredCoursesRecyclerView  = findViewById(R.id.registeredCoursesRecyclerView);
+        List<RegisteredCourses> list = new ArrayList<>();
+        RegisteredCourseAdapter registeredCourseAdapter = new RegisteredCourseAdapter(list, this);
+        LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext());
+        registeredCoursesRecyclerView.setLayoutManager(lm);
+        registeredCoursesRecyclerView.setAdapter(registeredCourseAdapter);
 
+        LiveData<List<RegisteredCourses>> creditsList = database.timeTableDao().loadCreditDetails(ConstantsActivity.getTimeTableId().getValue());
+        creditsList.observe(MainActivity.this, new Observer<List<RegisteredCourses>>() {
+            @Override
+            public void onChanged(List<RegisteredCourses> registeredCourses) {
+                registeredCourseAdapter.updateAdapter(registeredCourses);
+            }
+        });
 
         toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()){
