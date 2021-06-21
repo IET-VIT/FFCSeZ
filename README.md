@@ -39,9 +39,10 @@ The main features of the app are broken down into a technical task timeline.
   - [x] Complete debug till Task 3. 
 
 - <strong><em> Task 4: The Navigation Pane </em></strong>
-  - [ ] Setup the functionality to add and display the existing timetables of the user.
+  - [x] Setup the functionality to add and display the existing timetables of the user.
   - [ ] Adding the import timetable feature.
-  - [ ] UI cleanup.
+  - [ ] Add notifications to remind when new FFCS data has arrived
+  - [x] UI cleanup.
 
 - <strong><em> Task 5: Notes (To-Dos) and Reminders </em></strong>
   - [ ] Building the UI for the to-dos activity for each class.
@@ -65,4 +66,4 @@ The main features of the app are broken down into a technical task timeline.
   - [ ] Build a widget of the to-dos of the current timetable.
 
 ## <img src="https://techstackapps.com/media/2019/11/TechStackApps-logo-icon.png" width="32" height="32"> Tech Stack
-<img src="https://2.bp.blogspot.com/-tzm1twY_ENM/XlCRuI0ZkRI/AAAAAAAAOso/BmNOUANXWxwc5vwslNw3WpjrDlgs9PuwQCLcBGAsYHQ/s1600/pasted%2Bimage%2B0.png" width="40" height="40" alt="Android Studio"> <img src="https://symbols-electrical.getvecta.com/stencil_261/26_mongodb-realm.8095f50267.png" width="36" height="36" alt="Realm"> <img src="https://img.icons8.com/color/452/mongodb.png" width="40" height="40" alt="MongoDB Atlas"> <img src="https://i.pinimg.com/originals/a5/58/b4/a558b426cb8973523f37bbed94cf0f09.png" width="40" height="40" alt="Figma">
+<img src="https://2.bp.blogspot.com/-tzm1twY_ENM/XlCRuI0ZkRI/AAAAAAAAOso/BmNOUANXWxwc5vwslNw3WpjrDlgs9PuwQCLcBGAsYHQ/s1600/pasted%2Bimage%2B0.png" width="40" height="40" alt="Android Studio"> <img src="https://symbols-electrical.getvecta.com/stencil_261/26_mongodb-realm.8095f50267.png" width="36" height="36" alt="Realm"> <img src="https://img.icons8.com/color/452/mongodb.png" width="40" height="40" alt="MongoDB Atlas"> <img src="https://i.pinimg.com/originals/a5/58/b4/a558b426cb8973523f37bbed94cf0f09.png" width="40" height="40" alt="Figma"> <img src="https://img.icons8.com/color/452/firebase.png" width="40" height="40" alt="Firebase">
