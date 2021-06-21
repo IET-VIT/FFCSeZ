@@ -4,7 +4,7 @@
     <item android:title="Add Custom Course"
         android:icon="@drawable/ic_add"
         android:iconTint="@color/white"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:id="@+id/custom"/>
 
     <item android:title="My Timetable"

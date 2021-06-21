@@ -8,8 +8,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.tfd.ffcsez.fragments.timetable.MondayFragment;
 import com.tfd.ffcsez.fragments.timetable.ProjectFragment;
-import com.tfd.ffcsez.fragments.timetable.SaturdayFragment;
-import com.tfd.ffcsez.fragments.timetable.SundayFragment;
 import com.tfd.ffcsez.fragments.timetable.ThursdayFragment;
 import com.tfd.ffcsez.fragments.timetable.TuesdayFragment;
 import com.tfd.ffcsez.fragments.timetable.WednesdayFragment;
@@ -29,15 +27,13 @@ public class TimetablePagerAdapter extends FragmentStateAdapter {
             case 2: return new WednesdayFragment();
             case 3: return new ThursdayFragment();
             case 4: return new FridayFragment();
-            case 5: return new SaturdayFragment();
-            case 6: return new SundayFragment();
-            case 7: return new ProjectFragment();
+            case 5: return new ProjectFragment();
         }
         return new MondayFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        return 6;
     }
 }

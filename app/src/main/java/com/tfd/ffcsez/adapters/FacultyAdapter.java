@@ -174,11 +174,11 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
     public void setTTSlot(FacultyData facultyData, View v){
 
+        exists = false;
         if (!facultyData.getCourseType().equals("EPJ")) {
             String[] slot = facultyData.getSlot().split("[+]");
             Pattern pattern = Pattern.compile("^L");
             Matcher matcher;
-            exists = false;
 
             for (String slotNum : slot) {
                 matcher = pattern.matcher(slotNum);
@@ -283,10 +283,23 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                 }
             }
         }else{
+            TimeTableData data = new TimeTableData(facultyData, ConstantsActivity.getTimeTableId().getValue(), -1,
+                    -1, facultyData.getSlot(), "-:-", "-:-", false);
+
             ExecutorClass.getInstance().diskIO().execute(() -> {
-                TimeTableData data = new TimeTableData(facultyData, ConstantsActivity.getTimeTableId().getValue(), -1,
-                        -1, facultyData.getSlot(), "-:-", "-:-", false);
-                database.timeTableDao().insertSlot(data);
+                List<TimeTableData> clashSlots = database.timeTableDao()
+                        .loadClashSlots(-1, -1);
+
+                for (TimeTableData timeTableData : clashSlots) {
+                    if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getCourseCode().equals(data.getCourseCode())) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists) {
+                    database.timeTableDao().insertSlot(data);
+                }
             });
         }
 
