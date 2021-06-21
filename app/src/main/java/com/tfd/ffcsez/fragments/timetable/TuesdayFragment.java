@@ -51,6 +51,7 @@ public class TuesdayFragment extends Fragment {
                 if (getActivity() != null) {
                     tueTimeTableLD.observe(getActivity(), timeTableData -> {
                         adapter.updateAdapter(timeTableData);
+                        tuesdayRecyclerView.smoothScrollToPosition(0);
 
                         if (timeTableData.size() != 0) {
                             tuesdayAnimation.cancelAnimation();

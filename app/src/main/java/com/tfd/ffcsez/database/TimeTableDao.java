@@ -9,7 +9,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.tfd.ffcsez.models.Coord;
-import com.tfd.ffcsez.models.RegisteredCourses;
+import com.tfd.ffcsez.models.CreditDetails;
 
 import java.util.List;
 
@@ -31,8 +31,8 @@ public interface TimeTableDao {
     @Query("SELECT `row`, `column` FROM timetable WHERE timeTableId = :timeTableId")
     List<Coord> getChosenSlots(int timeTableId);
 
-    @Query(",SELECT DISTINCT courseCode, courseType, `c` FROM timetable WHERE `timeTableId` = :timeTableId ORDER BY courseCode")
-    LiveData<List<RegisteredCourses>> loadCreditDetails(int timeTableId);
+    @Query("SELECT DISTINCT courseCode, courseType, `c` FROM timetable WHERE `timeTableId` = :timeTableId ORDER BY courseCode, courseType")
+    LiveData<List<CreditDetails>> loadCreditDetails(int timeTableId);
 
     @Insert
     void insertSlot(TimeTableData timeTableData);

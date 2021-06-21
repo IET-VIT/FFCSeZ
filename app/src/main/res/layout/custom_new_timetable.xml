@@ -16,7 +16,7 @@
         android:background="@drawable/edittext_bg"
         android:ems="10"
         android:fontFamily="@font/poppins"
-        android:hint="Course Code"
+        android:hint="Timetable Name"
         android:inputType="textPersonName"
         android:padding="16dp"
         android:textColor="@color/custom_course_text"

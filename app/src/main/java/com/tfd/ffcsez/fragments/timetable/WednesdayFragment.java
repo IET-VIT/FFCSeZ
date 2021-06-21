@@ -51,6 +51,7 @@ public class WednesdayFragment extends Fragment {
                 if (getActivity() != null) {
                     wedTimeTableLD.observe(getActivity(), timeTableData -> {
                         adapter.updateAdapter(timeTableData);
+                        wednesdayRecyclerView.smoothScrollToPosition(0);
 
                         if (timeTableData.size() != 0) {
                             wednesdayAnimation.cancelAnimation();

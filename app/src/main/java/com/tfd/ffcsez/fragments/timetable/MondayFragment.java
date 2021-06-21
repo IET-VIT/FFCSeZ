@@ -53,6 +53,7 @@ public class MondayFragment extends Fragment {
                 if (getActivity() != null) {
                     monTimeTableLD.observe(getActivity(), timeTableData -> {
                         adapter.updateAdapter(timeTableData);
+                        mondayRecyclerView.smoothScrollToPosition(0);
 
                         if (timeTableData.size() != 0) {
                             mondayAnimation.cancelAnimation();

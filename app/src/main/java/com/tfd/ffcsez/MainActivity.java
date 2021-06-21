@@ -13,15 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,27 +33,26 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.roacult.backdrop.BackdropLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
+import com.tfd.ffcsez.adapters.CreditsAdapter;
 import com.tfd.ffcsez.adapters.FacultyACAdapter;
 import com.tfd.ffcsez.adapters.FacultyAdapter;
-import com.tfd.ffcsez.adapters.RegisteredCourseAdapter;
 import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TimeTableData;
 import com.tfd.ffcsez.fragments.BottomSheetFragment;
-import com.tfd.ffcsez.fragments.timetable.MondayFragment;
 import com.tfd.ffcsez.models.Coord;
 import com.tfd.ffcsez.models.CourseData;
 import com.tfd.ffcsez.models.CourseDetails;
+import com.tfd.ffcsez.models.CreditDetails;
 import com.tfd.ffcsez.models.FacultyDetails;
-import com.tfd.ffcsez.models.RegisteredCourses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,11 +78,12 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tabLayout) TabLayout tabLayout;
     @BindView(R.id.facultyRecyclerView) RecyclerView facultyRecyclerView;
     @BindView(R.id.searchButton) Button searchButton;
-    @BindView(R.id.toggle) Switch toggle;
+    @BindView(R.id.toggle) SwitchMaterial toggle;
     @BindView(R.id.viewPager) ViewPager2 viewPager;
     @BindView(R.id.animation) LottieAnimationView animation;
     @BindView(R.id.animation2) LottieAnimationView notFound;
     @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
+    @BindView(R.id.registeredCoursesRecyclerView) RecyclerView rRecyclerView;
 
     // TextViews
     @BindView(R.id.courseCodeEditText) AutoCompleteTextView courseCodeEditText;
@@ -97,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.cText) TextView cText;
     @BindView(R.id.fText) TextView fText;
     @BindView(R.id.errorText) TextView errorText;
+    @BindView(R.id.creditsNumber) TextView creditsNumber;
 
     // Chips
     @BindView(R.id.morningChip) Chip morningChip;
@@ -110,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     private String courseLO = "", timeFN = "", timeAN = "";
     private boolean exists;
     private AlertDialog customDialog;
-    private SharedPreferences preferences;
 
     // Database
     private FacultyDatabase database;
@@ -287,19 +283,23 @@ public class MainActivity extends AppCompatActivity {
 
         setupTimeTable();
 
-        // Bottom Sheet
-        RecyclerView registeredCoursesRecyclerView  = findViewById(R.id.registeredCoursesRecyclerView);
-        List<RegisteredCourses> list = new ArrayList<>();
-        RegisteredCourseAdapter registeredCourseAdapter = new RegisteredCourseAdapter(list, this);
-        LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext());
-        registeredCoursesRecyclerView.setLayoutManager(lm);
-        registeredCoursesRecyclerView.setAdapter(registeredCourseAdapter);
+        // Side Sheet
+        List<CreditDetails> creditsList = new ArrayList<>();
+        CreditsAdapter creditsAdapter = new CreditsAdapter(creditsList, this);
+        LinearLayoutManager rLayoutManager = new LinearLayoutManager(getApplicationContext());
+        rRecyclerView.setLayoutManager(rLayoutManager);
+        rRecyclerView.setAdapter(creditsAdapter);
 
-        LiveData<List<RegisteredCourses>> creditsList = database.timeTableDao().loadCreditDetails(ConstantsActivity.getTimeTableId().getValue());
-        creditsList.observe(MainActivity.this, new Observer<List<RegisteredCourses>>() {
+        LiveData<List<CreditDetails>> creditsListLD = database.timeTableDao().loadCreditDetails(ConstantsActivity.getTimeTableId().getValue());
+        creditsListLD.observe(MainActivity.this, new Observer<List<CreditDetails>>() {
             @Override
-            public void onChanged(List<RegisteredCourses> registeredCourses) {
-                registeredCourseAdapter.updateAdapter(registeredCourses);
+            public void onChanged(List<CreditDetails> registeredCourses) {
+                creditsAdapter.updateAdapter(registeredCourses);
+                int credits = 0;
+                for (CreditDetails credit: registeredCourses)
+                    credits += credit.getC();
+                creditsNumber.setText(Integer.toString(credits));
+                rRecyclerView.smoothScrollToPosition(0);
             }
         });
 
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        preferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
         database = FacultyDatabase.getInstance(getApplicationContext());
         int lastTTId = preferences.getInt("lastTT", 1);
         ConstantsActivity.getTimeTableId().setValue(lastTTId);
@@ -483,6 +483,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 facultyAdapter.updateAdapter(facultyList);
+                facultyRecyclerView.smoothScrollToPosition(0);
             });
         });
     }
@@ -679,6 +680,19 @@ public class MainActivity extends AppCompatActivity {
                                                 .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
                                                 .setTextColor(getResources().getColor(R.color.snackbar_text))
                                                 .show();
+
+                                        if (realm != null)
+                                            realm.close();
+
+                                        if (user != null) {
+                                            user.logOutAsync(result -> {
+                                                if (result.isSuccess()) {
+                                                    Log.d("Hello", "Successfully logged out.");
+                                                } else {
+                                                    Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                                }
+                                            });
+                                        }
                                     }
                                 });
                             }
@@ -692,6 +706,16 @@ public class MainActivity extends AppCompatActivity {
                                         .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
                                         .setTextColor(getResources().getColor(R.color.snackbar_text))
                                         .show();
+
+                                if (user != null) {
+                                    user.logOutAsync(result -> {
+                                        if (result.isSuccess()) {
+                                            Log.d("Hello", "Successfully logged out.");
+                                        } else {
+                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                        }
+                                    });
+                                }
                             }
                         });
                     }

@@ -51,6 +51,7 @@ public class FridayFragment extends Fragment {
                 if (getActivity() != null) {
                     friTimeTableLD.observe(getActivity(), timeTableData -> {
                         adapter.updateAdapter(timeTableData);
+                        fridayRecyclerView.smoothScrollToPosition(0);
 
                         if (timeTableData.size() != 0) {
                             fridayAnimation.cancelAnimation();

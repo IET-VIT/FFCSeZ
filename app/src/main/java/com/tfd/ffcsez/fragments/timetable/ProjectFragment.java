@@ -51,6 +51,7 @@ public class ProjectFragment extends Fragment {
                 if (getActivity() != null) {
                     projectTimeTableLD.observe(getActivity(), timeTableData -> {
                         adapter.updateAdapter(timeTableData);
+                        projectRecyclerView.smoothScrollToPosition(0);
 
                         if (timeTableData.size() != 0) {
                             projectAnimation.cancelAnimation();
