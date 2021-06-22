@@ -1,11 +1,13 @@
 package com.tfd.ffcsez;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,7 +20,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,11 +36,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.common.GoogleApiAvailabilityLight;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.roacult.backdrop.BackdropLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
 import com.tfd.ffcsez.adapters.CreditsAdapter;
@@ -54,19 +62,25 @@ import com.tfd.ffcsez.models.CourseDetails;
 import com.tfd.ffcsez.models.CreditDetails;
 import com.tfd.ffcsez.models.FacultyDetails;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import burakustun.com.lottieprogressdialog.LottieDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import io.realm.RealmResults;
+import io.realm.internal.objectstore.OsPush;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
+import io.realm.mongodb.push.Push;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 
@@ -122,6 +136,12 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         initialize();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getBooleanExtra("refreshNotif", false))
+                refreshRealm();
+        }
 
 //        Window window = getWindow();
 //        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -307,7 +327,8 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
 
                 case R.id.fullScreen:
-                    startActivity(new Intent(MainActivity.this, LandscapeActivity.class));
+                    startActivity(new Intent(MainActivity.this, LandscapeActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     return true;
 
                 case R.id.custom:
@@ -630,98 +651,103 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshRealm() {
-        Realm.init(this);
-        App app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
-
         Snackbar.make(backdropLayout, "Fetching the latest data from the server...",
                 Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
                 .setTextColor(getResources().getColor(R.color.snackbar_text))
                 .show();
 
+        final DialogFragment lottieDialog = new LottieDialogFragment().newInstance("cloudload.json",true);
+        lottieDialog.setCancelable(false);
+        lottieDialog.show(getFragmentManager(),"refreshDialog");
+
+        Realm.init(this);
+        App app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+
         Credentials credentials = Credentials.anonymous();
         app.loginAsync(credentials, result -> {
             if (result.isSuccess()) {
                 Log.d("Hello", "Successfully authenticated anonymously.");
 
-                runOnUiThread(() -> {
-                    Log.d("Hello", "afterlogin");
-                    User user = app.currentUser();
-                    Log.d("Hello", user.toString());
+                Log.d("Hello", "afterlogin");
+                User user = app.currentUser();
 
-                    if (user != null) {
-                        SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
-                                .waitForInitialRemoteData()
-                                .build();
-                        Log.d("Hello", "config");
+                if (user != null) {
+                    SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
+                            .waitForInitialRemoteData()
+                            .build();
+                    Log.d("Hello", "config");
 
-                        Realm.getInstanceAsync(config, new Realm.Callback() {
-                            @Override
-                            public void onSuccess(Realm realm) {
-                                Log.d("Hello", "Realm created");
+                    Realm.getInstanceAsync(config, new Realm.Callback() {
+                        @Override
+                        public void onSuccess(@NonNull Realm realm) {
+                            Log.d("Hello", "Realm created");
+                            RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                            data.addChangeListener(courseData -> {
+                                ExecutorClass.getInstance().diskIO().execute(() ->
+                                        database.facultyDao().deleteAll());
 
-                                RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                                data.addChangeListener(courseData -> {
+                                for (CourseData course : data) {
+                                    FacultyData faculty = new FacultyData(course);
                                     ExecutorClass.getInstance().diskIO().execute(() ->
-                                            database.facultyDao().deleteAll());
+                                            database.facultyDao().insertDetail(faculty));
+                                }
 
-                                    for (CourseData course : data) {
-                                        FacultyData faculty = new FacultyData(course);
-                                        ExecutorClass.getInstance().diskIO().execute(() ->
-                                                database.facultyDao().insertDetail(faculty));
+                                int size = courseData.size();
+                                Log.d("Hello", Integer.toString(size));
+
+                                if (data.size() > 0) {
+                                    lottieDialog.dismiss();
+                                    Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+                                            Snackbar.LENGTH_LONG)
+                                            .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                            .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                            .show();
+
+                                    if (realm != null)
+                                        realm.close();
+
+                                    if (user != null) {
+                                        user.logOutAsync(result -> {
+                                            if (result.isSuccess()) {
+                                                Log.d("Hello", "Successfully logged out.");
+                                            } else {
+                                                Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                            }
+                                        });
                                     }
+                                }
+                            });
+                        }
 
-                                    int size = courseData.size();
-                                    Log.d("Hello", Integer.toString(size));
+                        @Override
+                        public void onError(Throwable exception) {
+                            super.onError(exception);
+                            Log.d("Hello", "Failed to create Realm" + exception.getMessage());
+                            lottieDialog.dismiss();
 
-                                    if (data.size() > 0) {
-                                        Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
-                                                Snackbar.LENGTH_LONG)
-                                                .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
-                                                .setTextColor(getResources().getColor(R.color.snackbar_text))
-                                                .show();
+                            Snackbar.make(backdropLayout, "Failed to get data. " + exception.getMessage(),
+                                    Snackbar.LENGTH_LONG)
+                                    .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                    .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                    .show();
 
-                                        if (realm != null)
-                                            realm.close();
-
-                                        if (user != null) {
-                                            user.logOutAsync(result -> {
-                                                if (result.isSuccess()) {
-                                                    Log.d("Hello", "Successfully logged out.");
-                                                } else {
-                                                    Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                                }
-                                            });
-                                        }
+                            if (user != null) {
+                                user.logOutAsync(result -> {
+                                    if (result.isSuccess()) {
+                                        Log.d("Hello", "Successfully logged out.");
+                                    } else {
+                                        Log.d("Hello", "Failed to log out, error: " + result.getError());
                                     }
                                 });
                             }
-
-                            @Override
-                            public void onError(Throwable exception) {
-                                super.onError(exception);
-                                Log.d("Hello", "Failed to create Realm" + exception.getMessage());
-                                Snackbar.make(backdropLayout, exception.getMessage(),
-                                        Snackbar.LENGTH_LONG)
-                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
-                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
-                                        .show();
-
-                                if (user != null) {
-                                    user.logOutAsync(result -> {
-                                        if (result.isSuccess()) {
-                                            Log.d("Hello", "Successfully logged out.");
-                                        } else {
-                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    }
-                });
+                        }
+                    });
+                }
 
             } else {
+                lottieDialog.dismiss();
+
                 Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
                         Snackbar.LENGTH_LONG)
                         .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))

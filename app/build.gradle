@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'realm-android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -40,13 +41,18 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //FCM
+    api 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+
     // Lottie Dependency
     implementation 'com.airbnb.android:lottie:3.7.0'
+    implementation 'com.burakustun:lottieprogressdialog:1.0.2'
 
     //Liquid Swipe
     implementation 'com.cuberto:liquid-swipe:1.0.0'
@@ -70,4 +76,8 @@ dependencies {
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+
+    //Retrofit
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-jackson:2.0.0'
 }

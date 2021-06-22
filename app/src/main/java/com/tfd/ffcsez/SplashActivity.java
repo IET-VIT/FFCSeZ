@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -83,63 +84,60 @@ public class SplashActivity extends AppCompatActivity {
                         if (result.isSuccess()) {
                             Log.d("Hello", "Successfully authenticated anonymously.");
 
-                            runOnUiThread(() -> {
-                                Log.d("Hello", "afterlogin");
-                                user = app.currentUser();
-                                Log.d("Hello", user.toString());
+                            Log.d("Hello", "afterlogin");
+                            user = app.currentUser();
 
-                                if (user != null) {
-                                    SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
-                                            .waitForInitialRemoteData()
-                                            .build();
-                                    Log.d("Hello", "config");
+                            if (user != null) {
+                                SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
+                                        .waitForInitialRemoteData()
+                                        .build();
+                                Log.d("Hello", "config");
 
-                                    Realm.getInstanceAsync(config, new Realm.Callback() {
-                                        @Override
-                                        public void onSuccess(Realm realm) {
-                                            Log.d("Hello", "Realm created");
-                                            SplashActivity.this.realm = realm;
+                                Realm.getInstanceAsync(config, new Realm.Callback() {
+                                    @Override
+                                    public void onSuccess(@NonNull Realm realm) {
+                                        Log.d("Hello", "Realm created");
+                                        SplashActivity.this.realm = realm;
 
-                                            RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                                            data.addChangeListener(courseData -> {
+                                        RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                                        data.addChangeListener(courseData -> {
+                                            ExecutorClass.getInstance().diskIO().execute(() ->
+                                                    database.facultyDao().deleteAll());
+
+                                            for (CourseData course : data) {
+                                                FacultyData faculty = new FacultyData(course);
                                                 ExecutorClass.getInstance().diskIO().execute(() ->
-                                                        database.facultyDao().deleteAll());
+                                                        database.facultyDao().insertDetail(faculty));
+                                            }
 
-                                                for (CourseData course : data) {
-                                                    FacultyData faculty = new FacultyData(course);
-                                                    ExecutorClass.getInstance().diskIO().execute(() ->
-                                                            database.facultyDao().insertDetail(faculty));
-                                                }
+                                            int size = courseData.size();
+                                            Log.d("Hello", Integer.toString(size));
 
-                                                int size = courseData.size();
-                                                Log.d("Hello", Integer.toString(size));
+                                            if (data.size() > 0) {
+                                                sharedPreferences.edit().putBoolean("firstTime", false).apply();
+                                                loadAnimation.cancelAnimation();
+                                                loadLayout.setVisibility(View.GONE);
 
-                                                if (data.size() > 0) {
-                                                    sharedPreferences.edit().putBoolean("firstTime", false).apply();
-                                                    loadAnimation.cancelAnimation();
-                                                    loadLayout.setVisibility(View.GONE);
+                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
+                                                finish();
+                                            }
+                                        });
+                                    }
 
-                                                    startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
-                                                    finish();
-                                                }
-                                            });
-                                        }
+                                    @Override
+                                    public void onError(Throwable exception) {
+                                        super.onError(exception);
+                                        loadText.setText(exception.getMessage());
+                                        Log.d("Hello", "Failed to create Realm" + exception.getMessage());
+                                        Toast.makeText(SplashActivity.this,
+                                                "Couldn't login securely to the server. " + exception.getMessage(),
+                                                Toast.LENGTH_LONG).show();
 
-                                        @Override
-                                        public void onError(Throwable exception) {
-                                            super.onError(exception);
-                                            loadText.setText(exception.getMessage());
-                                            Log.d("Hello", "Failed to create Realm" + exception.getMessage());
-                                            Toast.makeText(SplashActivity.this,
-                                                    "Couldn't login securely to the server. " + exception.getMessage(),
-                                                    Toast.LENGTH_LONG).show();
-
-                                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                                            finish();
-                                        }
-                                    });
-                                }
-                            });
+                                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                                        finish();
+                                    }
+                                });
+                            }
 
                         } else {
                             Toast.makeText(SplashActivity.this,
@@ -153,12 +151,20 @@ public class SplashActivity extends AppCompatActivity {
                     loadLayout.setVisibility(View.GONE);
 
                     new Handler().postDelayed(() -> {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Intent notifIntent = getIntent();
+                        if (notifIntent != null){
+                            if (notifIntent.getStringExtra("refreshNotif") != null
+                                    && notifIntent.getStringExtra("refreshNotif").equals("true"))
+                                intent.putExtra("refreshNotif", true);
+                        }
+                        startActivity(intent);
                         finish();
                     }, 1000);
                 }
             }
-        }, 1100);
+        }, 600);
     }
 
     @Override
