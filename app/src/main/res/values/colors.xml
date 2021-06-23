@@ -33,6 +33,30 @@
 
     <color name="mtrl_textinput_default_box_stroke_color">#fff5eb</color>
 
+    <!--    Custom theme colors    -->
 
+    <color name="toolbar_bg">@color/light_blue</color>
+    <color name="tab_text">@color/blue</color>
+    <color name="background">@color/white</color>
+
+    <color name="back_text1">@color/blue</color>
+
+    <color name="home_timetable">#ffffff</color>
+    <color name="slot_time_bg">@color/light_violet</color>
+
+    <color name="custom_course_bg">@color/white</color>
+    <color name="custom_course_text">@color/black</color>
+    <color name="custom_course_btn">@color/light_blue</color>
+
+    <color name="back_btn">@color/black</color>
+
+    <color name="snackbar_bg">@color/black</color>
+    <color name="snackbar_text">@color/white</color>
+
+    <color name="clash_color">@color/blood_red</color>
+
+    <color name="project_color">@color/dark_blue</color>
+    <color name="theory_color">@color/orange</color>
+    <color name="lab_color">@color/teal_500</color>
 
 </resources>

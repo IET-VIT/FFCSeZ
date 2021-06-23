@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="toolbar_bg" tools:ignore="MissingDefaultResource">@color/blue</color>
-    <color name="tab_text" tools:ignore="MissingDefaultResource">@color/light_blue</color>
-    <color name="background" tools:ignore="MissingDefaultResource">@color/black</color>
+<resources>
+    <!--    Custom theme colors    -->
 
-    <color name="back_text1" tools:ignore="MissingDefaultResource">@color/light_blue</color>
+    <color name="toolbar_bg">@color/blue</color>
+    <color name="tab_text">@color/light_blue</color>
+    <color name="background">@color/black</color>
 
-    <color name="home_timetable" tools:ignore="MissingDefaultResource">@color/cardview_dark_background</color>
-    <color name="slot_time_bg" tools:ignore="MissingDefaultResource">#5d34a5</color>
+    <color name="back_text1">@color/light_blue</color>
 
-    <color name="custom_course_bg" tools:ignore="MissingDefaultResource">@color/black</color>
-    <color name="custom_course_text" tools:ignore="MissingDefaultResource">@color/white</color>
-    <color name="custom_course_btn" tools:ignore="MissingDefaultResource">@color/blue</color>
+    <color name="home_timetable">@color/cardview_dark_background</color>
+    <color name="slot_time_bg">#5d34a5</color>
 
-    <color name="back_btn" tools:ignore="MissingDefaultResource">@color/light_grey</color>
+    <color name="custom_course_bg">@color/black</color>
+    <color name="custom_course_text">@color/white</color>
+    <color name="custom_course_btn">@color/blue</color>
 
-    <color name="snackbar_bg" tools:ignore="MissingDefaultResource">@color/white</color>
-    <color name="snackbar_text" tools:ignore="MissingDefaultResource">@color/black</color>
+    <color name="back_btn">@color/light_grey</color>
 
-    <color name="clash_color" tools:ignore="MissingDefaultResource">#FF616D</color>
-    <color name="project_color" tools:ignore="MissingDefaultResource">#B6C9F0</color>
-    <color name="theory_color" tools:ignore="MissingDefaultResource">@color/light_orange</color>
-    <color name="lab_color" tools:ignore="MissingDefaultResource">@color/teal_100</color>
+    <color name="snackbar_bg">@color/white</color>
+    <color name="snackbar_text">@color/black</color>
+
+    <color name="clash_color">#FF616D</color>
+    <color name="project_color">#B6C9F0</color>
+    <color name="theory_color">@color/light_orange</color>
+    <color name="lab_color">@color/teal_100</color>
 </resources>
