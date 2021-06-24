@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -29,11 +30,13 @@ public class LandscapeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landscape);
         ButterKnife.bind(this);
 
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         LandscapePagerAdapter landscapePagerAdapter = new LandscapePagerAdapter(fragmentManager, getLifecycle());
         container.setAdapter(landscapePagerAdapter);
 
         backToHome.setOnClickListener(v -> {
+            MainActivity.doVibration();
             startActivity(new Intent(LandscapeActivity.this, MainActivity.class));
             finish();
         });

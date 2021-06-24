@@ -3,6 +3,9 @@ package com.tfd.ffcsez.adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +111,13 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             holder.cardView.setCardBackgroundColor(context.getColor(R.color.light_light_pink));
         }
 
-        holder.cardView.setOnClickListener(v -> setTTSlot(list.get(position),v));
+        holder.cardView.setOnClickListener(v -> {
+            Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.EFFECT_TICK));
+            }
+            setTTSlot(list.get(position),v);
+        });
 
     }
 

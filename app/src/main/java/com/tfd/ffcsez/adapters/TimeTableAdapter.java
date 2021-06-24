@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +32,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
     private List<TimeTableData> list;
     private final Context context;
     private FacultyDatabase database;
-
+    
     public TimeTableAdapter(List<TimeTableData> list, Context context) {
         this.list = list;
         this.context = context;
@@ -39,7 +42,6 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         database = FacultyDatabase.getInstance(context.getApplicationContext());
-
         View view = LayoutInflater.from(context).inflate(R.layout.home_timetable_layout, parent, false);
         return new RecyclerViewHolder(view);
     }
@@ -61,11 +63,13 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
             typeSelector = view.findViewById(R.id.typeSelector);
             deleteButton = view.findViewById(R.id.deleteButton);
             longPress = view.findViewById(R.id.longPress);
+
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+
         TimeTableData model = list.get(position);
 
         holder.startTime.setText(model.getStartTime());
@@ -95,6 +99,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         }
 
         holder.deleteButton.setOnClickListener(v -> {
+            MainActivity.doVibration();
+
             TimeTableData data = list.get(position);
 
             if (!data.getCourseType().equals("EPJ")) {
@@ -131,6 +137,11 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         });
 
         holder.longPress.setOnLongClickListener(v -> {
+
+            Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(80, VibrationEffect.EFFECT_TICK));
+            }
 
             View facultyView = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null);
 

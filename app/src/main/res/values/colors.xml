@@ -58,5 +58,5 @@
     <color name="project_color">@color/dark_blue</color>
     <color name="theory_color">@color/orange</color>
     <color name="lab_color">@color/teal_500</color>
-
+    <color name="edit_text">#61cde9</color>
 </resources>

@@ -5,10 +5,13 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -129,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
     private List<FacultyDetails> allFaculties = new ArrayList<>();
     public static FacultyAdapter facultyAdapter;
 
+    // Vibration
+    public static Vibrator vibrator;
+    public static void doVibration(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.EFFECT_TICK));
+        }
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,10 +152,8 @@ public class MainActivity extends AppCompatActivity {
             if (intent.getBooleanExtra("refreshNotif", false))
                 refreshRealm();
         }
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-//        Window window = getWindow();
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(Color.parseColor("#61cde9"));
 
         // Back Layout
         View back_layout = backdropLayout.getChildAt(0);
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         facultyRecyclerView.setAdapter(facultyAdapter);
 
         toggle.setOnClickListener(v -> {
-
+            doVibration();
             if(toggle.isChecked()){
                 courseCodeLayout.setVisibility(View.INVISIBLE);
                 facultyNameLayout.setVisibility(View.VISIBLE);
@@ -175,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Chips
         morningChip.setOnClickListener(v -> {
-
+            doVibration();
             if (morningChip.isChecked())
                 timeFN = "FN";
             else
@@ -184,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         afternoonChip.setOnClickListener(v -> {
-
+            doVibration();
             if (afternoonChip.isChecked())
                 timeAN = "AN";
             else
@@ -193,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         theoryChip.setOnClickListener(v -> {
-
+            doVibration();
             if (theoryChip.isChecked()) {
                 courseTH = "TH";
                 courseETH = "ETH";
@@ -207,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         labChip.setOnClickListener(v -> {
-
+            doVibration();
             if (labChip.isChecked()) {
                 courseELA = "ELA";
                 courseLO = "LO";
@@ -219,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         projectChip.setOnClickListener(v -> {
-
+            doVibration();
             if (projectChip.isChecked())
                 courseEPJ = "EPJ";
             else
@@ -228,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         searchButton.setOnClickListener(v -> {
+            doVibration();
             updateFilters();
         });
 
@@ -248,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
         customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         customButton.setOnClickListener(v -> {
+            doVibration();
             int flag = 0;
             customSlot.setError(null);
 
@@ -324,26 +334,33 @@ public class MainActivity extends AppCompatActivity {
         });
 
         toolbar.setOnMenuItemClickListener(item -> {
+
             switch (item.getItemId()){
 
                 case R.id.fullScreen:
+
                     startActivity(new Intent(MainActivity.this, LandscapeActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    doVibration();
                     return true;
 
                 case R.id.custom:
                     customDialog.show();
+                    doVibration();
                     return true;
 
                 case R.id.refresh:
                     refreshRealm();
+                    doVibration();
                     return true;
                 case R.id.timetable:
                     BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                     bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                    doVibration();
                     return true;
                 case R.id.registered:
                     drawerLayout.openDrawer(GravityCompat.END);
+                    doVibration();
 
             }
             return false;
@@ -756,4 +773,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

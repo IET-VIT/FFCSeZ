@@ -70,80 +70,71 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         LiveData<List<TTDetails>> ttDetailsListLD = database.ttDetailsDao().loadAllTimeTables();
         ttDetailsListLD.observe(getActivity(), adapter::updateAdapter);
 
-        createTTButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.custom_new_timetable, null);
-                EditText timeTableName = dialogView.findViewById(R.id.timeTableNameText);
-                Button doneButton = dialogView.findViewById(R.id.doneButton);
-                Button cancelButton = dialogView.findViewById(R.id.cancelButton);
+        createTTButton.setOnClickListener(v -> {
+            MainActivity.doVibration();
+            View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.custom_new_timetable, null);
+            EditText timeTableName = dialogView.findViewById(R.id.timeTableNameText);
+            Button doneButton = dialogView.findViewById(R.id.doneButton);
+            Button cancelButton = dialogView.findViewById(R.id.cancelButton);
 
-                AlertDialog newTTDialog = new AlertDialog.Builder(getActivity())
-                        .setView(dialogView)
-                        .setCancelable(true)
-                        .create();
-                newTTDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                newTTDialog.show();
+            AlertDialog newTTDialog = new AlertDialog.Builder(getActivity())
+                    .setView(dialogView)
+                    .setCancelable(true)
+                    .create();
+            newTTDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            newTTDialog.show();
 
-                newTTDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(timeTableName.getWindowToken(), 0);
-                    }
-                });
+            newTTDialog.setOnCancelListener(dialog -> {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(timeTableName.getWindowToken(), 0);
+            });
 
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        newTTDialog.cancel();
-                    }
-                });
+            cancelButton.setOnClickListener(v1 -> {
+                MainActivity.doVibration();
+                newTTDialog.cancel();
+            });
 
-                doneButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        timeTableName.setError(null);
-                        if (timeTableName.getText().toString().trim().isEmpty()){
-                            timeTableName.setError("Timetable name cannot be empty");
-                        }else{
-                            timeTableName.setEnabled(false);
-                            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TTDetails details = new TTDetails(timeTableName.getText().toString().trim());
-                                    database.ttDetailsDao().insertTimeTable(details);
+            doneButton.setOnClickListener(v12 -> {
+                MainActivity.doVibration();
+                timeTableName.setError(null);
+                if (timeTableName.getText().toString().trim().isEmpty()){
+                    timeTableName.setError("Timetable name cannot be empty");
+                }else{
+                    timeTableName.setEnabled(false);
+                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            TTDetails details = new TTDetails(timeTableName.getText().toString().trim());
+                            database.ttDetailsDao().insertTimeTable(details);
 
-                                    List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
+                            List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
 
-                                    for (int i = 0; i < 10; i++){
-                                        for(int j = 0; j < 6; j++){
-                                            ConstantsActivity.getChosenSlots()[i][j] = 0;
-                                        }
-                                    }
-
-                                    if (getActivity() != null) {
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                ConstantsActivity.getTimeTableId().setValue(timeTable.get(0).getTimeTableId());
-                                                preferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
-
-                                                newTTDialog.cancel();
-                                                Snackbar.make(view, "Created new timetable",
-                                                        Snackbar.LENGTH_SHORT)
-                                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
-                                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
-                                                        .show();
-                                            }
-                                        });
-                                    }
+                            for (int i = 0; i < 10; i++){
+                                for(int j = 0; j < 6; j++){
+                                    ConstantsActivity.getChosenSlots()[i][j] = 0;
                                 }
-                            });
+                            }
+
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ConstantsActivity.getTimeTableId().setValue(timeTable.get(0).getTimeTableId());
+                                        preferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
+
+                                        newTTDialog.cancel();
+                                        Snackbar.make(view, "Created new timetable",
+                                                Snackbar.LENGTH_SHORT)
+                                                .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                                .show();
+                                    }
+                                });
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
 
         return view;
