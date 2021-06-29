@@ -41,7 +41,7 @@ The main features of the app are broken down into a technical task timeline.
 - <strong><em> Task 4: The Navigation Pane </em></strong>
   - [x] Setup the functionality to add and display the existing timetables of the user.
   - [ ] Adding the import timetable feature.
-  - [ ] Add notifications to remind when new FFCS data has arrived
+  - [x] Add notifications to remind when new FFCS data has arrived
   - [x] UI cleanup.
 
 - <strong><em> Task 5: Notes (To-Dos) and Reminders </em></strong>
