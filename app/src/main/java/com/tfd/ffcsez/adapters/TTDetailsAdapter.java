@@ -56,7 +56,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder{
         private final TextView timeTableName;
-        private final ImageButton ttDeleteButton, ttEditButton;
+        private final ImageButton ttDeleteButton, ttEditButton, ttClearButton;
         private final ImageView selectedImageView;
         private final CardView timeTableInfo;
 
@@ -66,6 +66,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
             timeTableName = view.findViewById(R.id.timeTableName);
             ttDeleteButton = view.findViewById(R.id.ttDeleteButton);
             ttEditButton = view.findViewById(R.id.ttEditButton);
+            ttClearButton = view.findViewById(R.id.ttClearButton);
             selectedImageView = view.findViewById(R.id.selectedImageView);
             timeTableInfo = view.findViewById(R.id.timeTableInfo);
         }
@@ -87,10 +88,13 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
             holder.ttEditButton.setVisibility(View.VISIBLE);
         }
 
-        if (details.getTimeTableId() == ConstantsActivity.getTimeTableId().getValue())
+        if (details.getTimeTableId() == ConstantsActivity.getTimeTableId().getValue()) {
             holder.selectedImageView.setVisibility(View.VISIBLE);
-        else
+            holder.ttClearButton.setVisibility(View.VISIBLE);
+        }else {
             holder.selectedImageView.setVisibility(View.GONE);
+            holder.ttClearButton.setVisibility(View.GONE);
+        }
 
         holder.ttEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,12 +165,30 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                     }
                 });
 
-                Snackbar.make(v, "Timetable deleted",
+                Snackbar.make(v, "Deleted " + details.getTimeTableName(),
                         Snackbar.LENGTH_SHORT)
                         .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
                         .setTextColor(context.getResources().getColor(R.color.snackbar_text))
                         .show();
 
+            }
+        });
+
+        holder.ttClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        database.timeTableDao().deleteAllTTSlots(details.getTimeTableId());
+                    }
+                });
+
+                Snackbar.make(v, "Cleared " + details.getTimeTableName(),
+                        Snackbar.LENGTH_SHORT)
+                        .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
+                        .setTextColor(context.getResources().getColor(R.color.snackbar_text))
+                        .show();
             }
         });
 

@@ -30,6 +30,7 @@
     <color name="cyan">#a0ffe6</color>
     <color name="blue">#03256c</color>
     <color name="blood_red">#B00020</color>
+    <color name="opacity_black">#80000000</color>
 
     <color name="mtrl_textinput_default_box_stroke_color">#fff5eb</color>
 

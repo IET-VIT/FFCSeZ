@@ -5,7 +5,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -23,7 +22,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,15 +37,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.gms.common.GoogleApiAvailabilityLight;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.roacult.backdrop.BackdropLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
 import com.tfd.ffcsez.adapters.CreditsAdapter;
@@ -65,8 +59,6 @@ import com.tfd.ffcsez.models.CourseDetails;
 import com.tfd.ffcsez.models.CreditDetails;
 import com.tfd.ffcsez.models.FacultyDetails;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -76,14 +68,11 @@ import burakustun.com.lottieprogressdialog.LottieDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmAsyncTask;
 import io.realm.RealmResults;
-import io.realm.internal.objectstore.OsPush;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
-import io.realm.mongodb.push.Push;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 
@@ -124,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
     private String courseLO = "", timeFN = "", timeAN = "";
     private boolean exists;
     private AlertDialog customDialog;
+    private SharedPreferences preferences;
 
     // Database
     private FacultyDatabase database;
@@ -139,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.EFFECT_TICK));
         }
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -377,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        SharedPreferences preferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
+        preferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
         database = FacultyDatabase.getInstance(getApplicationContext());
         int lastTTId = preferences.getInt("lastTT", 1);
         ConstantsActivity.getTimeTableId().setValue(lastTTId);
