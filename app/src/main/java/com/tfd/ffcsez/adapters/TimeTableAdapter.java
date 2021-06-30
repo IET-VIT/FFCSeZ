@@ -128,7 +128,9 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                 ExecutorClass.getInstance().diskIO().execute(() -> database.timeTableDao().deleteSlot(data));
             }
 
-            MainActivity.facultyAdapter.notifyDataSetChanged();
+            if (MainActivity.facultyAdapter != null)
+                MainActivity.facultyAdapter.notifyDataSetChanged();
+
             Snackbar.make(v, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(),
                     Snackbar.LENGTH_LONG)
                     .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))

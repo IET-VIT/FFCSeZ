@@ -5,14 +5,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.tfd.ffcsez.database.ExecutorClass;
@@ -46,11 +50,21 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+        //getWindow().setEnterTransition(new Fade().setDuration(5000));
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getColor(R.color.pitch_black));
+        getWindow().setNavigationBarColor(getColor(R.color.pitch_black));
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
+        AppCompatDelegate.setDefaultNightMode(sharedPreferences.getInt("appTheme", AppCompatDelegate.MODE_NIGHT_YES));
+
         setContentView(R.layout.activity_splash);
 
         ButterKnife.bind(this);
         FacultyDatabase database = FacultyDatabase.getInstance(getApplicationContext());
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
 
         new Handler().postDelayed(new Runnable() {
             @Override

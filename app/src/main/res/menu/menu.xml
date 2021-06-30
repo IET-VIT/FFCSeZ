@@ -20,7 +20,7 @@
 
     <item android:title="Registered Courses"
         android:id="@+id/registered"
-        android:icon="@drawable/ic_info"
+        android:icon="@drawable/ic_num"
         android:iconTint="@color/white"
         app:showAsAction="always"/>
 
@@ -30,7 +30,16 @@
         app:showAsAction="ifRoom"
         android:id="@+id/refresh"/>
 
+    <item android:title="App theme"
+        android:icon="@drawable/ic_color"
+        android:iconTint="@color/white"
+        app:showAsAction="ifRoom"
+        android:id="@+id/appTheme"/>
+
     <item android:title="About"
-        app:showAsAction="ifRoom"/>
+        android:iconTint="@color/white"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="ifRoom"
+        android:id="@+id/about"/>
 
 </menu>

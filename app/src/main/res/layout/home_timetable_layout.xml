@@ -15,7 +15,7 @@
         android:layout_marginBottom="4dp"
         app:cardBackgroundColor="@color/home_timetable"
         app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
                 android:layout_width="72dp"
                 android:layout_height="0dp"
                 app:cardBackgroundColor="@color/slot_time_bg"
-                app:cardElevation="10dp"
+                app:cardElevation="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

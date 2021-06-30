@@ -5,37 +5,43 @@
     style="@style/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/pitch_black"
     tools:context=".SplashActivity">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/introAnimation"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:scaleType="fitStart"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="splash.json"
-        app:lottie_loop="false" />
-
-    <TextView
-        android:id="@+id/textView"
-        style="@style/text_color"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="@string/app_name"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/loadLayout"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/introAnimation"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:scaleType="fitStart"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="splash.json"
+            app:lottie_loop="false" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="40sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/loadLayout"
@@ -67,7 +73,8 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/app_name"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

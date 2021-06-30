@@ -189,6 +189,15 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                         .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
                         .setTextColor(context.getResources().getColor(R.color.snackbar_text))
                         .show();
+
+                for (int i = 0; i < 10; i++){
+                    for(int j = 0; j < 6; j++){
+                        ConstantsActivity.getChosenSlots()[i][j] = 0;
+                    }
+                }
+
+                if (MainActivity.facultyAdapter != null)
+                    MainActivity.facultyAdapter.notifyDataSetChanged();
             }
         });
 
@@ -211,7 +220,10 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                             ConstantsActivity.getChosenSlots()[coord.getRow()][coord.getColumn()] = 1;
                     }
                 });
-                MainActivity.facultyAdapter.notifyDataSetChanged();
+
+                if (MainActivity.facultyAdapter != null)
+                    MainActivity.facultyAdapter.notifyDataSetChanged();
+
                 notifyDataSetChanged();
             }
         });

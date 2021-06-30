@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -21,11 +22,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     // Vibration
     public static Vibrator vibrator;
     public static void doVibration(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.EFFECT_TICK));
         }
     }
@@ -153,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         facultyRecyclerView.setLayoutManager(layoutManager);
         facultyRecyclerView.setAdapter(facultyAdapter);
+        updateFilters();
 
         toggle.setOnClickListener(v -> {
             doVibration();
@@ -324,6 +329,53 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Theme Dialog
+        View themeSelector = LayoutInflater.from(this).inflate(R.layout.theme_dialog, null);
+        RadioGroup themeRG = themeSelector.findViewById(R.id.themeRadioGroup);
+        RadioButton systemThemeRB = themeSelector.findViewById(R.id.systemRadioButton);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+            systemThemeRB.setVisibility(View.VISIBLE);
+        else
+            systemThemeRB.setVisibility(View.GONE);
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO)
+            themeRG.check(R.id.lightRadioButton);
+        else if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            themeRG.check(R.id.darkRadioButton);
+        else if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            themeRG.check(R.id.systemRadioButton);
+        else {
+            if (getResources().getConfiguration().uiMode == Configuration.UI_MODE_NIGHT_NO)
+                themeRG.check(R.id.lightRadioButton);
+            else if (getResources().getConfiguration().uiMode == Configuration.UI_MODE_NIGHT_YES)
+                themeRG.check(R.id.darkRadioButton);
+            else if (getResources().getConfiguration().uiMode == Configuration.UI_MODE_NIGHT_UNDEFINED)
+                themeRG.check(R.id.darkRadioButton);
+        }
+
+        themeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.lightRadioButton){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    preferences.edit().putInt("appTheme", AppCompatDelegate.MODE_NIGHT_NO).apply();
+                }else if (checkedId == R.id.darkRadioButton){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    preferences.edit().putInt("appTheme", AppCompatDelegate.MODE_NIGHT_YES).apply();
+                }else if (checkedId == R.id.systemRadioButton){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    preferences.edit().putInt("appTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM).apply();
+                }
+            }
+        });
+
+        AlertDialog themeDialog = new AlertDialog.Builder(MainActivity.this)
+                .setView(themeSelector)
+                .setCancelable(true)
+                .create();
+        themeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         toolbar.setOnMenuItemClickListener(item -> {
 
             switch (item.getItemId()){
@@ -344,15 +396,22 @@ public class MainActivity extends AppCompatActivity {
                     refreshRealm();
                     doVibration();
                     return true;
+
                 case R.id.timetable:
                     BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                     bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                     doVibration();
                     return true;
+
                 case R.id.registered:
                     drawerLayout.openDrawer(GravityCompat.END);
                     doVibration();
+                    return true;
 
+                case R.id.appTheme:
+                    themeDialog.show();
+                    doVibration();
+                    return true;
             }
             return false;
         });
@@ -363,6 +422,7 @@ public class MainActivity extends AppCompatActivity {
         if (getCurrentFocus() != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            getCurrentFocus().clearFocus();
         }
         return super.dispatchTouchEvent(ev);
     }

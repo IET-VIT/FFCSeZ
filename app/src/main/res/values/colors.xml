@@ -16,7 +16,7 @@
     <color name="grass_green">#0F893B</color>
     <color name="dark_blue">#3554d1</color>
     <color name="black">#232323</color>
-    <color name="white">#fff5eb</color>
+    <color name="white">#ffffff</color>
     <color name="yellow">#e5d549</color>
     <color name="pink">#ff449f</color>
     <color name="light_grey">#bdc7c9</color>
@@ -31,6 +31,7 @@
     <color name="blue">#03256c</color>
     <color name="blood_red">#B00020</color>
     <color name="opacity_black">#80000000</color>
+    <color name="pitch_black">#000000</color>
 
     <color name="mtrl_textinput_default_box_stroke_color">#fff5eb</color>
 
@@ -39,6 +40,7 @@
     <color name="toolbar_bg">@color/light_blue</color>
     <color name="tab_text">@color/blue</color>
     <color name="background">@color/white</color>
+    <color name="radio_color">@color/blue</color>
 
     <color name="back_text1">@color/blue</color>
 

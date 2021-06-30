@@ -5,6 +5,7 @@
     <color name="toolbar_bg">@color/blue</color>
     <color name="tab_text">@color/light_blue</color>
     <color name="background">@color/black</color>
+    <color name="radio_color">@color/light_blue</color>
 
     <color name="back_text1">@color/light_blue</color>
 
@@ -15,7 +16,7 @@
     <color name="custom_course_text">@color/white</color>
     <color name="custom_course_btn">@color/blue</color>
 
-    <color name="back_btn">@color/light_grey</color>
+    <color name="back_btn">@color/white</color>
 
     <color name="snackbar_bg">@color/white</color>
     <color name="snackbar_text">@color/black</color>
