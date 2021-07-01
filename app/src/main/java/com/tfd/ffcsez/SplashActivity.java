@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmException;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
@@ -132,13 +133,13 @@ public class SplashActivity extends AppCompatActivity {
                                                 loadAnimation.cancelAnimation();
                                                 loadLayout.setVisibility(View.GONE);
 
-                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class));
+                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                                 finish();
                                             }
                                         });
                                     }
-
-                                    @Override
+                                    /*@Override
                                     public void onError(Throwable exception) {
                                         super.onError(exception);
                                         loadText.setText(exception.getMessage());
@@ -146,10 +147,9 @@ public class SplashActivity extends AppCompatActivity {
                                         Toast.makeText(SplashActivity.this,
                                                 "Couldn't login securely to the server. " + exception.getMessage(),
                                                 Toast.LENGTH_LONG).show();
-
                                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                                         finish();
-                                    }
+                                    }*/
                                 });
                             }
 

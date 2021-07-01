@@ -1,4 +1,4 @@
-package com.tfd.ffcsez;
+  package com.tfd.ffcsez;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.fText) TextView fText;
     @BindView(R.id.errorText) TextView errorText;
     @BindView(R.id.creditsNumber) TextView creditsNumber;
+    @BindView(R.id.searchCountText) TextView searchCount;
 
     // Chips
     @BindView(R.id.morningChip) Chip morningChip;
@@ -383,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.fullScreen:
 
                     startActivity(new Intent(MainActivity.this, LandscapeActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     doVibration();
                     return true;
 
@@ -559,10 +560,10 @@ public class MainActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
 
-                if(facultyList.size()==0){
+                if(facultyList.size() == 0){
                     animation.setVisibility(View.INVISIBLE);
                     notFound.setVisibility(View.VISIBLE);
-                    errorText.setText("No Course Available");
+                    errorText.setText("No Courses Available");
                     errorText.setVisibility(View.VISIBLE);
 
                 } else {
@@ -573,6 +574,8 @@ public class MainActivity extends AppCompatActivity {
 
                 facultyAdapter.updateAdapter(facultyList);
                 facultyRecyclerView.smoothScrollToPosition(0);
+
+                searchCount.setText(facultyList.size() + " result(s)");
             });
         });
     }

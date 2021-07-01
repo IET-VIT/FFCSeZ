@@ -47,7 +47,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
     }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
-        private final TextView startTime, endTime, slotNumber, courseCode, roomNumber;
+        private final TextView startTime, endTime, slotNumber, courseCode, roomNumber, empName;
         private final View typeSelector;
         private final ImageButton deleteButton;
         private final CardView longPress;
@@ -60,10 +60,10 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
             slotNumber = view.findViewById(R.id.slotNumberHome);
             courseCode = view.findViewById(R.id.courseCodeHome);
             roomNumber = view.findViewById(R.id.roomNoHome);
+            empName = view.findViewById(R.id.empNameHome);
             typeSelector = view.findViewById(R.id.typeSelector);
             deleteButton = view.findViewById(R.id.deleteButton);
             longPress = view.findViewById(R.id.longPress);
-
         }
     }
 
@@ -76,6 +76,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         holder.endTime.setText(model.getEndTime());
         holder.slotNumber.setText(model.getCurrentSlot());
         holder.courseCode.setText(model.getCourseCode() + " - " + model.getCourseType());
+        holder.empName.setText(model.getEmpName());
         holder.roomNumber.setText(model.getRoomNumber());
 
         if (list.get(position).isClash()) {

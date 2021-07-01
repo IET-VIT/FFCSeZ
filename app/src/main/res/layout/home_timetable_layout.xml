@@ -12,7 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/home_timetable"
         app:cardCornerRadius="5dp"
         app:cardElevation="8dp"
@@ -37,12 +37,58 @@
                 app:layout_constraintStart_toEndOf="@+id/cardView43"
                 app:layout_constraintTop_toTopOf="@+id/cardView43" />
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/slotNumberHome"
+                app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                app:layout_constraintStart_toEndOf="@+id/slotNumberHome"
+                app:layout_constraintTop_toTopOf="@+id/slotNumberHome">
+
+                <TextView
+                    android:id="@+id/courseCodeHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Code"
+                    android:textColor="@color/custom_course_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/empNameHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/poppins"
+                    android:maxLines="1"
+                    android:text="Name"
+                    android:textColor="@color/custom_course_text" />
+
+                <TextView
+                    android:id="@+id/roomNoHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Room"
+                    android:textColor="@color/custom_course_text" />
+
+            </LinearLayout>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView43"
                 android:layout_width="72dp"
                 android:layout_height="0dp"
+                android:background="@drawable/custom_card2"
                 app:cardBackgroundColor="@color/slot_time_bg"
-                app:cardElevation="8dp"
+                app:cardCornerRadius="0dp"
+                app:cardMaxElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -63,6 +109,7 @@
                         android:text="Start Time"
                         android:textColor="@color/white"
                         android:textSize="12sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/endTime"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +128,7 @@
                         android:text="End Time"
                         android:textColor="@color/light_grey"
                         android:textSize="12sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -96,35 +144,10 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="SLOT"
                 android:textColor="@color/sky_blue"
-                android:textSize="30sp"
+                android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="@+id/typeSelector"
                 app:layout_constraintStart_toEndOf="@+id/typeSelector"
                 app:layout_constraintTop_toTopOf="@+id/typeSelector" />
-
-            <TextView
-                android:id="@+id/courseCodeHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Code"
-                android:textColor="@color/custom_course_text"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/roomNoHome"
-                app:layout_constraintStart_toEndOf="@+id/slotNumberHome"
-                app:layout_constraintTop_toTopOf="@+id/slotNumberHome" />
-
-            <TextView
-                android:id="@+id/roomNoHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/poppins"
-                android:text="Room"
-                android:textColor="@color/custom_course_text"
-                app:layout_constraintBottom_toBottomOf="@+id/slotNumberHome"
-                app:layout_constraintStart_toEndOf="@+id/slotNumberHome"
-                app:layout_constraintTop_toBottomOf="@+id/courseCodeHome" />
 
             <ImageButton
                 android:id="@+id/deleteButton"
@@ -143,4 +166,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

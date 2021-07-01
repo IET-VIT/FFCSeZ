@@ -37,7 +37,8 @@ public class LandscapeActivity extends AppCompatActivity {
 
         backToHome.setOnClickListener(v -> {
             MainActivity.doVibration();
-            startActivity(new Intent(LandscapeActivity.this, MainActivity.class),
+            startActivity(new Intent(LandscapeActivity.this, MainActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
                     ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
             finish();
         });
@@ -78,5 +79,15 @@ public class LandscapeActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        startActivity(new Intent(LandscapeActivity.this, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
+        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        finish();
     }
 }
