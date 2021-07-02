@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,10 +79,12 @@ import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 
-public class MainActivity extends AppCompatActivity {
-
+  public class MainActivity extends AppCompatActivity {
+    private boolean backdropIsOpen;
     // Views
     @BindView(R.id.container) BackdropLayout backdropLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -150,7 +153,20 @@ public class MainActivity extends AppCompatActivity {
         }
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-
+        backdropLayout.setOnBackdropChangeStateListener(new Function1<BackdropLayout.State, Unit>() {
+            @Override
+            public Unit invoke(BackdropLayout.State state) {
+                switch(state){
+                    case OPEN:
+                        backdropIsOpen = true;
+                        break;
+                    case CLOSE:
+                        backdropIsOpen = false;
+                        break;
+                }
+                return null;
+            }
+        });
         // Back Layout
         View back_layout = backdropLayout.getChildAt(0);
 
@@ -165,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
             if(toggle.isChecked()){
                 courseCodeLayout.setVisibility(View.INVISIBLE);
                 facultyNameLayout.setVisibility(View.VISIBLE);
-                cText.setTextColor(Color.parseColor("#fff5eb"));
-                fText.setTextColor(Color.parseColor("#F54748"));
+                cText.setTextColor(Color.parseColor("#ffffff"));
+                fText.setTextColor(getColor(R.color.selected_option));
 
             } else {
                 courseCodeLayout.setVisibility(View.VISIBLE);
                 facultyNameLayout.setVisibility(View.INVISIBLE);
-                fText.setTextColor(Color.parseColor("#fff5eb"));
-                cText.setTextColor(Color.parseColor("#F54748"));
+                fText.setTextColor(Color.parseColor("#ffffff"));
+                cText.setTextColor(getColor(R.color.selected_option));
             }
         });
 
@@ -823,5 +839,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.END)){
+            drawerLayout.closeDrawer(GravityCompat.END);
+        } else if(backdropIsOpen){
+            backdropLayout.close();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 }

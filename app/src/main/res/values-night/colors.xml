@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="mtrl_textinput_default_box_stroke_color">@color/white</color>
     <!--    Custom theme colors    -->
 
     <color name="toolbar_bg">@color/blue</color>
@@ -27,4 +29,7 @@
     <color name="lab_color">@color/teal_100</color>
 
     <color name="edit_text">#61cde9</color>
+
+    <color name="selected_option">@color/light_blue</color>
+    <color name="notselected_option">@color/white</color>
 </resources>

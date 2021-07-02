@@ -99,6 +99,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         holder.ttEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.doVibration();
                 View dialogView = LayoutInflater.from(context).inflate(R.layout.custom_new_timetable, null);
                 EditText timeTableNameEditText = dialogView.findViewById(R.id.timeTableNameText);
                 Button doneButton = dialogView.findViewById(R.id.doneButton);
@@ -124,6 +125,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        MainActivity.doVibration();
                         newTTDialog.cancel();
                     }
                 });
@@ -131,6 +133,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        MainActivity.doVibration();
                         timeTableNameEditText.setError(null);
                         if (timeTableNameEditText.getText().toString().trim().isEmpty()) {
                             timeTableNameEditText.setError("Timetable name cannot be empty");
@@ -153,6 +156,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         holder.ttDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.doVibration();
                 if (details.getTimeTableId() == ConstantsActivity.getTimeTableId().getValue()){
                     ConstantsActivity.getTimeTableId().setValue(1);
                 }
@@ -177,6 +181,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         holder.ttClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.doVibration();
                 ExecutorClass.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -204,6 +209,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         holder.timeTableInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.doVibration();
                 ConstantsActivity.getTimeTableId().setValue(details.getTimeTableId());
                 preferences.edit().putInt("lastTT", ConstantsActivity.getTimeTableId().getValue()).apply();
 

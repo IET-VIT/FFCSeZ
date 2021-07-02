@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:elevation="8dp"
+    app:cardBackgroundColor="@color/home_timetable"
     app:cardElevation="0dp"
     app:strokeColor="@color/light_grey"
     app:strokeWidth="2dp">

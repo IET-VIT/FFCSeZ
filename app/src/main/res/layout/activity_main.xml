@@ -32,7 +32,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:animationDuration="400"
+            app:animationDuration="800"
             app:back_layout="@id/includedBack"
             app:closeDrawable="@drawable/ic_close"
             app:disable_when_open="true"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:menuDrawable="@drawable/ic_menu"
-            app:peekHeight="56dp"
+            app:peekHeight="0dp"
             app:toolbarId="@id/toolbar">
 
             <include
@@ -61,8 +61,8 @@
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        android:layout_gravity="end">
+        android:layout_gravity="end"
+        android:background="@color/background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -157,6 +157,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"

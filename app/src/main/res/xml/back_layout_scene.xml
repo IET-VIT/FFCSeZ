@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/searchCountText"
             motion:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/searchCountText"
             motion:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
