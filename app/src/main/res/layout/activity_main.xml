@@ -32,7 +32,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:animationDuration="800"
+            app:animationDuration="400"
             app:back_layout="@id/includedBack"
             app:closeDrawable="@drawable/ic_close"
             app:disable_when_open="true"

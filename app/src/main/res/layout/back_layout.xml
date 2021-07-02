@@ -30,7 +30,7 @@
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/poppins_medium"
             android:text="SEARCH BY COURSE"
-            android:textColor="#F54748"
+            android:textColor="@color/selected_option"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/toggle"
             app:layout_constraintEnd_toStartOf="@+id/toggle"
@@ -79,10 +79,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:thumbTint="#F54748"
+            android:thumbTint="@color/selected_option"
             app:layout_constraintEnd_toEndOf="@+id/filterGroup"
             app:layout_constraintStart_toStartOf="@+id/filterGroup"
-            app:layout_constraintTop_toBottomOf="@+id/filterGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/filterGroup"
+            app:thumbTint="@color/selected_option"
+            app:trackTint="@color/grey" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/filterGroup"
@@ -149,19 +151,19 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:hint="Faculty Name"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/back_btn"
             android:visibility="invisible"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
             app:boxCornerRadiusTopEnd="15dp"
             app:boxCornerRadiusTopStart="15dp"
-            app:boxStrokeColor="@color/white"
+            app:boxStrokeColor="@color/back_btn"
             app:boxStrokeWidth="2dp"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/white"
+            app:endIconTint="@color/back_btn"
             app:helperTextTextAppearance="@style/helper_text"
             app:helperTextTextColor="@color/blue"
-            app:hintTextColor="@color/white"
+            app:hintTextColor="@color/back_btn"
             app:layout_constraintEnd_toStartOf="@+id/searchButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toggle">
@@ -180,7 +182,7 @@
                 android:paddingRight="15dp"
                 android:paddingBottom="12dp"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/back_btn"
                 android:textCursorDrawable="@drawable/cursor" />
         </com.google.android.material.textfield.TextInputLayout>
 

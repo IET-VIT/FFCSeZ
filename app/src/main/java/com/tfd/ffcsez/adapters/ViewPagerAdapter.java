@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.tfd.ffcsez.fragments.getstarted.FragmentA;
 import com.tfd.ffcsez.fragments.getstarted.FragmentB;
 import com.tfd.ffcsez.fragments.getstarted.FragmentC;
-import com.tfd.ffcsez.fragments.getstarted.FragmentD;
-import com.tfd.ffcsez.fragments.getstarted.FragmentE;
 
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -24,14 +22,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 0: return new FragmentA();
             case 1: return new FragmentB();
             case 2: return new FragmentC();
-            case 3: return new FragmentD();
-            case 4: return new FragmentE();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return 3;
     }
 }

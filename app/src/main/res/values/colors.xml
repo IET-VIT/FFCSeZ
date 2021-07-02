@@ -32,6 +32,7 @@
     <color name="blood_red">#B00020</color>
     <color name="opacity_black">#80000000</color>
     <color name="pitch_black">#000000</color>
+    <color name="dark_purple">#52214c</color>
 
     <color name="mtrl_textinput_default_box_stroke_color">@color/black</color>
 
@@ -65,4 +66,6 @@
 
     <color name="selected_option">@color/blue</color>
     <color name="notselected_option">@color/black</color>
+
+
 </resources>

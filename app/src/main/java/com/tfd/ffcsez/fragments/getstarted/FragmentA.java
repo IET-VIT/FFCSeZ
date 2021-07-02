@@ -18,23 +18,17 @@ import butterknife.ButterKnife;
 
 public class FragmentA extends Fragment {
 
-    @BindView(R.id.skipButton1) TextView skipButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_a, container, false);
-        ButterKnife.bind(this, view);
 
-        skipButton.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), MainActivity.class));
-            getActivity().finish();
-        });
         return view;
     }
 
     @Override
     public void onResume() {
-        ((GetStartedActivity)getActivity()).updateStatusBarColor("#867ae9");
         super.onResume();
+        ((GetStartedActivity)getActivity()).updateStatusBarColor("#52214c");
     }
 }

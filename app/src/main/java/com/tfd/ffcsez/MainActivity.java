@@ -429,6 +429,11 @@ import kotlin.jvm.functions.Function1;
                     themeDialog.show();
                     doVibration();
                     return true;
+                case R.id.about:
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    doVibration();
+                    return true;
             }
             return false;
         });

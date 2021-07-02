@@ -114,7 +114,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         holder.cardView.setOnClickListener(v -> {
             Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(60, VibrationEffect.EFFECT_TICK));
+                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.EFFECT_TICK));
             }
             setTTSlot(list.get(position),v);
         });
