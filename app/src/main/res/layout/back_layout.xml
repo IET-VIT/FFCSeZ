@@ -1,284 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/toolbar_bg">
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation2"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:alpha="0.80"
-        android:scaleType="center"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/facultyRecyclerView"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="notfound.json"
-        app:lottie_loop="true" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:alpha="0.6"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/facultyRecyclerView"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="search.json"
-        app:lottie_loop="true" />
-
-    <TextView
-        android:id="@+id/errorText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins"
-        android:text="Search to view courses"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animation" />
+    android:background="@color/toolbar_bg"
+    app:layoutDescription="@xml/back_layout_scene">
 
     <TextView
         android:id="@+id/searchCountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
         android:fontFamily="@font/poppins"
         android:text="Search Results"
         android:textSize="18sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/facultyNameLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Faculty Name"
-        android:textColorHint="@color/white"
-        android:visibility="invisible"
-        app:boxCornerRadiusBottomEnd="15dp"
-        app:boxCornerRadiusBottomStart="15dp"
-        app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp"
-        app:boxStrokeColor="@color/white"
-        app:boxStrokeWidth="2dp"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/white"
-        app:helperTextTextAppearance="@style/helper_text"
-        app:helperTextTextColor="@color/blue"
-        app:hintTextColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/searchButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggle">
-
-        <AutoCompleteTextView
-            android:id="@+id/facultyNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:completionThreshold="1"
-            android:ems="10"
-            android:focusableInTouchMode="true"
-            android:fontFamily="@font/poppins"
-            android:inputType="text"
-            android:paddingLeft="15dp"
-            android:paddingTop="12dp"
-            android:paddingRight="15dp"
-            android:paddingBottom="12dp"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textCursorDrawable="@drawable/cursor" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/courseCodeLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Course Code or Title"
-        android:textColorHint="@color/back_btn"
-        android:visibility="visible"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
-        app:boxStrokeColor="@color/back_btn"
-        app:boxStrokeWidth="2dp"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/back_btn"
-        app:helperText="Example - CSE2011 or Data Structure and Algorithms"
-        app:helperTextTextAppearance="@style/helper_text"
-        app:helperTextTextColor="@color/back_text1"
-        app:hintTextColor="@color/back_btn"
-        app:layout_constraintEnd_toStartOf="@+id/searchButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggle">
-
-        <AutoCompleteTextView
-            android:id="@+id/courseCodeEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:completionThreshold="1"
-            android:ems="10"
-            android:focusableInTouchMode="true"
-            android:fontFamily="@font/poppins"
-            android:inputType="text"
-            android:paddingStart="16dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="12dp"
-            android:textColor="@color/back_btn"
-            android:textCursorDrawable="@drawable/cursor" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/filterGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:paddingStart="2dp"
-        android:paddingEnd="2dp"
-        app:barrierMargin="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/morningChip"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Morning"
-            android:textAppearance="@style/tab_layout_text" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/afternoonChip"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Afternoon"
-            android:textAppearance="@style/tab_layout_text" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/theoryChip"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theory"
-            android:textAppearance="@style/tab_layout_text" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/labChip"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lab"
-            android:textAppearance="@style/tab_layout_text" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/projectChip"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Project"
-            android:textAppearance="@style/tab_layout_text" />
-
-    </com.google.android.material.chip.ChipGroup>
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/toggle"
-        style="@android:style/Widget.Material.CompoundButton.Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:thumbTint="#F54748"
-        app:layout_constraintEnd_toEndOf="@+id/filterGroup"
-        app:layout_constraintStart_toStartOf="@+id/filterGroup"
-        app:layout_constraintTop_toBottomOf="@+id/filterGroup" />
-
-    <TextView
-        android:id="@+id/cText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="SEARCH BY COURSE"
-        android:textColor="#F54748"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toggle"
-        app:layout_constraintEnd_toStartOf="@+id/toggle"
-        app:layout_constraintTop_toTopOf="@+id/toggle" />
-
-    <TextView
-        android:id="@+id/fText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="SEARCH BY FACULTY"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toggle"
-        app:layout_constraintStart_toEndOf="@+id/toggle"
-        app:layout_constraintTop_toTopOf="@+id/toggle" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/searchButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="12dp"
-        android:fontFamily="@font/poppins"
-        android:pointerIcon="top_right_diagonal_double_arrow"
-        android:textAllCaps="false"
-        android:textColor="@color/back_btn"
-        android:textSize="10sp"
         android:textStyle="bold"
-        app:cornerRadius="15dp"
-        app:icon="@drawable/ic_next"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
-        app:iconTint="@color/back_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/facultyNameLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/facultyNameLayout"
-        app:rippleColor="@color/white"
-        app:strokeColor="@color/back_btn"
-        app:strokeWidth="2dp" />
+        tools:layout_editor_absoluteX="140dp"
+        tools:layout_editor_absoluteY="688dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/facultyRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="16dp"
-        android:layoutAnimation="@anim/layout_animation"
-        app:layout_constraintBottom_toTopOf="@+id/searchCountText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseCodeLayout" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/cText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="SEARCH BY COURSE"
+            android:textColor="#F54748"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/toggle"
+            app:layout_constraintEnd_toStartOf="@+id/toggle"
+            app:layout_constraintTop_toTopOf="@+id/toggle" />
+
+        <TextView
+            android:id="@+id/fText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="SEARCH BY FACULTY"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/toggle"
+            app:layout_constraintStart_toEndOf="@+id/toggle"
+            app:layout_constraintTop_toTopOf="@+id/toggle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/searchButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="@font/poppins"
+            android:pointerIcon="top_right_diagonal_double_arrow"
+            android:textAllCaps="false"
+            android:textColor="@color/back_btn"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
+            app:icon="@drawable/ic_next"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@color/back_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/facultyNameLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/facultyNameLayout"
+            app:rippleColor="@color/white"
+            app:strokeColor="@color/back_btn"
+            app:strokeWidth="2dp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/toggle"
+            style="@android:style/Widget.Material.CompoundButton.Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:thumbTint="#F54748"
+            app:layout_constraintEnd_toEndOf="@+id/filterGroup"
+            app:layout_constraintStart_toStartOf="@+id/filterGroup"
+            app:layout_constraintTop_toBottomOf="@+id/filterGroup" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/filterGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            app:barrierMargin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/morningChip"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Morning"
+                android:textAppearance="@style/tab_layout_text" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/afternoonChip"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Afternoon"
+                android:textAppearance="@style/tab_layout_text" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/theoryChip"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Theory"
+                android:textAppearance="@style/tab_layout_text" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/labChip"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lab"
+                android:textAppearance="@style/tab_layout_text" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/projectChip"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Project"
+                android:textAppearance="@style/tab_layout_text" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/facultyNameLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Faculty Name"
+            android:textColorHint="@color/white"
+            android:visibility="invisible"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxCornerRadiusTopEnd="15dp"
+            app:boxCornerRadiusTopStart="15dp"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white"
+            app:helperTextTextAppearance="@style/helper_text"
+            app:helperTextTextColor="@color/blue"
+            app:hintTextColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/searchButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggle">
+
+            <AutoCompleteTextView
+                android:id="@+id/facultyNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/poppins"
+                android:inputType="text"
+                android:paddingLeft="15dp"
+                android:paddingTop="12dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="12dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@drawable/cursor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/courseCodeLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Course Code or Title"
+            android:textColorHint="@color/back_btn"
+            android:visibility="visible"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="@color/back_btn"
+            app:boxStrokeWidth="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/back_btn"
+            app:helperText="Example - CSE2011 or Data Structure and Algorithms"
+            app:helperTextTextAppearance="@style/helper_text"
+            app:helperTextTextColor="@color/back_text1"
+            app:hintTextColor="@color/back_btn"
+            app:layout_constraintEnd_toStartOf="@+id/searchButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggle">
+
+            <AutoCompleteTextView
+                android:id="@+id/courseCodeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:fontFamily="@font/poppins"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp"
+                android:textColor="@color/back_btn"
+                android:textCursorDrawable="@drawable/cursor" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/facultyRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layoutAnimation="@anim/layout_animation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation2"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            android:alpha="0.80"
+            android:scaleType="center"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/facultyRecyclerView"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="notfound.json"
+            app:lottie_loop="true" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            android:alpha="0.6"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/facultyRecyclerView"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="search.json"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins"
+            android:text="Search to view courses"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/animation" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -47,7 +47,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
     }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
-        private final TextView startTime, endTime, slotNumber, courseCode, roomNumber, empName;
+        private final TextView startTime, endTime, slotNumber, courseCode, roomNumber, empName, slot,
+                courseName, l, t, p, j, c;
         private final View typeSelector;
         private final ImageButton deleteButton;
         private final CardView longPress;
@@ -64,6 +65,13 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
             typeSelector = view.findViewById(R.id.typeSelector);
             deleteButton = view.findViewById(R.id.deleteButton);
             longPress = view.findViewById(R.id.longPress);
+            courseName = view.findViewById(R.id.courseTitleHome);
+            slot = view.findViewById(R.id.slotHome);
+            l = view.findViewById(R.id.l);
+            t = view.findViewById(R.id.t);
+            p = view.findViewById(R.id.p);
+            j = view.findViewById(R.id.j);
+            c = view.findViewById(R.id.c);
         }
     }
 
@@ -78,6 +86,13 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         holder.courseCode.setText(model.getCourseCode() + " - " + model.getCourseType());
         holder.empName.setText(model.getEmpName());
         holder.roomNumber.setText(model.getRoomNumber());
+        holder.courseName.setText(model.getCourseTitle());
+        holder.slot.setText(model.getSlot());
+        holder.l.setText(model.getL());
+        holder.t.setText(model.getT());
+        holder.p.setText(model.getP());
+        holder.j.setText(model.getJ());
+        holder.c.setText(model.getC());
 
         if (list.get(position).isClash()) {
             holder.typeSelector.setBackgroundColor(context.getColor(R.color.clash_color));
@@ -139,7 +154,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                     .show();
         });
 
-        holder.longPress.setOnLongClickListener(v -> {
+        /*holder.longPress.setOnLongClickListener(v -> {
 
             Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -199,7 +214,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
             alertDialog.show();
 
             return true;
-        });
+        });*/
     }
 
     @Override

@@ -775,23 +775,20 @@ public class MainActivity extends AppCompatActivity {
                                             .setTextColor(getResources().getColor(R.color.snackbar_text))
                                             .show();
 
-                                    if (realm != null)
-                                        realm.close();
+                                    realm.close();
 
-                                    if (user != null) {
-                                        user.logOutAsync(result -> {
-                                            if (result.isSuccess()) {
-                                                Log.d("Hello", "Successfully logged out.");
-                                            } else {
-                                                Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                            }
-                                        });
-                                    }
+                                    user.logOutAsync(result -> {
+                                        if (result.isSuccess()) {
+                                            Log.d("Hello", "Successfully logged out.");
+                                        } else {
+                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                        }
+                                    });
                                 }
                             });
                         }
 
-                        @Override
+                        /*@Override
                         public void onError(Throwable exception) {
                             super.onError(exception);
                             Log.d("Hello", "Failed to create Realm" + exception.getMessage());
@@ -803,16 +800,14 @@ public class MainActivity extends AppCompatActivity {
                                     .setTextColor(getResources().getColor(R.color.snackbar_text))
                                     .show();
 
-                            if (user != null) {
-                                user.logOutAsync(result -> {
-                                    if (result.isSuccess()) {
-                                        Log.d("Hello", "Successfully logged out.");
-                                    } else {
-                                        Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                    }
-                                });
-                            }
-                        }
+                            user.logOutAsync(result -> {
+                                if (result.isSuccess()) {
+                                    Log.d("Hello", "Successfully logged out.");
+                                } else {
+                                    Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                }
+                            });
+                        }*/
                     });
                 }
 

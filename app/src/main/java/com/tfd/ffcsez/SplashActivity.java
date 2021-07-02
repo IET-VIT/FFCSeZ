@@ -1,5 +1,6 @@
 package com.tfd.ffcsez;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -133,12 +134,26 @@ public class SplashActivity extends AppCompatActivity {
                                                 loadAnimation.cancelAnimation();
                                                 loadLayout.setVisibility(View.GONE);
 
+                                                realm.close();
+
+                                                if (user != null) {
+                                                    user.logOutAsync(result -> {
+                                                        if (result.isSuccess()) {
+                                                            Log.d("Hello", "Successfully logged out.");
+                                                        } else {
+                                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                                        }
+                                                    });
+                                                }
+
                                                 startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
+                                                        ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
                                                 finish();
                                             }
                                         });
                                     }
+
                                     /*@Override
                                     public void onError(Throwable exception) {
                                         super.onError(exception);
@@ -157,7 +172,23 @@ public class SplashActivity extends AppCompatActivity {
                             Toast.makeText(SplashActivity.this,
                                     "Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.",
                                     Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
+                            if (realm != null)
+                                realm.close();
+
+                            if (user != null) {
+                                user.logOutAsync(result1 -> {
+                                    if (result1.isSuccess()) {
+                                        Log.d("Hello", "Successfully logged out.");
+                                    } else {
+                                        Log.d("Hello", "Failed to log out, error: " + result1.getError());
+                                    }
+                                });
+                            }
+
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class)
+                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
+                                    ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
                             finish();
                         }
                     });
@@ -173,7 +204,7 @@ public class SplashActivity extends AppCompatActivity {
                                     && notifIntent.getStringExtra("refreshNotif").equals("true"))
                                 intent.putExtra("refreshNotif", true);
                         }
-                        startActivity(intent);
+                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
                         finish();
                     }, 1000);
                 }
