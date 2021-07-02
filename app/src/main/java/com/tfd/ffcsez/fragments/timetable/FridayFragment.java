@@ -47,7 +47,7 @@ public class FridayFragment extends Fragment {
         ConstantsActivity.getTimeTableId().observe(getActivity(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                LiveData<List<TimeTableData>> friTimeTableLD = database.timeTableDao().loadTTDetails(ConstantsActivity.getTimeTableId().getValue(), 4, 9);
+                LiveData<List<TimeTableData>> friTimeTableLD = database.timeTableDao().loadTTDetails(integer, 4, 9);
                 if (getActivity() != null) {
                     friTimeTableLD.observe(getActivity(), timeTableData -> {
                         adapter.updateAdapter(timeTableData);

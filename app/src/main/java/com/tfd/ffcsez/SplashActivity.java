@@ -186,7 +186,7 @@ public class SplashActivity extends AppCompatActivity {
                                 });
                             }
 
-                            startActivity(new Intent(SplashActivity.this, MainActivity.class)
+                            startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
                                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
                                     ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
                             finish();

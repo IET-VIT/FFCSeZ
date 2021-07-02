@@ -67,8 +67,10 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         ttRecyclerView.setLayoutManager(layoutManager);
         ttRecyclerView.setAdapter(adapter);
 
-        LiveData<List<TTDetails>> ttDetailsListLD = database.ttDetailsDao().loadAllTimeTables();
-        ttDetailsListLD.observe(getActivity(), adapter::updateAdapter);
+        if (getActivity() != null) {
+            LiveData<List<TTDetails>> ttDetailsListLD = database.ttDetailsDao().loadAllTimeTables();
+            ttDetailsListLD.observe(getActivity(), adapter::updateAdapter);
+        }
 
         createTTButton.setOnClickListener(v -> {
             MainActivity.doVibration();

@@ -25,39 +25,41 @@ public class MorningFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_morning, container, false);
         FacultyDatabase database = FacultyDatabase.getInstance(getActivity().getApplicationContext());
 
-        LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(ConstantsActivity.getTimeTableId().getValue(), 0, 4);
-        data.observe(getActivity(), timeTableData -> {
-            TextView slotHolder;
-            String slots;
+        if (getActivity() != null) {
+            LiveData<List<TimeTableData>> data = database.timeTableDao().loadTT(ConstantsActivity.getTimeTableId().getValue(), 0, 4);
+            data.observe(getActivity(), timeTableData -> {
+                TextView slotHolder;
+                String slots;
 
-            for (TimeTableData tableData: timeTableData){
-                int num;
-                if(tableData.getColumn() == 5){
-                    num = ((tableData.getRow() + 1)*6);
-                }else{
-                    num = ((tableData.getRow())*6) + (tableData.getColumn() + 1);
+                for (TimeTableData tableData : timeTableData) {
+                    int num;
+                    if (tableData.getColumn() == 5) {
+                        num = ((tableData.getRow() + 1) * 6);
+                    } else {
+                        num = ((tableData.getRow()) * 6) + (tableData.getColumn() + 1);
+                    }
+
+                    slotHolder = view.findViewById(getResources().getIdentifier("text" + num, "id",
+                            getActivity().getPackageName()));
+                    slots = slotHolder.getText().toString();
+
+                    if (slots.isEmpty()) {
+                        slots += ConstantsActivity.getNumList().get(num);
+                    }
+                    slots += ("\n" + tableData.getCourseCode() + "-" + tableData.getCourseType());
+
+                    slotHolder.setText(slots);
+
+                    if (tableData.isClash()) {
+                        slotHolder.setBackgroundColor(Color.parseColor("#ff0000"));
+                        slotHolder.setTextColor(Color.parseColor("#fff5eb"));
+                    } else {
+                        slotHolder.setBackgroundColor(Color.parseColor("#ccff33"));
+                        slotHolder.setTextColor(Color.parseColor("#232323"));
+                    }
                 }
-
-                slotHolder = view.findViewById(getResources().getIdentifier("text" + num, "id",
-                                getActivity().getPackageName()));
-                slots = slotHolder.getText().toString();
-
-                if (slots.isEmpty()){
-                    slots += ConstantsActivity.getNumList().get(num);
-                }
-                slots += ("\n" + tableData.getCourseCode() + "-" + tableData.getCourseType());
-
-                slotHolder.setText(slots);
-
-                if (tableData.isClash()){
-                    slotHolder.setBackgroundColor(Color.parseColor("#ff0000"));
-                    slotHolder.setTextColor(Color.parseColor("#fff5eb"));
-                }else{
-                    slotHolder.setBackgroundColor(Color.parseColor("#ccff33"));
-                    slotHolder.setTextColor(Color.parseColor("#232323"));
-                }
-            }
-        });
+            });
+        }
         return view;
     }
 }
