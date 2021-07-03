@@ -28,9 +28,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="B2 / L37"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -54,9 +56,10 @@
             android:background=" #99ccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="4:00 PM\nTO\n4:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -80,9 +83,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TB2 / L34"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -106,9 +111,9 @@
             android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="THURSDAY"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -132,9 +137,10 @@
             android:background="#ccccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="2:00 PM\nTO\n2:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -158,9 +164,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="E2 / L39"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -184,9 +192,9 @@
             android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TUESDAY"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -210,9 +218,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="G2 / L38"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -236,9 +246,10 @@
             android:background="#ccccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="5:00 PM\nTO\n5:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -262,9 +273,9 @@
             android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="THEORY\nHOURS"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -288,9 +299,10 @@
             android:background=" #99ccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="2:00 PM\nTO\n2:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -314,9 +326,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TD2 / L59"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -340,9 +354,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="G2 / L51"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -366,9 +382,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="A2 / L31"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -392,9 +410,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TAA2 / L41"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -418,9 +438,10 @@
             android:background=" #99ccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="5:31 PM\nTO\n6:15 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -444,9 +465,10 @@
             android:background="#ccccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="3:00 PM\nTO\n3:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -470,9 +492,10 @@
             android:background=" #99ccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="6:16 PM\nTO\n7:00 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -496,9 +519,9 @@
             android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="MONDAY"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -522,9 +545,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="C2 / L56"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -548,9 +573,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="V5 / L48"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -574,9 +601,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TF2 / L58"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -600,9 +629,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TG2 / L35"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -626,9 +657,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="F2 / L32"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -652,9 +685,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="B2 / L50"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -678,9 +713,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="C2 / L43"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -704,9 +741,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="A2 / L44"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -730,9 +769,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TE2 / L52"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -756,9 +797,10 @@
             android:background="#ccccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="6:00 PM\nTO\n6:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -782,9 +824,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="V7 / L60"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -808,9 +852,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TA2 / L57"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -834,9 +880,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TD2/ L46"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -860,9 +908,10 @@
             android:background="#ccccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="4:00 PM\nTO\n4:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -886,9 +935,10 @@
             android:background=" #99ccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="2:46 PM\nTO\n3:30 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -912,9 +962,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="V6 / L54"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -938,9 +990,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TBB2 / L47"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -975,9 +1029,10 @@
             android:background="#ccccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="7:00 PM\nTO\n7:45 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1001,9 +1056,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="V4 / L42"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1027,9 +1084,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="F2 / L45"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1053,9 +1112,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="V3 / L36"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1079,9 +1140,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="D2 / L33"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1105,9 +1168,9 @@
             android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="WEDNESDAY"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1131,9 +1194,9 @@
             android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="FRIDAY"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1157,9 +1220,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="D2 / L49"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1183,9 +1248,10 @@
             android:background=" #99ccff"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="4:46 PM\nTO\n5:30 PM"
             android:textColor="@color/black"
-            android:textSize="8sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1209,9 +1275,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TCC2 / L53"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1235,9 +1303,11 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="E2 / L55"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1261,9 +1331,9 @@
             android:background="#e2e2e2"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
+            android:padding="2dp"
             android:text="LAB\nHOURS"
-            android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1287,8 +1357,10 @@
             android:background="#ffffcc"
             android:fontFamily="@font/poppins"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TC2 / L40"
             android:textColor="#948d83"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            app:autoSizePresetSizes="@array/autosize_text_sizes" />
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
