@@ -271,7 +271,8 @@ import kotlin.jvm.functions.Function1;
 
         customButton.setOnClickListener(v -> {
             doVibration();
-            int flag = 0;
+            Toast.makeText(this, "This feature is still under development", Toast.LENGTH_SHORT).show();
+            /*int flag = 0;
             customSlot.setError(null);
 
             FacultyData data = new FacultyData();
@@ -316,7 +317,7 @@ import kotlin.jvm.functions.Function1;
                 customDialog.dismiss();
                 data.setSlot(customSlot.getText().toString().toUpperCase().trim());
                 setTTSlot(data, back_layout);
-            }
+            }*/
         });
 
         // Front Layout
