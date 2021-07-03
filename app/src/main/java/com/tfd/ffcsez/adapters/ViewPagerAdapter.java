@@ -3,21 +3,24 @@ package com.tfd.ffcsez.adapters;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.tfd.ffcsez.fragments.getstarted.FragmentA;
 import com.tfd.ffcsez.fragments.getstarted.FragmentB;
 import com.tfd.ffcsez.fragments.getstarted.FragmentC;
 
+import org.jetbrains.annotations.NotNull;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+
+public class ViewPagerAdapter extends FragmentStateAdapter {
+    public ViewPagerAdapter(@NonNull @NotNull FragmentManager fragmentManager, @NonNull @NotNull Lifecycle lifecycle) {
+        super(fragmentManager, lifecycle);
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         switch (position){
             case 0: return new FragmentA();
             case 1: return new FragmentB();
@@ -27,7 +30,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return 3;
     }
 }

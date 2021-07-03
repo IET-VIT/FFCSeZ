@@ -13,9 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,35 +78,42 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/ietLogo"
         android:layout_width="70dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tfdLogo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tfdLogo"
+        app:layout_constraintTop_toTopOf="@+id/tfdLogo"
         app:srcCompat="@drawable/ietlogo" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/tfdLogo"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/loadLayout"
+        app:layout_constraintEnd_toStartOf="@+id/ietLogo"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/tfd" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/madeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/poppins"
+        android:text="Made with ❤ by"
         android:textColor="@color/light_grey"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/imageView7" />
+        app:layout_constraintBottom_toTopOf="@+id/tfdLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -369,7 +369,7 @@ import kotlin.jvm.functions.Function1;
             else if (getResources().getConfiguration().uiMode == Configuration.UI_MODE_NIGHT_YES)
                 themeRG.check(R.id.darkRadioButton);
             else if (getResources().getConfiguration().uiMode == Configuration.UI_MODE_NIGHT_UNDEFINED)
-                themeRG.check(R.id.darkRadioButton);
+                themeRG.check(R.id.lightRadioButton);
         }
 
         themeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

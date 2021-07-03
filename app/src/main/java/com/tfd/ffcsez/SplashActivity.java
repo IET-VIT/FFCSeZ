@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,10 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.loadAnimation) LottieAnimationView loadAnimation;
     @BindView(R.id.loadTextView) TextView loadText;
     @BindView(R.id.loadLayout) LinearLayout loadLayout;
+    @BindView(R.id.ietLogo) ImageView ietLogo;
+    @BindView(R.id.tfdLogo) ImageView tfdLogo;
+    @BindView(R.id.madeText) TextView madeText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setNavigationBarColor(getColor(R.color.pitch_black));
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
-        AppCompatDelegate.setDefaultNightMode(sharedPreferences.getInt("appTheme", AppCompatDelegate.MODE_NIGHT_YES));
+        AppCompatDelegate.setDefaultNightMode(sharedPreferences.getInt("appTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
 
         setContentView(R.layout.activity_splash);
 
@@ -90,7 +95,9 @@ public class SplashActivity extends AppCompatActivity {
 
                     Realm.init(SplashActivity.this);
                     app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
-
+                    ietLogo.setVisibility(View.GONE);
+                    tfdLogo.setVisibility(View.GONE);
+                    madeText.setVisibility(View.GONE);
                     loadLayout.setVisibility(View.VISIBLE);
                     loadAnimation.playAnimation();
                     loadText.setText("Setting up for first time use...");
@@ -194,7 +201,9 @@ public class SplashActivity extends AppCompatActivity {
                     });
                 }else {
                     loadLayout.setVisibility(View.GONE);
-
+                    ietLogo.setVisibility(View.VISIBLE);
+                    tfdLogo.setVisibility(View.VISIBLE);
+                    madeText.setVisibility(View.VISIBLE);
                     new Handler().postDelayed(() -> {
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

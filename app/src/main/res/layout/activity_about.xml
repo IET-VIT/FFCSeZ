@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/background">
 
         <androidx.appcompat.widget.Toolbar
@@ -34,13 +34,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:cardBackgroundColor="@color/home_timetable"
             app:cardElevation="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView21"
             app:strokeColor="@color/light_grey"
             app:strokeWidth="2dp">
 
@@ -130,13 +129,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             app:cardBackgroundColor="@color/home_timetable"
             app:cardElevation="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
             app:strokeColor="@color/light_grey"
             app:strokeWidth="2dp">
 
@@ -248,6 +249,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

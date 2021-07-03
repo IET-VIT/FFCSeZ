@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".GetStartedActivity">
 
-    <com.cuberto.liquid_swipe.LiquidPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

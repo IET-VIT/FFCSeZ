@@ -6,6 +6,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.cuberto.liquid_swipe.LiquidPager;
 import com.tfd.ffcsez.adapters.ViewPagerAdapter;
@@ -17,9 +19,9 @@ public class GetStartedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
-        LiquidPager pager = findViewById(R.id.pager);
-        pager.setButtonDrawable(R.drawable.next_button);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 1);
+        ViewPager2 pager = findViewById(R.id.pager);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(fragmentManager, getLifecycle());
         pager.setAdapter(viewPagerAdapter);
     }
 

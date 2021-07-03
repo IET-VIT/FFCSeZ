@@ -29,6 +29,5 @@ public class FragmentA extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((GetStartedActivity)getActivity()).updateStatusBarColor("#ffffff");
     }
 }
