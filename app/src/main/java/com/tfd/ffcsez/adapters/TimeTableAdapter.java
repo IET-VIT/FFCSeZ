@@ -79,7 +79,9 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
 
         TimeTableData model = list.get(position);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            holder.deleteButton.setTooltipText("Delete Course");
+        }
         holder.startTime.setText(model.getStartTime());
         holder.endTime.setText(model.getEndTime());
         holder.slotNumber.setText(model.getCurrentSlot());

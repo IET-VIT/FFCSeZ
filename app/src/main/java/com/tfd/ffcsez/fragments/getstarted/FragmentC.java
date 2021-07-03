@@ -38,6 +38,6 @@ public class FragmentC extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((GetStartedActivity)getActivity()).updateStatusBarColor("#974ea0");
+        ((GetStartedActivity)getActivity()).updateStatusBarColor("#ffffff");
     }
 }

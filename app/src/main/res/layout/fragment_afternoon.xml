@@ -278,7 +278,7 @@
             android:padding="2dp"
             android:text="THEORY\nHOURS"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1340,7 +1340,7 @@
             android:padding="2dp"
             android:text="LAB\nHOURS"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView

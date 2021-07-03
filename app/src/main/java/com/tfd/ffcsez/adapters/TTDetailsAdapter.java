@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,11 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         TTDetails details = list.get(position);
 
         Log.d("HelloTT", details.getTimeTableId() + details.getTimeTableName());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            holder.ttClearButton.setTooltipText("Clear Timetable");
+            holder.ttDeleteButton.setTooltipText("Delete Timetable");
+            holder.ttEditButton.setTooltipText("Edit Timetable");
+        }
 
         if (details.getTimeTableName().equals("XXDefault TimetableXX")) {
             holder.timeTableName.setText("Default Timetable");
