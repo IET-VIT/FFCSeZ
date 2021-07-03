@@ -52,6 +52,8 @@
     <color name="custom_course_text">@color/black</color>
     <color name="custom_course_btn">@color/light_blue</color>
 
+    <color name="splash_bg">@color/white</color>
+
     <color name="back_btn">@color/black</color>
 
     <color name="snackbar_bg">@color/black</color>

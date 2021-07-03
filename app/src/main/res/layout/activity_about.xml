@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/background">
 
         <androidx.appcompat.widget.Toolbar
@@ -33,15 +33,15 @@
             android:id="@+id/materialCardView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
             app:cardBackgroundColor="@color/home_timetable"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
-            app:strokeColor="@color/light_grey"
-            app:strokeWidth="2dp">
+            app:layout_constraintTop_toBottomOf="@+id/textView21">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/poppins"
                     android:text="Committed to sharing and spreading STEM knowledge among the student community. Help students become standouts by providing them training and inspiration unavailable in the confines of their classrooms. Regularly organize university and global level events like workshops, entrepreneurship events and hackathons."
@@ -91,8 +91,8 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,20 +103,19 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="130dp"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/app_name"
             android:textColor="@color/back_btn"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView4"
             app:layout_constraintStart_toStartOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
         <TextView
             android:id="@+id/textView21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins_light"
             android:text="@string/app_version"
             android:textSize="16sp"
@@ -129,17 +128,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             app:cardBackgroundColor="@color/home_timetable"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-            app:strokeColor="@color/light_grey"
-            app:strokeWidth="2dp">
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -170,10 +168,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_margin="8dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +206,6 @@
                         app:cornerRadius="16dp"
                         app:icon="@drawable/ic_github"
                         app:iconGravity="textStart"
-                        app:iconPadding="4dp"
                         app:iconTint="@color/background"
                         app:rippleColor="@color/background"
                         app:strokeColor="@color/custom_course_text"
@@ -223,7 +217,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_medium"
                         android:pointerIcon="top_right_diagonal_double_arrow"
@@ -237,11 +230,8 @@
                         app:cornerRadius="16dp"
                         app:icon="@drawable/ic_github"
                         app:iconGravity="textStart"
-                        app:iconPadding="4dp"
                         app:iconTint="@color/background"
-                        app:rippleColor="@color/background"
-                        app:strokeColor="@color/custom_course_text"
-                        app:strokeWidth="2dp" />
+                        app:rippleColor="@color/background" />
 
                 </LinearLayout>
 
@@ -253,15 +243,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             app:cardBackgroundColor="@color/home_timetable"
-            app:cardElevation="3dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView3"
-            app:strokeColor="@color/light_grey"
-            app:strokeWidth="2dp">
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView3">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

@@ -62,8 +62,8 @@ public class SplashActivity extends AppCompatActivity {
         //getWindow().setEnterTransition(new Fade().setDuration(5000));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(getColor(R.color.pitch_black));
-        getWindow().setNavigationBarColor(getColor(R.color.pitch_black));
+        getWindow().setStatusBarColor(getColor(R.color.custom_course_bg));
+        getWindow().setNavigationBarColor(getColor(R.color.custom_course_bg));
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
         AppCompatDelegate.setDefaultNightMode(sharedPreferences.getInt("appTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));

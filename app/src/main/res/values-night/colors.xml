@@ -18,6 +18,8 @@
     <color name="custom_course_text">@color/white</color>
     <color name="custom_course_btn">@color/blue</color>
 
+    <color name="splash_bg">@color/pitch_black</color>
+
     <color name="back_btn">@color/white</color>
 
     <color name="snackbar_bg">@color/white</color>
