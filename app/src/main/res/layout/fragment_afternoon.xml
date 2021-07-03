@@ -59,7 +59,7 @@
             android:padding="2dp"
             android:text="4:00 PM\nTO\n4:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -113,7 +113,8 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="THURSDAY"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -140,7 +141,7 @@
             android:padding="2dp"
             android:text="2:00 PM\nTO\n2:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -194,7 +195,8 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="TUESDAY"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -249,7 +251,7 @@
             android:padding="2dp"
             android:text="5:00 PM\nTO\n5:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -275,7 +277,8 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="THEORY\nHOURS"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -302,7 +305,7 @@
             android:padding="2dp"
             android:text="2:00 PM\nTO\n2:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -441,7 +444,7 @@
             android:padding="2dp"
             android:text="5:31 PM\nTO\n6:15 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -468,7 +471,7 @@
             android:padding="2dp"
             android:text="3:00 PM\nTO\n3:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -495,7 +498,7 @@
             android:padding="2dp"
             android:text="6:16 PM\nTO\n7:00 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -521,7 +524,8 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="MONDAY"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -800,7 +804,7 @@
             android:padding="2dp"
             android:text="6:00 PM\nTO\n6:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -911,7 +915,7 @@
             android:padding="2dp"
             android:text="4:00 PM\nTO\n4:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -938,7 +942,7 @@
             android:padding="2dp"
             android:text="2:46 PM\nTO\n3:30 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1032,7 +1036,7 @@
             android:padding="2dp"
             android:text="7:00 PM\nTO\n7:45 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1170,7 +1174,8 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="WEDNESDAY"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1196,7 +1201,8 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="FRIDAY"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1251,7 +1257,7 @@
             android:padding="2dp"
             android:text="4:46 PM\nTO\n5:30 PM"
             android:textColor="@color/black"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -1333,7 +1339,8 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="LAB\nHOURS"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
