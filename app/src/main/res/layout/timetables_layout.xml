@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/timeTableInfo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,68 +12,121 @@
     app:strokeColor="@color/light_grey"
     app:strokeWidth="2dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:orientation="horizontal"
-        android:padding="4dp">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/selectedImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_done"
-            app:tint="@color/grass_green" />
-
-        <TextView
-            android:id="@+id/timeTableName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_weight="10"
-            android:fontFamily="@font/poppins_bold"
-            android:maxLines="1"
-            android:text="TimeTable Number"
-            android:textSize="20sp" />
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout11"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/ttEditButton"
+            <ImageView
+                android:id="@+id/selectedImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_done"
+                app:tint="@color/grass_green" />
+
+            <TextView
+                android:id="@+id/timeTableName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="TimeTable Name"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout11"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|end"
-            android:layout_weight="1"
-            android:backgroundTint="@color/orange"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_edit"
-            app:tint="#ffffff" />
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/ttClearButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|end"
-            android:layout_weight="1"
-            android:backgroundTint="@color/dark_blue"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_clear"
-            app:tint="#ffffff" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ttEditButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:fontFamily="@font/poppins"
+                android:pointerIcon="top_right_diagonal_double_arrow"
+                android:textAllCaps="false"
+                android:textColor="@color/back_btn"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_edit"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/theory_color"
+                app:rippleColor="@color/theory_color"
+                app:strokeColor="@color/theory_color"
+                app:strokeWidth="2dp" />
 
-        <ImageButton
-            android:id="@+id/ttDeleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|end"
-            android:layout_weight="1"
-            android:backgroundTint="#d11a2a"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_delete"
-            app:tint="@color/white" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ttClearButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:fontFamily="@font/poppins"
+                android:pointerIcon="top_right_diagonal_double_arrow"
+                android:textAllCaps="false"
+                android:textColor="@color/back_btn"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_clear"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/project_color"
+                app:rippleColor="@color/project_color"
+                app:strokeColor="@color/project_color"
+                app:strokeWidth="2dp" />
 
-    </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ttDeleteButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:fontFamily="@font/poppins"
+                android:pointerIcon="top_right_diagonal_double_arrow"
+                android:textAllCaps="false"
+                android:textColor="@color/back_btn"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_delete"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/clash_color"
+                app:rippleColor="@color/clash_color"
+                app:strokeColor="@color/clash_color"
+                app:strokeWidth="2dp" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.material.card.MaterialCardView>

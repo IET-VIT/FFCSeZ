@@ -231,10 +231,34 @@
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/hideButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/poppins"
+        android:pointerIcon="top_right_diagonal_double_arrow"
+        android:textAllCaps="false"
+        android:textColor="@color/back_btn"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:cornerRadius="64dp"
+        app:icon="@drawable/ic_arrow_up"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@color/toolbar_bg"
+        app:backgroundTint="@color/custom_course_text"
+        app:rippleColor="@color/white"
+        app:strokeColor="@color/custom_course_text"
+        app:strokeWidth="2dp"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="233dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="267dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/facultyRecyclerView"

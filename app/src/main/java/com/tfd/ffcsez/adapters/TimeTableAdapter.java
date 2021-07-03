@@ -10,7 +10,7 @@ import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,7 +50,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         private final TextView startTime, endTime, slotNumber, courseCode, roomNumber, empName, slot,
                 courseName, l, t, p, j, c;
         private final View typeSelector;
-        private final ImageButton deleteButton;
+        private final Button deleteButton;
         private final CardView longPress;
 
         public RecyclerViewHolder(@NonNull View view) {
@@ -153,68 +153,6 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                     .setTextColor(context.getResources().getColor(R.color.snackbar_text))
                     .show();
         });
-
-        /*holder.longPress.setOnLongClickListener(v -> {
-
-            Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(80, VibrationEffect.EFFECT_TICK));
-            }
-
-            View facultyView = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null);
-
-            TextView facultyName = facultyView.findViewById(R.id.digFacultyName);
-            TextView facultySchool = facultyView.findViewById(R.id.digFacultySchool);
-            TextView courseName = facultyView.findViewById(R.id.digCourseName);
-            TextView l = facultyView.findViewById(R.id.l);
-            TextView t = facultyView.findViewById(R.id.t);
-            TextView p = facultyView.findViewById(R.id.p);
-            TextView j = facultyView.findViewById(R.id.j);
-            TextView c = facultyView.findViewById(R.id.c);
-            TextView digSlot = facultyView.findViewById(R.id.digSlot);
-            TextView digCourseCode = facultyView.findViewById(R.id.digCourseCode);
-            TextView digCourseType = facultyView.findViewById(R.id.digCourseType);
-            TextView digRoomNo = facultyView.findViewById(R.id.digRoomNo);
-            CardView cardView = facultyView.findViewById(R.id.customDialogCardView);
-
-            if (list.get(position).isClash()) {
-                cardView.setCardBackgroundColor(context.getColor(R.color.light_light_pink));
-
-            }else {
-
-                if (list.get(position).getCourseType().equals("LO") || list.get(position).getCourseType().equals("ELA")) {
-                    cardView.setCardBackgroundColor(context.getColor(R.color.teal_100));
-
-                }else if (list.get(position).getCourseType().equals("EPJ")){
-                    cardView.setCardBackgroundColor(context.getColor(R.color.sky_blue));
-
-                }else{
-                    cardView.setCardBackgroundColor(context.getColor(R.color.light_orange));
-                }
-            }
-
-            facultyName.setText(model.getEmpName());
-            facultySchool.setText(model.getEmpSchool());
-            courseName.setText(model.getCourseTitle());
-            l.setText(model.getL());
-            t.setText(model.getT());
-            p.setText(model.getP());
-            j.setText(model.getJ());
-            c.setText(model.getC());
-            digSlot.setText(model.getSlot());
-            digCourseCode.setText(model.getCourseCode());
-            digCourseType.setText(model.getCourseType());
-            digRoomNo.setText(model.getRoomNumber());
-
-            AlertDialog alertDialog = new AlertDialog.Builder(context)
-                    .setView(facultyView)
-                    .setCancelable(true)
-                    .create();
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            alertDialog.show();
-
-            return true;
-        });*/
     }
 
     @Override

@@ -15,7 +15,7 @@
         android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/home_timetable"
         app:cardCornerRadius="5dp"
-        app:cardElevation="3dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,22 +152,31 @@
                 app:layout_constraintStart_toEndOf="@+id/typeSelector"
                 app:layout_constraintTop_toTopOf="@+id/typeSelector" />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/deleteButton"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="64dp"
                 android:layout_height="0dp"
+                android:fontFamily="@font/poppins"
+                android:pointerIcon="top_right_diagonal_double_arrow"
+                android:textAllCaps="false"
+                android:textColor="@color/back_btn"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/ic_delete"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@color/clash_color"
+                app:rippleColor="@color/clash_color"
+                app:strokeColor="@color/clash_color"
+                app:strokeWidth="2dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
-                android:backgroundTint="#d11a2a"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_delete"
-                app:tint="#ffffff" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <LinearLayout
                 android:id="@+id/linearLayout10"

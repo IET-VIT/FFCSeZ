@@ -26,8 +26,8 @@
         <Constraint
             android:id="@+id/deleteButton"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="64dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"
@@ -69,8 +69,8 @@
         <Constraint
             android:id="@+id/deleteButton"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="64dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"

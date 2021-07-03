@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,7 +55,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder{
         private final TextView timeTableName;
-        private final ImageButton ttDeleteButton, ttEditButton, ttClearButton;
+        private final Button ttDeleteButton, ttEditButton, ttClearButton;
         private final ImageView selectedImageView;
         private final CardView timeTableInfo;
 
@@ -102,6 +101,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                 MainActivity.doVibration();
                 View dialogView = LayoutInflater.from(context).inflate(R.layout.custom_new_timetable, null);
                 EditText timeTableNameEditText = dialogView.findViewById(R.id.timeTableNameText);
+                TextInputLayout timeTableNameLayout = dialogView.findViewById(R.id.timeTableNameLayout);
                 Button doneButton = dialogView.findViewById(R.id.doneButton);
                 Button cancelButton = dialogView.findViewById(R.id.cancelButton);
 
@@ -134,9 +134,11 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                     @Override
                     public void onClick(View v) {
                         MainActivity.doVibration();
-                        timeTableNameEditText.setError(null);
+                        timeTableNameLayout.setError(null);
                         if (timeTableNameEditText.getText().toString().trim().isEmpty()) {
-                            timeTableNameEditText.setError("Timetable name cannot be empty");
+                            timeTableNameLayout.setError("Timetable name cannot be empty");
+                        } else if (timeTableNameEditText.getText().toString().length() > 16){
+                            timeTableNameLayout.setError("Name cannot be greater than 16 characters");
                         } else {
                             timeTableNameEditText.setEnabled(false);
                             newTTDialog.cancel();

@@ -76,6 +76,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             MainActivity.doVibration();
             View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.custom_new_timetable, null);
             EditText timeTableName = dialogView.findViewById(R.id.timeTableNameText);
+            TextInputLayout timeTableNameLayout = dialogView.findViewById(R.id.timeTableNameLayout);
             Button doneButton = dialogView.findViewById(R.id.doneButton);
             Button cancelButton = dialogView.findViewById(R.id.cancelButton);
 
@@ -98,10 +99,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
             doneButton.setOnClickListener(v12 -> {
                 MainActivity.doVibration();
-                timeTableName.setError(null);
+                timeTableNameLayout.setError(null);
                 if (timeTableName.getText().toString().trim().isEmpty()){
-                    timeTableName.setError("Timetable name cannot be empty");
-                }else{
+                    timeTableNameLayout.setError("Timetable name cannot be empty");
+                } else if (timeTableName.getText().toString().length() > 16){
+                    timeTableNameLayout.setError("Name cannot be greater than 16 characters");
+                } else{
                     timeTableName.setEnabled(false);
                     ExecutorClass.getInstance().diskIO().execute(new Runnable() {
                         @Override
