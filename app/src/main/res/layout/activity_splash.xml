@@ -5,7 +5,7 @@
     style="@style/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pitch_black"
+    android:background="@color/splash_bg"
     tools:context=".SplashActivity">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tfdLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,8 +27,7 @@
             android:layout_gravity="center"
             android:scaleType="fitStart"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="splash.json"
-            app:lottie_loop="true" />
+            app:lottie_fileName="splash.json" />
 
         <TextView
             android:id="@+id/textView"
@@ -39,7 +38,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/app_name"
-            android:textColor="@color/white"
+            android:textColor="@color/custom_course_text"
             android:textSize="40sp" />
     </LinearLayout>
 
@@ -100,7 +99,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/tfd" />
+        app:srcCompat="@drawable/tfd_2" />
 
     <TextView
         android:id="@+id/madeText"
@@ -111,7 +110,7 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/poppins"
         android:text="Made with ❤ by"
-        android:textColor="@color/light_grey"
+        android:textColor="@color/custom_course_text"
         app:layout_constraintBottom_toTopOf="@+id/tfdLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

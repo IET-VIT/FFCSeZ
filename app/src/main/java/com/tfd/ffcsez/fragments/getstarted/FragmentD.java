@@ -2,13 +2,13 @@ package com.tfd.ffcsez.fragments.getstarted;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
@@ -16,14 +16,16 @@ import com.tfd.ffcsez.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FragmentB extends Fragment {
+public class FragmentD extends Fragment {
 
-    @BindView(R.id.skipButton1) TextView skipButton;
-    @BindView(R.id.bg) ConstraintLayout bg;
+    @BindView(R.id.skipButton2) TextView skipButton;
+
+    public FragmentD() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_b, container, false);
+        View view = inflater.inflate(R.layout.fragment_d, container, false);
         ButterKnife.bind(this, view);
 
         skipButton.setOnClickListener(v -> {
