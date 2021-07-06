@@ -68,4 +68,5 @@
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/custom_card</item>
     </style>
+
 </resources>
