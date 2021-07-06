@@ -231,7 +231,7 @@
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <!-- <com.google.android.material.button.MaterialButton
         android:id="@+id/hideButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="50dp"
@@ -252,7 +252,27 @@
         app:strokeColor="@color/custom_course_text"
         app:strokeWidth="2dp"
         tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="233dp" />
+        tools:layout_editor_absoluteY="233dp" /> -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="288dp">
+
+        <View
+            android:id="@+id/divider20"
+            android:layout_width="150dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/sheet_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
