@@ -99,7 +99,7 @@ The main features of the app are broken down into a technical task timeline.
 ## <img src="https://hpe-developer-portal.s3.amazonaws.com/uploads/media/2020/3/git-icon-1788c-1590702885345.png" width=32 height=32> Contributing
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-1. Fork the Project. [(Refer the installation instructions)](#installation)
+1. Fork the Project. [(Refer the get started instructions)](#-getting-started)
 2. Create your Feature Branch. (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes. (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch. (`git push origin feature/AmazingFeature`)
