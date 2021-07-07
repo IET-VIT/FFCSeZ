@@ -42,11 +42,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
 import com.roacult.backdrop.BackdropLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
 import com.tfd.ffcsez.adapters.CreditsAdapter;
@@ -108,6 +112,7 @@ import kotlin.jvm.functions.Function1;
     @BindView(R.id.errorText) TextView errorText;
     @BindView(R.id.creditsNumber) TextView creditsNumber;
     @BindView(R.id.searchCountText) TextView searchCount;
+    @BindView(R.id.lastUpdated) TextView lastUpdatedText;
 
     // Chips
     @BindView(R.id.morningChip) Chip morningChip;
@@ -169,6 +174,8 @@ import kotlin.jvm.functions.Function1;
         });
         // Back Layout
         View back_layout = backdropLayout.getChildAt(0);
+
+        lastUpdatedText.setText(preferences.getString("lastUpdated", "Last updated for"));
 
         facultyAdapter = new FacultyAdapter(facultyList, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
@@ -790,6 +797,31 @@ import kotlin.jvm.functions.Function1;
                                 Log.d("Hello", Integer.toString(size));
 
                                 if (data.size() > 0) {
+
+                                    FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot != null) {
+                                                if (dataSnapshot.exists()) {
+                                                    String text = dataSnapshot.getValue().toString();
+                                                    lastUpdatedText.setText(text);
+                                                    preferences.edit().putString("lastUpdated", text).apply();
+                                                }
+                                            } else {
+                                                String text = "Last updated on";
+                                                lastUpdatedText.setText(text);
+                                                preferences.edit().putString("lastUpdated", text).apply();
+                                            }
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            String text = "Last updated on";
+                                            lastUpdatedText.setText(text);
+                                            preferences.edit().putString("lastUpdated", text).apply();
+                                        }
+                                    });
+
                                     lottieDialog.dismiss();
                                     Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
                                             Snackbar.LENGTH_LONG)

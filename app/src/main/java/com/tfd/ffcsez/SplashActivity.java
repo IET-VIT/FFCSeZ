@@ -21,6 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
@@ -138,6 +142,28 @@ public class SplashActivity extends AppCompatActivity {
 
                                             if (data.size() > 0) {
                                                 sharedPreferences.edit().putBoolean("firstTime", false).apply();
+
+                                                FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot != null) {
+                                                            if (dataSnapshot.exists()) {
+                                                                String text = dataSnapshot.getValue().toString();
+                                                                sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                                            }
+                                                        } else {
+                                                            String text = "Last updated on";
+                                                            sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                                        }
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        String text = "Last updated on";
+                                                        sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                                    }
+                                                });
+
                                                 loadAnimation.cancelAnimation();
                                                 loadLayout.setVisibility(View.GONE);
 

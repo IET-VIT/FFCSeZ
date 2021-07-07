@@ -45,7 +45,6 @@
                motion:framePosition="100"
                android:scaleY="0" />
        </KeyFrameSet>
-        <OnClick motion:targetId="@+id/constraintLayout3" />
         <OnSwipe motion:touchAnchorId="@+id/constraintLayout3"
             motion:dragDirection="dragUp"
             motion:touchAnchorSide="middle"/>
@@ -113,7 +112,7 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintBottom_toTopOf="@+id/searchCountText"
             android:layout_marginTop="0dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="8dp" />
         <Constraint
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

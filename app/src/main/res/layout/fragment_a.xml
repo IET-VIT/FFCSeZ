@@ -44,7 +44,9 @@
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/poppins_bold"
         android:text="FFCSeZ"
         android:textColor="@color/black"
@@ -56,6 +58,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/poppins_bold"
         android:text="An app to ease your FFCS"
         android:textColor="@color/black"

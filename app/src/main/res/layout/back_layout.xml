@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
         android:text="Search Results"
-        android:textSize="12sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="688dp" />
@@ -27,6 +26,7 @@
             android:id="@+id/cText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/poppins_medium"
             android:text="SEARCH BY COURSE"
@@ -34,6 +34,7 @@
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/toggle"
             app:layout_constraintEnd_toStartOf="@+id/toggle"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toggle" />
 
         <TextView
@@ -41,11 +42,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/poppins_medium"
             android:text="SEARCH BY FACULTY"
             android:textColor="@color/notselected_option"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/toggle"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/toggle"
             app:layout_constraintTop_toTopOf="@+id/toggle" />
 
@@ -54,8 +57,8 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="50dp"
             android:layout_height="60dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
             android:fontFamily="@font/poppins"
             android:pointerIcon="top_right_diagonal_double_arrow"
             android:textAllCaps="false"
@@ -71,9 +74,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/facultyNameLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/facultyNameLayout"
-            app:layout_constraintVertical_bias="0.0"
             app:rippleColor="@color/white"
-            app:strokeColor="@color/custom_course_text"
+            app:strokeColor="@color/back_btn"
             app:strokeWidth="2dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
@@ -94,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="24dp"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
@@ -238,12 +240,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="4dp"
-            android:text="Winter Semester"
             android:fontFamily="@font/poppins_light"
+            android:text="Last updated for"
             android:textColor="@color/selected_option"
-            android:layout_marginTop="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
