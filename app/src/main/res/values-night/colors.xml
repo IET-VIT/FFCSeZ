@@ -27,11 +27,11 @@
 
     <color name="clash_color">#FF616D</color>
     <color name="project_color">#B6C9F0</color>
-    <color name="theory_color">@color/light_orange</color>
+    <color name="theory_color">#ffe338</color>
     <color name="lab_color">@color/teal_100</color>
 
     <color name="edit_text">#61cde9</color>
 
     <color name="selected_option">@color/light_blue</color>
-    <color name="notselected_option">@color/white</color>
+    <color name="notselected_option">#bebebe</color>
 </resources>

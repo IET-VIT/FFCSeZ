@@ -10,6 +10,7 @@ import com.tfd.ffcsez.fragments.getstarted.FragmentA;
 import com.tfd.ffcsez.fragments.getstarted.FragmentB;
 import com.tfd.ffcsez.fragments.getstarted.FragmentC;
 import com.tfd.ffcsez.fragments.getstarted.FragmentD;
+import com.tfd.ffcsez.fragments.getstarted.FragmentE;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,12 +28,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 1: return new FragmentB();
             case 2: return new FragmentD();
             case 3: return new FragmentC();
+            case 4: return new FragmentE();
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 }

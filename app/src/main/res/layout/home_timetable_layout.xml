@@ -146,7 +146,7 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_medium"
                 android:text="SLOT"
-                android:textColor="@color/sky_blue"
+                android:textColor="@color/theory_color"
                 android:textSize="32sp"
                 app:layout_constraintBottom_toBottomOf="@+id/typeSelector"
                 app:layout_constraintStart_toEndOf="@+id/typeSelector"

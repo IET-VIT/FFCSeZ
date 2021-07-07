@@ -67,7 +67,7 @@
     <color name="edit_text">#61cde9</color>
 
     <color name="selected_option">@color/blue</color>
-    <color name="notselected_option">@color/black</color>
+    <color name="notselected_option">#555555</color>
 
 
 </resources>

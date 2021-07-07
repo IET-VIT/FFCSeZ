@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="12dp"
         android:src="@drawable/ietlogo"
@@ -18,8 +18,8 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="12dp"
         android:src="@drawable/tfd_2"
