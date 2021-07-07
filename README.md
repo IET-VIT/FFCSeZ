@@ -1,13 +1,6 @@
-[![Contributors](https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/graphs/contributors)
-[![Forks](https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/network/members)
-[![Stargazers](https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/stargazers)
-[![Issues](https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/issues)
-[![MIT License](https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE)
-
-<br>
 <p align="center">
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ">
-    <img src="images/icon.png" alt="App Icon" width="256" height="256">
+    <img align="left" src="images/icon.png" alt="App Icon" width="250" height="250">
   </a>
   
   <h1 align="center">FFCSeZ</h3>
@@ -23,6 +16,18 @@
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/issues">Request a feature</a>
   ·
   </p>
+</p>
+
+<br>
+
+<p align="center">
+
+[![Contributors](https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/graphs/contributors)
+[![Forks](https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/network/members)
+[![Stargazers](https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/stargazers)
+[![Issues](https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/issues)
+[![MIT License](https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE)
+
 </p>
 
 ## <img src="https://openclipart.org/download/307315/1538154643.svg" width="32" height="32"> About the project
