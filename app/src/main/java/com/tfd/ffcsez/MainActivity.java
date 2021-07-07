@@ -15,7 +15,9 @@ import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -125,6 +128,7 @@ import kotlin.jvm.functions.Function1;
     private String courseTH = "", courseETH = "", courseELA = "", courseEPJ = "", courseSS = "";
     private String courseLO = "", timeFN = "", timeAN = "";
     private boolean exists;
+    private int count;
     private AlertDialog customDialog;
     private SharedPreferences preferences;
 
@@ -188,13 +192,13 @@ import kotlin.jvm.functions.Function1;
             if(toggle.isChecked()){
                 courseCodeLayout.setVisibility(View.INVISIBLE);
                 facultyNameLayout.setVisibility(View.VISIBLE);
-                cText.setTextColor(Color.parseColor("#ffffff"));
+                cText.setTextColor(getColor(R.color.notselected_option));
                 fText.setTextColor(getColor(R.color.selected_option));
 
             } else {
                 courseCodeLayout.setVisibility(View.VISIBLE);
                 facultyNameLayout.setVisibility(View.INVISIBLE);
-                fText.setTextColor(Color.parseColor("#ffffff"));
+                fText.setTextColor(getColor(R.color.notselected_option));
                 cText.setTextColor(getColor(R.color.selected_option));
             }
         });
@@ -401,6 +405,7 @@ import kotlin.jvm.functions.Function1;
                 .create();
         themeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        new SwipeListener(toolbar);
         toolbar.setOnMenuItemClickListener(item -> {
 
             switch (item.getItemId()){
@@ -778,6 +783,25 @@ import kotlin.jvm.functions.Function1;
                             .build();
                     Log.d("Hello", "config");
 
+                    count = 0;
+                    FirebaseDatabase.getInstance().getReference().child("resultCount").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                        @Override
+                        public void onSuccess(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot != null) {
+                                if (dataSnapshot.exists()) {
+                                    count = Integer.parseInt(dataSnapshot.getValue().toString());
+                                }
+                            } else {
+                                count = 0;
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                           count = 0;
+                        }
+                    });
+
                     Realm.getInstanceAsync(config, new Realm.Callback() {
                         @Override
                         public void onSuccess(@NonNull Realm realm) {
@@ -796,7 +820,7 @@ import kotlin.jvm.functions.Function1;
                                 int size = courseData.size();
                                 Log.d("Hello", Integer.toString(size));
 
-                                if (data.size() > 0) {
+                                if (data.size() > count) {
 
                                     FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                         @Override
@@ -875,6 +899,50 @@ import kotlin.jvm.functions.Function1;
                         .show();
             }
         });
+    }
+
+    public class SwipeListener implements View.OnTouchListener{
+        GestureDetector detector;
+
+        SwipeListener(View view){
+            int threshold = 100;
+            int velocity_threshold = 100;
+
+            GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onDown(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                    if (e1 != null && e2 != null) {
+                        float xDiff = e2.getX() - e1.getY();
+                        float yDiff = e2.getY() - e1.getY();
+
+                        if (Math.abs(xDiff) < Math.abs(yDiff)) {
+                            if (yDiff > threshold && Math.abs(velocityY) > velocity_threshold) {
+                                if (yDiff > 0) {
+                                    if (!backdropIsOpen) {
+                                        backdropLayout.open();
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                }
+            };
+
+            detector = new GestureDetector(listener);
+            view.setOnTouchListener(this);
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return detector.onTouchEvent(event);
+        }
     }
 
     @Override

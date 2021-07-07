@@ -17,6 +17,7 @@
         <!-- Customize your theme here. -->
 
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="actionOverflowButtonStyle">@style/DotsMenuTheme</item>
 
     </style>
 
@@ -71,4 +72,9 @@
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/custom_card</item>
     </style>
+
+    <style name="DotsMenuTheme" parent="@style/Widget.AppCompat.ActionButton.Overflow" >
+        <item name="android:tint">@color/white</item>
+    </style>
+
 </resources>

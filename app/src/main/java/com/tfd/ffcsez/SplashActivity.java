@@ -49,6 +49,7 @@ public class SplashActivity extends AppCompatActivity {
     private Realm realm;
     private User user;
     private App app;
+    private int count;
 
     @BindView(R.id.loadAnimation) LottieAnimationView loadAnimation;
     @BindView(R.id.loadTextView) TextView loadText;
@@ -120,6 +121,25 @@ public class SplashActivity extends AppCompatActivity {
                                         .build();
                                 Log.d("Hello", "config");
 
+                                count = 0;
+                                FirebaseDatabase.getInstance().getReference().child("resultCount").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot != null) {
+                                            if (dataSnapshot.exists()) {
+                                                count = Integer.parseInt(dataSnapshot.getValue().toString());
+                                            }
+                                        } else {
+                                            count = 0;
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        count = 0;
+                                    }
+                                });
+
                                 Realm.getInstanceAsync(config, new Realm.Callback() {
                                     @Override
                                     public void onSuccess(@NonNull Realm realm) {
@@ -140,7 +160,7 @@ public class SplashActivity extends AppCompatActivity {
                                             int size = courseData.size();
                                             Log.d("Hello", Integer.toString(size));
 
-                                            if (data.size() > 0) {
+                                            if (data.size() > count) {
                                                 sharedPreferences.edit().putBoolean("firstTime", false).apply();
 
                                                 FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
