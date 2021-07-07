@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
         android:text="Search Results"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="688dp" />
@@ -229,6 +229,22 @@
                 android:textColor="@color/back_btn"
                 android:textCursorDrawable="@drawable/cursor" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/lastUpdated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Winter Semester"
+            android:fontFamily="@font/poppins_light"
+            android:textColor="@color/selected_option"
+            android:layout_marginTop="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseCodeLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- <com.google.android.material.button.MaterialButton
@@ -257,7 +273,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="288dp">
 
@@ -268,6 +284,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/sheet_back"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
