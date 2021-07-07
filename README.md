@@ -30,8 +30,42 @@
 
 </p>
 
+<details open="open">
+  <summary><h3 style="display: inline-block">Table of Contents</h3></summary>
+  <ol>
+    <li><a href="#-about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#-features">Features</a></li>
+        <li><a href="#-tech-stack">Tech Stack</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#-getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#-roadmap">Roadmap</a></li>
+    <li><a href="#-contributing">Contributing</a></li>
+    <li><a href="#-license">License</a></li>
+    <li><a href="#-reach-out">Reach out</a></li>
+  </ol>
+</details>
+
+
 ## <img src="https://openclipart.org/download/307315/1538154643.svg" width="32" height="32"> About the project
 FFCSeZ is an app to facilitate the smooth and hassle-free preparation of timetables during FFCS and keeping a track of daily classes and related to-dos, with a host a of new and student-centric features. The app can be used by any student studying in VIT right from the first years to the final years.
+
+## <img src="https://noveltypharma.eu/wp-content/uploads/2020/10/icon_novel_ingredients.png" width="32" height="32"> Features
+- Updated with the latest faculty information for FFCS.
+- Minimalistic and smooth UI for creating timetables on mobile.
+- Easy add/drop courses with credit management.
+- Filters to help you narrow down to your preferred slots.
+- Support for multiple mock time tables.
+- Time-table sharing.
+- To-do listings for all classes with timely reminders, if set.
+- Sleep alarms to remind a few moments before a class starts based on the current timetable.
 
 ## <img src="https://techstackapps.com/media/2019/11/TechStackApps-logo-icon.png" width="32" height="32"> Tech Stack
 <img src="https://2.bp.blogspot.com/-tzm1twY_ENM/XlCRuI0ZkRI/AAAAAAAAOso/BmNOUANXWxwc5vwslNw3WpjrDlgs9PuwQCLcBGAsYHQ/s1600/pasted%2Bimage%2B0.png" width="40" height="40" alt="Android Studio"> <img src="https://symbols-electrical.getvecta.com/stencil_261/26_mongodb-realm.8095f50267.png" width="36" height="36" alt="Realm"> <img src="https://img.icons8.com/color/452/mongodb.png" width="40" height="40" alt="MongoDB Atlas"> <img src="https://i.pinimg.com/originals/a5/58/b4/a558b426cb8973523f37bbed94cf0f09.png" width="40" height="40" alt="Figma"> <img src="https://img.icons8.com/color/452/firebase.png" width="40" height="40" alt="Firebase">
@@ -109,8 +143,8 @@ Contributions are what make the open source community such an amazing place to b
 Distributed under the **MIT License**. See [`LICENSE`](https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE) for more information.
 
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Google_Contacts_icon.svg/1024px-Google_Contacts_icon.svg.png" width=32 height=32> Reach out
-##### Arjun Sivaraman via [Email](mailto:arjun140702@gmail.com) · [Github](https://github.com/1407Arjun) · [Linkedin](https://linkedin.com/in/arjun-sivaraman-1407)
-##### Prasoon Soni via [Email](mailto:arjun140702@gmail.com) · [Github](https://github.com/1407Arjun) · [Linkedin](https://linkedin.com/in/arjun-sivaraman-1407)
+##### Arjun Sivaraman via [Email](mailto:arjun140702@gmail.com) · [Github](https://github.com/1407arjun) · [Linkedin](https://linkedin.com/in/arjun-sivaraman-1407)
+##### Prasoon Soni via [Email](mailto:prasoonsoni03@gmail.com) · [Github](https://github.com/prasoonsoni) · [Linkedin](https://www.linkedin.com/in/prasoonsoni)
 
 <br><h4 align="center"> With :heart: by <a href="https://ietvit.tech/" target="_blank">Team Fourth Dimension, IET-VIT</a></h4>
 
