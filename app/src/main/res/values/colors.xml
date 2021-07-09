@@ -42,6 +42,7 @@
     <color name="tab_text">@color/blue</color>
     <color name="background">@color/white</color>
     <color name="radio_color">@color/blue</color>
+    <color name="invert">@color/pitch_black</color>
 
     <color name="back_text1">@color/blue</color>
 

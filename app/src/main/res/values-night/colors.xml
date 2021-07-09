@@ -8,6 +8,7 @@
     <color name="tab_text">@color/light_grey</color>
     <color name="background">@color/black</color>
     <color name="radio_color">@color/light_blue</color>
+    <color name="invert">@color/white</color>
 
     <color name="back_text1">@color/light_blue</color>
 

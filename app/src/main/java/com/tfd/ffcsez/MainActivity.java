@@ -469,13 +469,19 @@
                 .create();
         themeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        View tutorialView = LayoutInflater.from(this).inflate(R.layout.custom_get_started, null);
+        AlertDialog getStartedDialog = new AlertDialog.Builder(MainActivity.this)
+                .setView(tutorialView)
+                .setCancelable(true)
+                .create();
+        getStartedDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         new SwipeListener(toolbar);
         toolbar.setOnMenuItemClickListener(item -> {
 
             switch (item.getItemId()){
 
                 case R.id.fullScreen:
-
                     startActivity(new Intent(MainActivity.this, LandscapeActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     doVibration();
@@ -506,9 +512,15 @@
                     themeDialog.show();
                     doVibration();
                     return true;
+
                 case R.id.about:
                     startActivity(new Intent(MainActivity.this, AboutActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    doVibration();
+                    return true;
+
+                case R.id.getStarted:
+                    getStartedDialog.show();
                     doVibration();
                     return true;
             }

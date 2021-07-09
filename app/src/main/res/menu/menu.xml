@@ -15,6 +15,7 @@
 
     <item android:title="Legacy Timetable"
         android:icon="@drawable/ic_fullscreen"
+        android:iconTint="@color/white"
         app:showAsAction="always"
         android:id="@+id/fullScreen"/>
 
@@ -35,6 +36,12 @@
         android:iconTint="@color/white"
         app:showAsAction="ifRoom"
         android:id="@+id/appTheme"/>
+
+    <item android:title="Get Started"
+        android:iconTint="@color/white"
+        android:icon="@drawable/ic_assistant"
+        app:showAsAction="ifRoom"
+        android:id="@+id/getStarted"/>
 
     <item android:title="About"
         android:iconTint="@color/white"
