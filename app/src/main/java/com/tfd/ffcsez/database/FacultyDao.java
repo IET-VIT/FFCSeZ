@@ -1,5 +1,6 @@
 package com.tfd.ffcsez.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,8 +16,8 @@ import java.util.List;
 @Dao
 public interface FacultyDao {
 
-    @Query("SELECT * FROM facultylist ORDER BY id")
-    List<FacultyData> loadDetails();
+    @Query("SELECT * FROM facultylist ORDER BY empName")
+    LiveData<List<FacultyData>> loadAllDetails();
 
     @Query("SELECT DISTINCT courseCode, courseTitle FROM facultylist ORDER BY courseCode")
     List<CourseDetails> loadCourses();

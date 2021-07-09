@@ -3,6 +3,7 @@
   import android.app.AlertDialog;
   import android.app.DialogFragment;
   import android.content.Context;
+  import android.content.DialogInterface;
   import android.content.Intent;
   import android.content.SharedPreferences;
   import android.content.res.Configuration;
@@ -22,6 +23,7 @@
   import android.view.inputmethod.InputMethodManager;
   import android.widget.AutoCompleteTextView;
   import android.widget.Button;
+  import android.widget.CompoundButton;
   import android.widget.EditText;
   import android.widget.RadioButton;
   import android.widget.RadioGroup;
@@ -43,6 +45,7 @@
   import androidx.viewpager2.widget.ViewPager2;
 
   import com.airbnb.lottie.LottieAnimationView;
+  import com.google.android.gms.tasks.OnCanceledListener;
   import com.google.android.gms.tasks.OnFailureListener;
   import com.google.android.gms.tasks.OnSuccessListener;
   import com.google.android.material.chip.Chip;
@@ -68,6 +71,8 @@
   import com.tfd.ffcsez.models.CourseDetails;
   import com.tfd.ffcsez.models.CreditDetails;
   import com.tfd.ffcsez.models.FacultyDetails;
+
+  import org.jetbrains.annotations.NotNull;
 
   import java.util.ArrayList;
   import java.util.List;
@@ -179,13 +184,54 @@
 
         lastUpdatedText.setText(preferences.getString("lastUpdated", "Last updated for"));
 
+        LiveData<List<FacultyData>> facultyListLD = database.facultyDao().loadAllDetails();
+        facultyListLD.observe(this, new Observer<List<FacultyData>>() {
+            @Override
+            public void onChanged(List<FacultyData> facultyData) {
+                courseCodeEditText.setText("");
+                courseCodeEditText.clearFocus();
+                facultyNameEditText.setText("");
+                facultyNameEditText.clearFocus();
+
+                courseTH = "";
+                courseETH = "";
+                courseELA = "";
+                courseEPJ = "";
+                courseSS = "";
+                courseLO = "";
+                timeFN = "";
+                timeAN = "";
+                morningChip.setChecked(false);
+                afternoonChip.setChecked(false);
+                theoryChip.setChecked(false);
+                labChip.setChecked(false);
+                projectChip.setChecked(false);
+
+                if(facultyData.size() == 0){
+                    animation.setVisibility(View.INVISIBLE);
+                    notFound.setVisibility(View.VISIBLE);
+                    errorText.setText("No Courses Available");
+                    errorText.setVisibility(View.VISIBLE);
+
+                } else {
+                    animation.setVisibility(View.INVISIBLE);
+                    notFound.setVisibility(View.INVISIBLE);
+                    errorText.setVisibility(View.INVISIBLE);
+                }
+
+                facultyAdapter.updateAdapter(facultyData);
+                facultyRecyclerView.smoothScrollToPosition(0);
+                searchCount.setText(facultyData.size() + " result(s)");
+            }
+        });
+
         facultyAdapter = new FacultyAdapter(facultyList, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         facultyRecyclerView.setLayoutManager(layoutManager);
         facultyRecyclerView.setAdapter(facultyAdapter);
         updateFilters();
 
-        toggle.setOnClickListener(v -> {
+        /*toggle.setOnClickListener(v -> {
             doVibration();
             if(toggle.isChecked()){
                 courseCodeLayout.setVisibility(View.INVISIBLE);
@@ -198,6 +244,25 @@
                 facultyNameLayout.setVisibility(View.INVISIBLE);
                 fText.setTextColor(getColor(R.color.notselected_option));
                 cText.setTextColor(getColor(R.color.selected_option));
+            }
+        });*/
+
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                doVibration();
+                if(toggle.isChecked()){
+                    courseCodeLayout.setVisibility(View.INVISIBLE);
+                    facultyNameLayout.setVisibility(View.VISIBLE);
+                    cText.setTextColor(getColor(R.color.notselected_option));
+                    fText.setTextColor(getColor(R.color.selected_option));
+
+                } else {
+                    courseCodeLayout.setVisibility(View.VISIBLE);
+                    facultyNameLayout.setVisibility(View.INVISIBLE);
+                    fText.setTextColor(getColor(R.color.notselected_option));
+                    cText.setTextColor(getColor(R.color.selected_option));
+                }
             }
         });
 
@@ -799,93 +864,101 @@
                         }
                     });
 
-                    Realm.getInstanceAsync(config, new Realm.Callback() {
+                    runOnUiThread(new Runnable() {
                         @Override
-                        public void onSuccess(@NonNull Realm realm) {
-                            Log.d("Hello", "Realm created");
-                            RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                            data.addChangeListener(courseData -> {
-                                ExecutorClass.getInstance().diskIO().execute(() ->
-                                        database.facultyDao().deleteAll());
+                        public void run() {
+                            Realm.getInstanceAsync(config, new Realm.Callback() {
+                                @Override
+                                public void onSuccess(@NonNull Realm realm) {
+                                    Log.d("Hello", "Realm created");
+                                    RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                                    data.addChangeListener(courseData -> {
+                                        ExecutorClass.getInstance().diskIO().execute(() ->
+                                                database.facultyDao().deleteAll());
 
-                                for (CourseData course : data) {
-                                    FacultyData faculty = new FacultyData(course);
-                                    ExecutorClass.getInstance().diskIO().execute(() ->
-                                            database.facultyDao().insertDetail(faculty));
-                                }
+                                        for (CourseData course : data) {
+                                            FacultyData faculty = new FacultyData(course);
+                                            ExecutorClass.getInstance().diskIO().execute(() ->
+                                                    database.facultyDao().insertDetail(faculty));
+                                        }
 
-                                int size = courseData.size();
-                                Log.d("Hello", Integer.toString(size));
+                                        int size = courseData.size();
+                                        Log.d("Hello", Integer.toString(size));
 
-                                if (data.size() > count) {
+                                        if (data.size() > count) {
 
-                                    FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot != null) {
-                                                if (dataSnapshot.exists()) {
-                                                    String text = dataSnapshot.getValue().toString();
+                                            FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DataSnapshot dataSnapshot) {
+                                                    if (dataSnapshot != null) {
+                                                        if (dataSnapshot.exists()) {
+                                                            String text = dataSnapshot.getValue().toString();
+                                                            lastUpdatedText.setText(text);
+                                                            preferences.edit().putString("lastUpdated", text).apply();
+                                                        }
+                                                    } else {
+                                                        String text = "Last updated on";
+                                                        lastUpdatedText.setText(text);
+                                                        preferences.edit().putString("lastUpdated", text).apply();
+                                                    }
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    String text = "Last updated on";
                                                     lastUpdatedText.setText(text);
                                                     preferences.edit().putString("lastUpdated", text).apply();
                                                 }
-                                            } else {
-                                                String text = "Last updated on";
-                                                lastUpdatedText.setText(text);
-                                                preferences.edit().putString("lastUpdated", text).apply();
+                                            });
+
+                                            lottieDialog.dismiss();
+                                            Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+                                                    Snackbar.LENGTH_LONG)
+                                                    .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                    .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                                    .show();
+
+                                            realm.close();
+
+                                            if (user != null) {
+                                                user.logOutAsync(result -> {
+                                                    if (result.isSuccess()) {
+                                                        Log.d("Hello", "Successfully logged out.");
+                                                    } else {
+                                                        Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                                    }
+                                                });
                                             }
                                         }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            String text = "Last updated on";
-                                            lastUpdatedText.setText(text);
-                                            preferences.edit().putString("lastUpdated", text).apply();
-                                        }
                                     });
+                                }
 
+                                @Override
+                                public void onError(@NotNull Throwable exception) {
+                                    super.onError(exception);
+                                    Log.d("Hello", "Failed to create Realm" + exception.getMessage());
                                     lottieDialog.dismiss();
-                                    Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+
+                                    Snackbar.make(backdropLayout, "Failed to get data. " + exception.getMessage(),
                                             Snackbar.LENGTH_LONG)
                                             .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
                                             .setTextColor(getResources().getColor(R.color.snackbar_text))
                                             .show();
 
-                                    realm.close();
-
-                                    user.logOutAsync(result -> {
-                                        if (result.isSuccess()) {
-                                            Log.d("Hello", "Successfully logged out.");
-                                        } else {
-                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                        }
-                                    });
+                                    if (user != null) {
+                                        user.logOutAsync(result -> {
+                                            if (result.isSuccess()) {
+                                                Log.d("Hello", "Successfully logged out.");
+                                            } else {
+                                                Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                            }
+                                        });
+                                    }
                                 }
                             });
                         }
-
-                        /*@Override
-                        public void onError(Throwable exception) {
-                            super.onError(exception);
-                            Log.d("Hello", "Failed to create Realm" + exception.getMessage());
-                            lottieDialog.dismiss();
-
-                            Snackbar.make(backdropLayout, "Failed to get data. " + exception.getMessage(),
-                                    Snackbar.LENGTH_LONG)
-                                    .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
-                                    .setTextColor(getResources().getColor(R.color.snackbar_text))
-                                    .show();
-
-                            user.logOutAsync(result -> {
-                                if (result.isSuccess()) {
-                                    Log.d("Hello", "Successfully logged out.");
-                                } else {
-                                    Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                }
-                            });
-                        }*/
                     });
                 }
-
             } else {
                 lottieDialog.dismiss();
 

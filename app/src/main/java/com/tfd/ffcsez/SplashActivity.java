@@ -136,54 +136,83 @@ public class SplashActivity extends AppCompatActivity {
                             }
                         });
 
-                        Realm.getInstanceAsync(config, new Realm.Callback() {
+                        runOnUiThread(new Runnable() {
                             @Override
-                            public void onSuccess(@NonNull Realm realm) {
-                                Log.d("Hello", "Realm created");
-                                SplashActivity.this.realm = realm;
+                            public void run() {
+                                Realm.getInstanceAsync(config, new Realm.Callback() {
+                                    @Override
+                                    public void onSuccess(@NonNull Realm realm) {
+                                        Log.d("Hello", "Realm created");
+                                        SplashActivity.this.realm = realm;
 
-                                RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                                data.addChangeListener(courseData -> {
-                                    ExecutorClass.getInstance().diskIO().execute(() ->
-                                            database.facultyDao().deleteAll());
+                                        RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                                        data.addChangeListener(courseData -> {
+                                            ExecutorClass.getInstance().diskIO().execute(() ->
+                                                    database.facultyDao().deleteAll());
 
-                                    for (CourseData course : data) {
-                                        FacultyData faculty = new FacultyData(course);
-                                        ExecutorClass.getInstance().diskIO().execute(() ->
-                                                database.facultyDao().insertDetail(faculty));
-                                    }
+                                            for (CourseData course : data) {
+                                                FacultyData faculty = new FacultyData(course);
+                                                ExecutorClass.getInstance().diskIO().execute(() ->
+                                                        database.facultyDao().insertDetail(faculty));
+                                            }
 
-                                    int size = courseData.size();
-                                    Log.d("Hello", Integer.toString(size));
+                                            int size = courseData.size();
+                                            Log.d("Hello", Integer.toString(size));
 
-                                    if (data.size() > count) {
-                                        sharedPreferences.edit().putBoolean("firstTime", false).apply();
+                                            if (data.size() > count) {
+                                                sharedPreferences.edit().putBoolean("firstTime", false).apply();
 
-                                        FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                                            @Override
-                                            public void onSuccess(DataSnapshot dataSnapshot) {
-                                                if (dataSnapshot != null) {
-                                                    if (dataSnapshot.exists()) {
-                                                        String text = dataSnapshot.getValue().toString();
+                                                FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot != null) {
+                                                            if (dataSnapshot.exists()) {
+                                                                String text = dataSnapshot.getValue().toString();
+                                                                sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                                            }
+                                                        } else {
+                                                            String text = "Last updated on";
+                                                            sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                                        }
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        String text = "Last updated on";
                                                         sharedPreferences.edit().putString("lastUpdated", text).apply();
                                                     }
-                                                } else {
-                                                    String text = "Last updated on";
-                                                    sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                                });
+
+                                                loadAnimation.cancelAnimation();
+                                                loadLayout.setVisibility(View.GONE);
+
+                                                realm.close();
+
+                                                if (user != null) {
+                                                    user.logOutAsync(result -> {
+                                                        if (result.isSuccess()) {
+                                                            Log.d("Hello", "Successfully logged out.");
+                                                        } else {
+                                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                                        }
+                                                    });
                                                 }
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                String text = "Last updated on";
-                                                sharedPreferences.edit().putString("lastUpdated", text).apply();
+
+                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                finish();
                                             }
                                         });
+                                    }
 
-                                        loadAnimation.cancelAnimation();
-                                        loadLayout.setVisibility(View.GONE);
-
-                                        realm.close();
+                                    @Override
+                                    public void onError(Throwable exception) {
+                                        super.onError(exception);
+                                        loadText.setText(exception.getMessage());
+                                        Log.d("Hello", "Failed to create Realm" + exception.getMessage());
+                                        Toast.makeText(SplashActivity.this,
+                                                "Couldn't login securely to the server. " + exception.getMessage(),
+                                                Toast.LENGTH_LONG).show();
 
                                         if (user != null) {
                                             user.logOutAsync(result -> {
@@ -201,18 +230,6 @@ public class SplashActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-
-                                    /*@Override
-                                    public void onError(Throwable exception) {
-                                        super.onError(exception);
-                                        loadText.setText(exception.getMessage());
-                                        Log.d("Hello", "Failed to create Realm" + exception.getMessage());
-                                        Toast.makeText(SplashActivity.this,
-                                                "Couldn't login securely to the server. " + exception.getMessage(),
-                                                Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                                        finish();
-                                    }*/
                         });
                     }
 
