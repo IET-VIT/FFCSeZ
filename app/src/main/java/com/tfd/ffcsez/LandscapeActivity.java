@@ -1,16 +1,13 @@
 package com.tfd.ffcsez;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageButton;
 
 import com.google.android.material.tabs.TabLayout;
 import com.tfd.ffcsez.adapters.LandscapePagerAdapter;
@@ -38,8 +35,7 @@ public class LandscapeActivity extends AppCompatActivity {
         backToHome.setOnClickListener(v -> {
             MainActivity.doVibration();
             startActivity(new Intent(LandscapeActivity.this, MainActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
-                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
             finish();
         });
 
@@ -86,8 +82,7 @@ public class LandscapeActivity extends AppCompatActivity {
         super.onBackPressed();
 
         startActivity(new Intent(LandscapeActivity.this, MainActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
-        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
         finish();
     }
 }

@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.widget.RemoteViews;
 
@@ -47,16 +48,15 @@ public class FCMService extends FirebaseMessagingService {
 
     // Method to get the custom Design for the display of
     // notification.
-    private RemoteViews getCustomDesign(String title,
-                                        String message) {
+    /*private RemoteViews getCustomDesign(String title) {
         RemoteViews remoteViews = new RemoteViews(
                 getApplicationContext().getPackageName(),
                 R.layout.notification);
         remoteViews.setTextViewText(R.id.title, title);
         remoteViews.setTextViewText(R.id.message, message);
-        remoteViews.setImageViewResource(R.id.icon, R.drawable.delete);
+        remoteViews.setImageViewResource(R.id.icon, R.drawable.icon);
         return remoteViews;
-    }
+    }*/
 
     // Method to display the notifications
     public void showNotification(String title, String message) {
@@ -71,42 +71,26 @@ public class FCMService extends FirebaseMessagingService {
         String channel_id = "ffcsez_notif_channel";
         // Pass the intent to PendingIntent to start the
         // next Activity
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(),
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_ONE_SHOT);
 
         // Create a Builder object using NotificationCompat
         // class. This will allow control over all the flags
         NotificationCompat.Builder builder = new NotificationCompat
                 .Builder(getApplicationContext(), channel_id)
-                .setSmallIcon(R.drawable.ic_done)
+                .setSmallIcon(R.drawable.ic_notificon)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon))
                 .setContentTitle(title)
-                .setContentText(message)
                 .setAutoCancel(true)
-                .setGroup("FFCSeZ")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-                .setOnlyAlertOnce(true)
+                .setOnlyAlertOnce(false)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentIntent(pendingIntent);
 
-        // A customized design for the notification can be
-        // set only for Android versions 4.1 and above. Thus
-        // condition for the same is checked here.
-        //builder = builder.setContent(
-        //       getCustomDesign(title, message));
         // Create an object of NotificationManager class to
         // notify the
         // user of events that happen in the background.
-
-        NotificationCompat.Builder groupNotifications = new NotificationCompat.Builder(getApplicationContext(), channel_id)
-                .setContentTitle("Get the latest updates")
-                .setContentText("Refresh your app or tap on this notification")
-                .setSmallIcon(R.drawable.ic_info)
-                .setStyle(new NotificationCompat.InboxStyle()
-                        .setBigContentTitle("Don't miss out on updates")
-                        .addLine("Refresh your app")
-                        .setSummaryText("Latest updates"))
-                .setGroup("FFCSeZ")
-                .setGroupSummary(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         // Check if the Android Version is greater than Oreo
@@ -116,7 +100,6 @@ public class FCMService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
-        notificationManager.notify(0, groupNotifications.build());
+        notificationManager.notify(0, builder.build());
     }
 }

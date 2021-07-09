@@ -19,6 +19,9 @@ public interface TTDetailsDao {
     @Query("SELECT * FROM ttdetails WHERE timeTableName = :timeTableName ORDER BY timeTableId")
     List<TTDetails> getTimeTable(String timeTableName);
 
+    @Query("DELETE FROM ttdetails")
+    void deleteAll();
+
     @Insert
     void insertTimeTable(TTDetails ttDetails);
 

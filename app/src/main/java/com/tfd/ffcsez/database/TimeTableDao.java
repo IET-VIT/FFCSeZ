@@ -34,6 +34,9 @@ public interface TimeTableDao {
     @Query("SELECT DISTINCT courseCode, courseType, `c` FROM timetable WHERE `timeTableId` = :timeTableId ORDER BY courseCode, courseType")
     LiveData<List<CreditDetails>> loadCreditDetails(int timeTableId);
 
+    @Query("DELETE FROM timetable")
+    void deleteAll();
+
     @Insert
     void insertSlot(TimeTableData timeTableData);
 

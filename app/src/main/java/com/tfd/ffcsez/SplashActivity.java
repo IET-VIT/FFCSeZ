@@ -1,15 +1,12 @@
 package com.tfd.ffcsez;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +34,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.exceptions.RealmException;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
@@ -78,134 +74,133 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         FacultyDatabase database = FacultyDatabase.getInstance(getApplicationContext());
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (sharedPreferences.getBoolean("firstTime", true)) {
-                    Log.d("Hello", "firstTime");
+        if (sharedPreferences.getBoolean("firstTime", true)) {
+            Log.d("Hello", "firstTime");
 
-                    ExecutorClass.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            TTDetails details = new TTDetails("XXDefault TimetableXX");
-                            database.ttDetailsDao().insertTimeTable(details);
-                            List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
-                            runOnUiThread(() -> {
-                                sharedPreferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
-                                ConstantsActivity.getTimeTableId().setValue(sharedPreferences.getInt("lastTT", 1));
-                            });
+            ExecutorClass.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    database.timeTableDao().deleteAll();
+                    database.ttDetailsDao().deleteAll();
 
-                        }
+                    TTDetails details = new TTDetails("XXDefault TimetableXX");
+                    database.ttDetailsDao().insertTimeTable(details);
+                    List<TTDetails> timeTable = database.ttDetailsDao().getTimeTable(details.getTimeTableName());
+                    runOnUiThread(() -> {
+                        sharedPreferences.edit().putInt("lastTT", timeTable.get(0).getTimeTableId()).apply();
+                        ConstantsActivity.getTimeTableId().setValue(sharedPreferences.getInt("lastTT", 1));
                     });
 
-                    Realm.init(SplashActivity.this);
-                    app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
-                    ietLogo.setVisibility(View.GONE);
-                    tfdLogo.setVisibility(View.GONE);
-                    madeText.setVisibility(View.GONE);
-                    loadLayout.setVisibility(View.VISIBLE);
-                    loadAnimation.playAnimation();
-                    loadText.setText("Setting up for first time use...");
+                }
+            });
 
-                    Credentials credentials = Credentials.anonymous();
-                    app.loginAsync(credentials, result -> {
-                        if (result.isSuccess()) {
-                            Log.d("Hello", "Successfully authenticated anonymously.");
+            Realm.init(SplashActivity.this);
+            app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+            ietLogo.setVisibility(View.GONE);
+            tfdLogo.setVisibility(View.GONE);
+            madeText.setVisibility(View.GONE);
+            loadLayout.setVisibility(View.VISIBLE);
+            loadAnimation.playAnimation();
+            loadText.setText("Setting up for first time use...");
 
-                            Log.d("Hello", "afterlogin");
-                            user = app.currentUser();
+            Credentials credentials = Credentials.anonymous();
+            app.loginAsync(credentials, result -> {
+                if (result.isSuccess()) {
+                    Log.d("Hello", "Successfully authenticated anonymously.");
 
-                            if (user != null) {
-                                SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
-                                        .waitForInitialRemoteData()
-                                        .build();
-                                Log.d("Hello", "config");
+                    Log.d("Hello", "afterlogin");
+                    user = app.currentUser();
 
+                    if (user != null) {
+                        SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
+                                .waitForInitialRemoteData()
+                                .build();
+                        Log.d("Hello", "config");
+
+                        count = 0;
+                        FirebaseDatabase.getInstance().getReference().child("resultCount").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            @Override
+                            public void onSuccess(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot != null) {
+                                    if (dataSnapshot.exists()) {
+                                        count = Integer.parseInt(dataSnapshot.getValue().toString());
+                                    }
+                                } else {
+                                    count = 0;
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
                                 count = 0;
-                                FirebaseDatabase.getInstance().getReference().child("resultCount").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot != null) {
-                                            if (dataSnapshot.exists()) {
-                                                count = Integer.parseInt(dataSnapshot.getValue().toString());
-                                            }
-                                        } else {
-                                            count = 0;
-                                        }
+                            }
+                        });
+
+                        Realm.getInstanceAsync(config, new Realm.Callback() {
+                            @Override
+                            public void onSuccess(@NonNull Realm realm) {
+                                Log.d("Hello", "Realm created");
+                                SplashActivity.this.realm = realm;
+
+                                RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                                data.addChangeListener(courseData -> {
+                                    ExecutorClass.getInstance().diskIO().execute(() ->
+                                            database.facultyDao().deleteAll());
+
+                                    for (CourseData course : data) {
+                                        FacultyData faculty = new FacultyData(course);
+                                        ExecutorClass.getInstance().diskIO().execute(() ->
+                                                database.facultyDao().insertDetail(faculty));
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        count = 0;
-                                    }
-                                });
 
-                                Realm.getInstanceAsync(config, new Realm.Callback() {
-                                    @Override
-                                    public void onSuccess(@NonNull Realm realm) {
-                                        Log.d("Hello", "Realm created");
-                                        SplashActivity.this.realm = realm;
+                                    int size = courseData.size();
+                                    Log.d("Hello", Integer.toString(size));
 
-                                        RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                                        data.addChangeListener(courseData -> {
-                                            ExecutorClass.getInstance().diskIO().execute(() ->
-                                                    database.facultyDao().deleteAll());
+                                    if (data.size() > count) {
+                                        sharedPreferences.edit().putBoolean("firstTime", false).apply();
 
-                                            for (CourseData course : data) {
-                                                FacultyData faculty = new FacultyData(course);
-                                                ExecutorClass.getInstance().diskIO().execute(() ->
-                                                        database.facultyDao().insertDetail(faculty));
-                                            }
-
-                                            int size = courseData.size();
-                                            Log.d("Hello", Integer.toString(size));
-
-                                            if (data.size() > count) {
-                                                sharedPreferences.edit().putBoolean("firstTime", false).apply();
-
-                                                FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DataSnapshot dataSnapshot) {
-                                                        if (dataSnapshot != null) {
-                                                            if (dataSnapshot.exists()) {
-                                                                String text = dataSnapshot.getValue().toString();
-                                                                sharedPreferences.edit().putString("lastUpdated", text).apply();
-                                                            }
-                                                        } else {
-                                                            String text = "Last updated on";
-                                                            sharedPreferences.edit().putString("lastUpdated", text).apply();
-                                                        }
-                                                    }
-                                                }).addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        String text = "Last updated on";
+                                        FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot != null) {
+                                                    if (dataSnapshot.exists()) {
+                                                        String text = dataSnapshot.getValue().toString();
                                                         sharedPreferences.edit().putString("lastUpdated", text).apply();
                                                     }
-                                                });
-
-                                                loadAnimation.cancelAnimation();
-                                                loadLayout.setVisibility(View.GONE);
-
-                                                realm.close();
-
-                                                if (user != null) {
-                                                    user.logOutAsync(result -> {
-                                                        if (result.isSuccess()) {
-                                                            Log.d("Hello", "Successfully logged out.");
-                                                        } else {
-                                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                                        }
-                                                    });
+                                                } else {
+                                                    String text = "Last updated on";
+                                                    sharedPreferences.edit().putString("lastUpdated", text).apply();
                                                 }
-
-                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
-                                                        ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
-                                                finish();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                String text = "Last updated on";
+                                                sharedPreferences.edit().putString("lastUpdated", text).apply();
                                             }
                                         });
+
+                                        loadAnimation.cancelAnimation();
+                                        loadLayout.setVisibility(View.GONE);
+
+                                        realm.close();
+
+                                        if (user != null) {
+                                            user.logOutAsync(result -> {
+                                                if (result.isSuccess()) {
+                                                    Log.d("Hello", "Successfully logged out.");
+                                                } else {
+                                                    Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                                }
+                                            });
+                                        }
+
+                                        startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                        finish();
                                     }
+                                });
+                            }
 
                                     /*@Override
                                     public void onError(Throwable exception) {
@@ -218,53 +213,50 @@ public class SplashActivity extends AppCompatActivity {
                                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                                         finish();
                                     }*/
-                                });
+                        });
+                    }
+
+                } else {
+                    Toast.makeText(SplashActivity.this,
+                            "Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.",
+                            Toast.LENGTH_LONG).show();
+
+                    if (realm != null)
+                        realm.close();
+
+                    if (user != null) {
+                        user.logOutAsync(result1 -> {
+                            if (result1.isSuccess()) {
+                                Log.d("Hello", "Successfully logged out.");
+                            } else {
+                                Log.d("Hello", "Failed to log out, error: " + result1.getError());
                             }
+                        });
+                    }
 
-                        } else {
-                            Toast.makeText(SplashActivity.this,
-                                    "Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.",
-                                    Toast.LENGTH_LONG).show();
-
-                            if (realm != null)
-                                realm.close();
-
-                            if (user != null) {
-                                user.logOutAsync(result1 -> {
-                                    if (result1.isSuccess()) {
-                                        Log.d("Hello", "Successfully logged out.");
-                                    } else {
-                                        Log.d("Hello", "Failed to log out, error: " + result1.getError());
-                                    }
-                                });
-                            }
-
-                            startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP),
-                                    ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
-                            finish();
-                        }
-                    });
-                }else {
-                    loadLayout.setVisibility(View.GONE);
-                    ietLogo.setVisibility(View.VISIBLE);
-                    tfdLogo.setVisibility(View.VISIBLE);
-                    madeText.setVisibility(View.VISIBLE);
-                    new Handler().postDelayed(() -> {
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        Intent notifIntent = getIntent();
-                        if (notifIntent != null){
-                            if (notifIntent.getStringExtra("refreshNotif") != null
-                                    && notifIntent.getStringExtra("refreshNotif").equals("true"))
-                                intent.putExtra("refreshNotif", true);
-                        }
-                        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
-                        finish();
-                    }, 1000);
+                    startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
                 }
-            }
-        }, 600);
+            });
+        }else {
+            loadLayout.setVisibility(View.GONE);
+            ietLogo.setVisibility(View.VISIBLE);
+            tfdLogo.setVisibility(View.VISIBLE);
+            madeText.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(() -> {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent notifIntent = getIntent();
+                if (notifIntent != null){
+                    if (notifIntent.getStringExtra("refreshNotif") != null
+                            && notifIntent.getStringExtra("refreshNotif").equals("true"))
+                        intent.putExtra("refreshNotif", true);
+                }
+                startActivity(intent);
+                finish();
+            }, 1600);
+        }
     }
 
     @Override

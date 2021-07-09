@@ -19,11 +19,6 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="actionOverflowButtonStyle">@style/DotsMenuTheme</item>
 
-        <!-- TODO Animations -->
-        <item name="android:windowActivityTransitions">true</item>
-<!--        <item name="android:windowEnterTransition">@android:transition/fade</item>-->
-<!--        <item name="android:windowExitTransition">@android:transition/slide_left</item>-->
-
     </style>
 
     <style name="background">

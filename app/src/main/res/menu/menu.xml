@@ -7,13 +7,13 @@
         app:showAsAction="ifRoom"
         android:id="@+id/custom"/>
 
-    <item android:title="My Timetable"
+    <item android:title="My Timetables"
         android:icon="@drawable/ic_timetable"
         android:iconTint="@color/white"
         app:showAsAction="always"
         android:id="@+id/timetable"/>
 
-    <item android:title="Full Screen"
+    <item android:title="Legacy Timetable"
         android:icon="@drawable/ic_fullscreen"
         app:showAsAction="always"
         android:id="@+id/fullScreen"/>

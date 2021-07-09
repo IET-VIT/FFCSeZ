@@ -25,7 +25,7 @@
         android:id="@+id/imageView3"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="42dp"
         android:src="@drawable/getstarted"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +47,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +77,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
-                android:text="Theory Course / Component"
+                android:text="Theory Course/Component"
                 android:textColor="@color/orange"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -102,7 +102,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
-                android:text="Lab Course / Component"
+                android:text="Lab Course/Component"
                 android:textColor="@color/teal_500"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -152,7 +152,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
-                android:text="Indicates a Clash"
+                android:text="Clash between slots"
                 android:textColor="@color/blood_red"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -178,7 +178,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
-                android:text="To reveal all the features\n(Swipe Down or Tap)"
+                android:text="Course Selection Screen\n(Swipe Down or Tap)"
                 android:textColor="@color/pitch_black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -204,7 +204,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
-                android:text="Full Screen TimeTable "
+                android:text="Legacy TimeTable View"
                 android:textColor="@color/pitch_black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -230,7 +230,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
-                android:text="Create Multiple TimeTables"
+                android:text="Multiple Custom Timetables"
                 android:textColor="@color/pitch_black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -256,7 +256,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/poppins"
-                android:text="Manage Your Credits\n(Swipe Left or Tap)"
+                android:text="View your Registered Courses\n(Swipe Left or Tap)"
                 android:textColor="@color/pitch_black"
                 android:textSize="18sp" />
         </LinearLayout>

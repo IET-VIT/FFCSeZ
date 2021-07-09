@@ -15,13 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
@@ -80,10 +80,10 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             holder.ttClearButton.setTooltipText("Clear Timetable");
             holder.ttDeleteButton.setTooltipText("Delete Timetable");
-            holder.ttEditButton.setTooltipText("Edit Timetable");
+            holder.ttEditButton.setTooltipText("Edit Timetable Name");
         }
 
-        if (details.getTimeTableName().equals("XXDefault TimetableXX")) {
+        if (details.getTimeTableId() == 1) {
             holder.timeTableName.setText("Default Timetable");
             holder.ttDeleteButton.setVisibility(View.GONE);
             holder.ttEditButton.setVisibility(View.GONE);
@@ -167,6 +167,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                 MainActivity.doVibration();
                 if (details.getTimeTableId() == ConstantsActivity.getTimeTableId().getValue()){
                     ConstantsActivity.getTimeTableId().setValue(1);
+                    preferences.edit().putInt("lastTT", ConstantsActivity.getTimeTableId().getValue()).apply();
                 }
 
                 ExecutorClass.getInstance().diskIO().execute(new Runnable() {
@@ -177,12 +178,7 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                     }
                 });
 
-                Snackbar.make(v, "Deleted " + details.getTimeTableName(),
-                        Snackbar.LENGTH_SHORT)
-                        .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
-                        .setTextColor(context.getResources().getColor(R.color.snackbar_text))
-                        .show();
-
+                Toast.makeText(context, "Deleted " + details.getTimeTableName(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -197,17 +193,16 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                     }
                 });
 
-                Snackbar.make(v, "Cleared " + details.getTimeTableName(),
-                        Snackbar.LENGTH_SHORT)
-                        .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
-                        .setTextColor(context.getResources().getColor(R.color.snackbar_text))
-                        .show();
-
                 for (int i = 0; i < 10; i++){
                     for(int j = 0; j < 6; j++){
                         ConstantsActivity.getChosenSlots()[i][j] = 0;
                     }
                 }
+
+                if (details.getTimeTableId() == 1)
+                    Toast.makeText(context, "Cleared the default timetable", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(context, "Cleared " + details.getTimeTableName(), Toast.LENGTH_SHORT).show();
 
                 if (MainActivity.facultyAdapter != null)
                     MainActivity.facultyAdapter.notifyDataSetChanged();

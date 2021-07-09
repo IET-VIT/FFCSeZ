@@ -48,6 +48,7 @@
         <OnSwipe motion:touchAnchorId="@+id/constraintLayout3"
             motion:dragDirection="dragUp"
             motion:touchAnchorSide="middle"/>
+        <OnClick motion:targetId="@+id/hideButton" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -70,6 +71,14 @@
             motion:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
             android:layout_marginTop="0dp" />
         <Constraint
+            android:layout_height="0dp"
+            android:layout_width="50dp"
+            android:id="@+id/hideButton"
+            motion:layout_constraintTop_toBottomOf="@id/constraintLayout2"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"/>
+        <Constraint
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/searchCountText"
@@ -88,18 +97,18 @@
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/constraintLayout2"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="0dp" />
         <Constraint
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/constraintLayout3"
-            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/hideButton"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="0dp" />
@@ -113,6 +122,17 @@
             motion:layout_constraintBottom_toTopOf="@+id/searchCountText"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="8dp" />
+        <Constraint
+            android:layout_height="0dp"
+            android:layout_width="50dp"
+            android:visibility="visible"
+            android:id="@+id/hideButton"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="2dp" />
         <Constraint
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
