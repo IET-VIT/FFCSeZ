@@ -3,7 +3,6 @@
   import android.app.AlertDialog;
   import android.app.DialogFragment;
   import android.content.Context;
-  import android.content.DialogInterface;
   import android.content.Intent;
   import android.content.SharedPreferences;
   import android.content.res.Configuration;
@@ -45,7 +44,6 @@
   import androidx.viewpager2.widget.ViewPager2;
 
   import com.airbnb.lottie.LottieAnimationView;
-  import com.google.android.gms.tasks.OnCanceledListener;
   import com.google.android.gms.tasks.OnFailureListener;
   import com.google.android.gms.tasks.OnSuccessListener;
   import com.google.android.material.chip.Chip;
@@ -132,6 +130,9 @@
     private String courseLO = "", timeFN = "", timeAN = "";
     private boolean exists;
     private int count;
+    private Realm realm;
+    private User user;
+    private App app;
     private AlertDialog customDialog;
     private SharedPreferences preferences;
 
@@ -829,7 +830,7 @@
         lottieDialog.show(getFragmentManager(),"refreshDialog");
 
         Realm.init(this);
-        App app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+        app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
 
         Credentials credentials = Credentials.anonymous();
         app.loginAsync(credentials, result -> {
@@ -837,7 +838,7 @@
                 Log.d("Hello", "Successfully authenticated anonymously.");
 
                 Log.d("Hello", "afterlogin");
-                User user = app.currentUser();
+                user = app.currentUser();
 
                 if (user != null) {
                     SyncConfiguration config = new SyncConfiguration.Builder(user, "Open")
@@ -870,6 +871,7 @@
                             Realm.getInstanceAsync(config, new Realm.Callback() {
                                 @Override
                                 public void onSuccess(@NonNull Realm realm) {
+                                    MainActivity.this.realm = realm;
                                     Log.d("Hello", "Realm created");
                                     RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
                                     data.addChangeListener(courseData -> {
@@ -1023,6 +1025,24 @@
             backdropLayout.close();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (realm != null)
+            realm.close();
+
+        if (user != null) {
+            user.logOutAsync(result -> {
+                if (result.isSuccess()) {
+                    Log.d("Hello", "Successfully logged out.");
+                } else {
+                    Log.d("Hello", "Failed to log out, error: " + result.getError());
+                }
+            });
         }
     }
   }
