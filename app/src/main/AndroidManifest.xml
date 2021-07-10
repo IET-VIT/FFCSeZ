@@ -60,7 +60,7 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/tab_text" />
+            android:resource="@color/back_text1" />
     </application>
 
 </manifest>

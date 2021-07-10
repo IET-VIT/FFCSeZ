@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
-        android:text="Search Results"
+        android:text="0 result(s)"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="140dp"
         tools:layout_editor_absoluteY="688dp" />

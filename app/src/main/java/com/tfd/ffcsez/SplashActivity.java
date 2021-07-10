@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,15 +19,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TTDetails;
 import com.tfd.ffcsez.models.CourseData;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -53,6 +59,7 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.ietLogo) ImageView ietLogo;
     @BindView(R.id.tfdLogo) ImageView tfdLogo;
     @BindView(R.id.madeText) TextView madeText;
+    @BindView(R.id.splashProgressBar) ProgressBar progressBar;
 
 
     @Override
@@ -76,6 +83,18 @@ public class SplashActivity extends AppCompatActivity {
 
         if (sharedPreferences.getBoolean("firstTime", true)) {
             Log.d("Hello", "firstTime");
+
+            FirebaseMessaging.getInstance().subscribeToTopic("all").addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    sharedPreferences.edit().putBoolean("fcmsubs", false).apply();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    sharedPreferences.edit().putBoolean("fcmsubs", true).apply();
+                }
+            });
 
             ExecutorClass.getInstance().diskIO().execute(new Runnable() {
                 @Override
@@ -101,7 +120,8 @@ public class SplashActivity extends AppCompatActivity {
             madeText.setVisibility(View.GONE);
             loadLayout.setVisibility(View.VISIBLE);
             loadAnimation.playAnimation();
-            loadText.setText("Setting up for first time use...");
+            loadText.setText("Setting up for first time use...Please do not close the app");
+            progressBar.setIndeterminate(true);
 
             Credentials credentials = Credentials.anonymous();
             app.loginAsync(credentials, result -> {
@@ -124,6 +144,7 @@ public class SplashActivity extends AppCompatActivity {
                                 if (dataSnapshot != null) {
                                     if (dataSnapshot.exists()) {
                                         count = Integer.parseInt(dataSnapshot.getValue().toString());
+                                        sharedPreferences.edit().putInt("realmCount", count).apply();
                                     }
                                 } else {
                                     count = 0;
@@ -147,19 +168,42 @@ public class SplashActivity extends AppCompatActivity {
 
                                         RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
                                         data.addChangeListener(courseData -> {
-                                            ExecutorClass.getInstance().diskIO().execute(() ->
-                                                    database.facultyDao().deleteAll());
-
-                                            for (CourseData course : data) {
-                                                FacultyData faculty = new FacultyData(course);
-                                                ExecutorClass.getInstance().diskIO().execute(() ->
-                                                        database.facultyDao().insertDetail(faculty));
-                                            }
-
                                             int size = courseData.size();
                                             Log.d("Hello", Integer.toString(size));
+                                            Log.d("HelloCount", Integer.toString(count));
 
-                                            if (data.size() > count) {
+                                            if (count != 0){
+                                                progressBar.setIndeterminate(false);
+                                                progressBar.setMax(count);
+                                                progressBar.setProgress(0);
+                                                progressBar.setSecondaryProgress(courseData.size());
+                                            }
+
+                                            if ((count == 0 && courseData.size() > count) || (count != 0 && courseData.size() == count)) {
+                                                ExecutorClass.getInstance().diskIO().execute(() ->
+                                                        database.facultyDao().deleteAll());
+
+                                                for (CourseData course : courseData) {
+                                                    FacultyData faculty = new FacultyData(course);
+                                                    ExecutorClass.getInstance().diskIO().execute(() -> {
+                                                            database.facultyDao().insertDetail(faculty);
+                                                            runOnUiThread(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    progressBar.setProgress(progressBar.getProgress() + 1);
+                                                                    Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
+                                                                    if (!progressBar.isIndeterminate() && progressBar.getProgress() == count){
+                                                                        loadAnimation.cancelAnimation();
+                                                                        loadLayout.setVisibility(View.GONE);
+                                                                        startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                                        finish();
+                                                                    }
+                                                                }
+                                                            });
+                                                    });
+                                                }
+
                                                 sharedPreferences.edit().putBoolean("firstTime", false).apply();
 
                                                 FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -183,8 +227,10 @@ public class SplashActivity extends AppCompatActivity {
                                                     }
                                                 });
 
-                                                loadAnimation.cancelAnimation();
-                                                loadLayout.setVisibility(View.GONE);
+                                                if (count == 0) {
+                                                    loadAnimation.cancelAnimation();
+                                                    loadLayout.setVisibility(View.GONE);
+                                                }
 
                                                 realm.close();
 
@@ -198,15 +244,17 @@ public class SplashActivity extends AppCompatActivity {
                                                     });
                                                 }
 
-                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                                finish();
+                                                if (progressBar.isIndeterminate()) {
+                                                    startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                    finish();
+                                                }
                                             }
                                         });
                                     }
 
                                     @Override
-                                    public void onError(Throwable exception) {
+                                    public void onError(@NotNull Throwable exception) {
                                         super.onError(exception);
                                         loadText.setText(exception.getMessage());
                                         Log.d("Hello", "Failed to create Realm" + exception.getMessage());
@@ -261,14 +309,32 @@ public class SplashActivity extends AppCompatActivity {
             ietLogo.setVisibility(View.VISIBLE);
             tfdLogo.setVisibility(View.VISIBLE);
             madeText.setVisibility(View.VISIBLE);
+
+            if (!sharedPreferences.getBoolean("fcmsubs", false)){
+                FirebaseMessaging.getInstance().subscribeToTopic("all").addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        sharedPreferences.edit().putBoolean("fcmsubs", false).apply();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        sharedPreferences.edit().putBoolean("fcmsubs", true).apply();
+                    }
+                });
+            }
+
             new Handler().postDelayed(() -> {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Intent notifIntent = getIntent();
-                if (notifIntent != null){
+                //Intent notifIntent = getIntent();
+                /*if (notifIntent != null){
                     if (notifIntent.getStringExtra("refreshNotif") != null
                             && notifIntent.getStringExtra("refreshNotif").equals("true"))
                         intent.putExtra("refreshNotif", true);
+                }*/
+                if (sharedPreferences.getBoolean("refreshNotif", false)){
+                    intent.putExtra("refreshNotif", true);
                 }
                 startActivity(intent);
                 finish();

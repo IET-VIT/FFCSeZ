@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadAnimation3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:scaleType="fitStart"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="cloudload.json"
+        app:lottie_loop="true" />
+
+    <ProgressBar
+        android:id="@+id/mainProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:indeterminateTint="@color/back_text1"
+        android:progressTint="@color/back_text1"
+        android:secondaryProgressTint="@color/project_color" />
+
+    <TextView
+        android:id="@+id/mainTextView"
+        style="@style/text_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Fetching data from server...Please do not close the app"
+        android:textAlignment="center"
+        android:textColor="@color/custom_course_text" />
+</LinearLayout>

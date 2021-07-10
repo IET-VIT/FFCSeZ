@@ -24,6 +24,7 @@
   import android.widget.Button;
   import android.widget.CompoundButton;
   import android.widget.EditText;
+  import android.widget.ProgressBar;
   import android.widget.RadioButton;
   import android.widget.RadioGroup;
   import android.widget.TextView;
@@ -161,8 +162,9 @@
 
         Intent intent = getIntent();
         if (intent != null) {
-            if (intent.getBooleanExtra("refreshNotif", false))
+            if (intent.getBooleanExtra("refreshNotif", false)) {
                 refreshRealm();
+            }
         }
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -184,6 +186,12 @@
         View back_layout = backdropLayout.getChildAt(0);
 
         lastUpdatedText.setText(preferences.getString("lastUpdated", "Last updated for"));
+
+        facultyAdapter = new FacultyAdapter(facultyList, this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        facultyRecyclerView.setLayoutManager(layoutManager);
+        facultyRecyclerView.setAdapter(facultyAdapter);
+        updateFilters();
 
         LiveData<List<FacultyData>> facultyListLD = database.facultyDao().loadAllDetails();
         facultyListLD.observe(this, new Observer<List<FacultyData>>() {
@@ -225,12 +233,6 @@
                 searchCount.setText(facultyData.size() + " result(s)");
             }
         });
-
-        facultyAdapter = new FacultyAdapter(facultyList, this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        facultyRecyclerView.setLayoutManager(layoutManager);
-        facultyRecyclerView.setAdapter(facultyAdapter);
-        updateFilters();
 
         /*toggle.setOnClickListener(v -> {
             doVibration();
@@ -837,12 +839,23 @@
                 .setTextColor(getResources().getColor(R.color.snackbar_text))
                 .show();
 
-        final DialogFragment lottieDialog = new LottieDialogFragment().newInstance("cloudload.json",true);
+        /*final DialogFragment lottieDialog = new LottieDialogFragment().newInstance("cloudload.json",true);
         lottieDialog.setCancelable(false);
-        lottieDialog.show(getFragmentManager(),"refreshDialog");
+        lottieDialog.show(getFragmentManager(),"refreshDialog");*/
+
+        View refreshView = LayoutInflater.from(this).inflate(R.layout.custom_refresh, null);
+        ProgressBar progressBar = refreshView.findViewById(R.id.mainProgressBar);
+
+        AlertDialog refreshDialog = new AlertDialog.Builder(MainActivity.this)
+                .setView(refreshView)
+                .setCancelable(false)
+                .create();
+        refreshDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        refreshDialog.show();
 
         Realm.init(this);
         app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+        progressBar.setIndeterminate(true);
 
         Credentials credentials = Credentials.anonymous();
         app.loginAsync(credentials, result -> {
@@ -858,8 +871,7 @@
                             .build();
                     Log.d("Hello", "config");
 
-                    count = 0;
-                    FirebaseDatabase.getInstance().getReference().child("resultCount").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    /*FirebaseDatabase.getInstance().getReference().child("resultCount").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                         @Override
                         public void onSuccess(DataSnapshot dataSnapshot) {
                             if (dataSnapshot != null) {
@@ -875,11 +887,12 @@
                         public void onFailure(@NonNull Exception e) {
                            count = 0;
                         }
-                    });
+                    });*/
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            count = preferences.getInt("realmCount", 0);
                             Realm.getInstanceAsync(config, new Realm.Callback() {
                                 @Override
                                 public void onSuccess(@NonNull Realm realm) {
@@ -887,21 +900,46 @@
                                     Log.d("Hello", "Realm created");
                                     RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
                                     data.addChangeListener(courseData -> {
-                                        ExecutorClass.getInstance().diskIO().execute(() ->
-                                                database.facultyDao().deleteAll());
-
-                                        for (CourseData course : data) {
-                                            FacultyData faculty = new FacultyData(course);
-                                            ExecutorClass.getInstance().diskIO().execute(() ->
-                                                    database.facultyDao().insertDetail(faculty));
-                                        }
-
                                         int size = courseData.size();
-                                        Log.d("Hello", Integer.toString(size));
+                                        Log.d("HelloCount", Integer.toString(size));
 
-                                        if (data.size() > count) {
+                                        if (count != 0){
+                                                progressBar.setIndeterminate(false);
+                                                progressBar.setMax(count);
+                                                progressBar.setProgress(0);
+                                                progressBar.setSecondaryProgress(courseData.size());
+                                            }
 
-                                            FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                        if ((count == 0 && courseData.size() > count) || (count != 0 && courseData.size() == count)) {
+                                            ExecutorClass.getInstance().diskIO().execute(() ->
+                                                    database.facultyDao().deleteAll());
+
+                                            for (CourseData course : courseData) {
+                                                FacultyData faculty = new FacultyData(course);
+                                                ExecutorClass.getInstance().diskIO().execute(() -> {
+                                                    database.facultyDao().insertDetail(faculty);
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            progressBar.setProgress(progressBar.getProgress() + 1);
+                                                            Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
+                                                            if (!progressBar.isIndeterminate() && progressBar.getProgress() == count){
+                                                                refreshDialog.dismiss();
+                                                                preferences.edit().putBoolean("refreshNotif", false).apply();
+                                                                Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+                                                                        Snackbar.LENGTH_LONG)
+                                                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                                                        .show();
+                                                            }
+                                                        }
+                                                    });
+                                                });
+                                            }
+
+                                            lastUpdatedText.setText(String.valueOf(preferences.getString("lastUpdatedRealm", "Last updated for")));
+                                            preferences.edit().putString("lastUpdated", preferences.getString("lastUpdatedRealm", "Last updated for")).apply();
+                                            /*FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                                 @Override
                                                 public void onSuccess(DataSnapshot dataSnapshot) {
                                                     if (dataSnapshot != null) {
@@ -911,7 +949,7 @@
                                                             preferences.edit().putString("lastUpdated", text).apply();
                                                         }
                                                     } else {
-                                                        String text = "Last updated on";
+                                                        String text = "Last updated for";
                                                         lastUpdatedText.setText(text);
                                                         preferences.edit().putString("lastUpdated", text).apply();
                                                     }
@@ -923,14 +961,18 @@
                                                     lastUpdatedText.setText(text);
                                                     preferences.edit().putString("lastUpdated", text).apply();
                                                 }
-                                            });
+                                            });*/
 
-                                            lottieDialog.dismiss();
-                                            Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
-                                                    Snackbar.LENGTH_LONG)
-                                                    .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
-                                                    .setTextColor(getResources().getColor(R.color.snackbar_text))
-                                                    .show();
+                                            //lottieDialog.dismiss();
+                                            if (count == 0) {
+                                                refreshDialog.dismiss();
+                                                preferences.edit().putBoolean("refreshNotif", false).apply();
+                                                Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+                                                        Snackbar.LENGTH_LONG)
+                                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                                        .show();
+                                            }
 
                                             realm.close();
 
@@ -951,7 +993,7 @@
                                 public void onError(@NotNull Throwable exception) {
                                     super.onError(exception);
                                     Log.d("Hello", "Failed to create Realm" + exception.getMessage());
-                                    lottieDialog.dismiss();
+                                    refreshDialog.dismiss();
 
                                     Snackbar.make(backdropLayout, "Failed to get data. " + exception.getMessage(),
                                             Snackbar.LENGTH_LONG)
@@ -974,7 +1016,7 @@
                     });
                 }
             } else {
-                lottieDialog.dismiss();
+                refreshDialog.dismiss();
 
                 Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
                         Snackbar.LENGTH_LONG)

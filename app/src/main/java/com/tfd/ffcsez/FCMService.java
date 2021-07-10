@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.widget.RemoteViews;
@@ -29,21 +30,28 @@ public class FCMService extends FirebaseMessagingService {
         // attributes. Since here we do not have any data
         // payload, This section is commented out. It is
         // here only for reference purposes.
-		/*if(remoteMessage.getData().size()>0){
-			showNotification(remoteMessage.getData().get("title"),
-						remoteMessage.getData().get("message"));
-		}*/
+		if(remoteMessage.getData().size() > 0){
+            SharedPreferences preferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
+		    if (remoteMessage.getData().get("realmCount") != null)
+                preferences.edit().putInt("realmCount", Integer.parseInt(remoteMessage.getData().get("realmCount"))).apply();
+            if (remoteMessage.getData().get("lastUpdatedRealm") != null)
+		        preferences.edit().putString("lastUpdatedRealm", remoteMessage.getData().get("lastUpdatedRealm")).apply();
+            if (remoteMessage.getData().get("refreshNotif") != null && remoteMessage.getData().get("refreshNotif").equals("true"))
+                preferences.edit().putBoolean("refreshNotif", true).apply();
+            if (remoteMessage.getData().get("title") != null && remoteMessage.getData().get("body") != null)
+                showNotification(remoteMessage.getData().get("title"),
+                        remoteMessage.getData().get("body"), remoteMessage.getData().get("refreshNotif") != null
+                        && remoteMessage.getData().get("refreshNotif").equals("true"));
+		}
 
         // Second case when notification payload is
         // received.
-        if (remoteMessage.getNotification() != null) {
+        /*if (remoteMessage.getNotification() != null) {
             // Since the notification is received directly from
             // FCM, the title and the body can be fetched
             // directly as below.
-            showNotification(
-                    remoteMessage.getNotification().getTitle(),
-                    remoteMessage.getNotification().getBody());
-        }
+            showNotification();
+        }*/
     }
 
     // Method to get the custom Design for the display of
@@ -59,10 +67,11 @@ public class FCMService extends FirebaseMessagingService {
     }*/
 
     // Method to display the notifications
-    public void showNotification(String title, String message) {
+    public void showNotification(String title, String message, boolean isRefresh) {
         // Pass the intent to switch to the MainActivity
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("refreshNotif", true);
+        if (isRefresh)
+            intent.putExtra("refreshNotif", true);
         // Here FLAG_ACTIVITY_CLEAR_TOP flag is set to clear
         // the activities present in the activity stack,
         // on the top of the Activity that is to be launched
