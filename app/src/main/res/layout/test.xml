@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/custom_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/icon_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/icon_view_bg"
+            android:padding="8dp"
+            android:src="@drawable/next_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#CEB1E7" />
+
+        <com.mackhartley.roundedprogressbar.RoundedProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/icon_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icon_view"
+            app:layout_constraintTop_toTopOf="@id/icon_view"
+            app:rpbBackgroundColor="#CEB1E7"
+            app:rpbBackgroundTextColor="#360568"
+            app:rpbCornerRadiusBottomRight="12dp"
+            app:rpbCornerRadiusTopRight="12dp"
+            app:rpbProgressColor="#360568"
+            app:rpbProgressTextColor="#CEB1E7"
+            app:rpbTextSize="18sp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- drawable/icon_view_bg.xml -->
+</androidx.constraintlayout.widget.ConstraintLayout>

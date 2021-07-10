@@ -102,8 +102,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 timeTableNameLayout.setError(null);
                 if (timeTableName.getText().toString().trim().isEmpty()){
                     timeTableNameLayout.setError("Timetable name cannot be empty");
-                } else if (timeTableName.getText().toString().length() > 16){
-                    timeTableNameLayout.setError("Name cannot be greater than 16 characters");
+                } else if (timeTableName.getText().toString().length() > 15){
+                    timeTableNameLayout.setError("Name cannot be greater than 15 characters");
                 } else{
                     timeTableName.setEnabled(false);
                     ExecutorClass.getInstance().diskIO().execute(new Runnable() {

@@ -88,4 +88,7 @@ dependencies {
 
     //ViewPager Indicator
     implementation 'com.tbuonomo:dotsindicator:4.2'
+
+    // loading animation
+    implementation 'com.github.MackHartley:RoundedProgressBar:2.1.0'
 }
