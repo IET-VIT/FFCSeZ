@@ -90,6 +90,11 @@
   import io.realm.mongodb.sync.SyncConfiguration;
   import kotlin.Unit;
   import kotlin.jvm.functions.Function1;
+  import retrofit2.Call;
+  import retrofit2.Callback;
+  import retrofit2.Response;
+  import retrofit2.Retrofit;
+  import retrofit2.converter.gson.GsonConverterFactory;
 
 
   public class MainActivity extends AppCompatActivity {
@@ -853,11 +858,82 @@
         refreshDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         refreshDialog.show();
 
-        Realm.init(this);
-        app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+        //Realm.init(this);
+        //app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
         progressBar.setIndeterminate(true);
 
-        Credentials credentials = Credentials.anonymous();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(AtlasAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AtlasAPI atlasAPI = retrofit.create(AtlasAPI.class);
+        Call<AtlasModel> call = atlasAPI.getResult();
+        call.enqueue(new Callback<AtlasModel>() {
+            @Override
+            public void onResponse(@NotNull Call<AtlasModel> call, @NotNull Response<AtlasModel> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals("success")) {
+                        count = response.body().getLength();
+                        List<CourseData> data = response.body().getData();
+                        progressBar.setIndeterminate(false);
+                        progressBar.setMax(count);
+                        progressBar.setProgress(0);
+
+                        ExecutorClass.getInstance().diskIO().execute(() ->
+                                database.facultyDao().deleteAll());
+
+                        for (CourseData course : data) {
+                            FacultyData faculty = new FacultyData(course);
+                            ExecutorClass.getInstance().diskIO().execute(() -> {
+                                database.facultyDao().insertDetail(faculty);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBar.setProgress(progressBar.getProgress() + 1);
+                                        Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
+                                        if (!progressBar.isIndeterminate() && progressBar.getProgress() == count){
+                                            refreshDialog.dismiss();
+                                            preferences.edit().putBoolean("refreshNotif", false).apply();
+                                            lastUpdatedText.setText(String.valueOf(preferences.getString("lastUpdatedRealm", "Last updated for")));
+                                            preferences.edit().putString("lastUpdated", preferences.getString("lastUpdatedRealm", "Last updated for")).apply();
+                                            Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+                                                    Snackbar.LENGTH_LONG)
+                                                    .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                    .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                                    .show();
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    }
+                }else{
+                    count = 0;
+                    refreshDialog.dismiss();
+
+                    Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
+                            Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                            .setTextColor(getResources().getColor(R.color.snackbar_text))
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<AtlasModel> call, @NotNull Throwable t) {
+                count = 0;
+                refreshDialog.dismiss();
+
+                Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
+                        Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                        .setTextColor(getResources().getColor(R.color.snackbar_text))
+                        .show();
+            }
+        });
+
+        /*Credentials credentials = Credentials.anonymous();
         app.loginAsync(credentials, result -> {
             if (result.isSuccess()) {
                 Log.d("Hello", "Successfully authenticated anonymously.");
@@ -887,7 +963,7 @@
                         public void onFailure(@NonNull Exception e) {
                            count = 0;
                         }
-                    });*/
+                    });
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -961,7 +1037,7 @@
                                                     lastUpdatedText.setText(text);
                                                     preferences.edit().putString("lastUpdated", text).apply();
                                                 }
-                                            });*/
+                                            });
 
                                             //lottieDialog.dismiss();
                                             if (count == 0) {
@@ -1024,7 +1100,7 @@
                         .setTextColor(getResources().getColor(R.color.snackbar_text))
                         .show();
             }
-        });
+        });*/
     }
 
     public class SwipeListener implements View.OnTouchListener{

@@ -5,33 +5,56 @@ import org.bson.types.ObjectId;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class CourseData extends RealmObject {
+public class CourseData {
 
     @PrimaryKey
-    private ObjectId _id = new ObjectId();
-    private String batch = "";
-    private String c = "";
-    private String classOption = "";
-    private String courseCode = "";
-    private String courseStatus = "Open";
-    private String courseTitle = "";
-    private String courseType = "";
-    private String empName = "";
-    private String empSchool = "";
-    private String j = "";
-    private String l = "";
-    private String p = "";
-    private String roomNumber = "";
-    private String slot = "";
-    private String t = "";
-    private String time = "";
+    private String _id;
+    private String batch;
+    private String c;
+    private String classOption;
+    private String courseCode;
+    private String courseStatus;
+    private String courseTitle;
+    private String courseType;
+    private String empName;
+    private String empSchool;
+    private String j;
+    private String l;
+    private String p;
+    private String roomNumber;
+    private String slot;
+    private String t;
+    private String time;
+
+    public CourseData(String _id, String batch, String c, String classOption,
+                      String courseCode, String courseStatus, String courseTitle,
+                      String courseType, String empName, String empSchool, String j,
+                      String l, String p, String roomNumber, String slot, String t, String time) {
+        this._id = _id;
+        this.batch = batch;
+        this.c = c;
+        this.classOption = classOption;
+        this.courseCode = courseCode;
+        this.courseStatus = courseStatus;
+        this.courseTitle = courseTitle;
+        this.courseType = courseType;
+        this.empName = empName;
+        this.empSchool = empSchool;
+        this.j = j;
+        this.l = l;
+        this.p = p;
+        this.roomNumber = roomNumber;
+        this.slot = slot;
+        this.t = t;
+        this.time = time;
+    }
 
     // Standard getters & setters
-    public ObjectId get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(ObjectId _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 

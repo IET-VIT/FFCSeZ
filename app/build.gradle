@@ -84,7 +84,7 @@ dependencies {
 
     //Retrofit
     api 'com.squareup.retrofit2:retrofit:2.3.0'
-    api 'com.squareup.retrofit2:converter-jackson:2.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     //ViewPager Indicator
     implementation 'com.tbuonomo:dotsindicator:4.2'

@@ -45,6 +45,11 @@ import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -113,8 +118,8 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
 
-            Realm.init(SplashActivity.this);
-            app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
+            //Realm.init(SplashActivity.this);
+            //app = new App(new AppConfiguration.Builder("ffcsapp-mwjba").build());
             ietLogo.setVisibility(View.GONE);
             tfdLogo.setVisibility(View.GONE);
             madeText.setVisibility(View.GONE);
@@ -123,7 +128,101 @@ public class SplashActivity extends AppCompatActivity {
             loadText.setText("Setting up for first time use...Please do not close the app");
             progressBar.setIndeterminate(true);
 
-            Credentials credentials = Credentials.anonymous();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(AtlasAPI.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            AtlasAPI atlasAPI = retrofit.create(AtlasAPI.class);
+            Call<AtlasModel> call = atlasAPI.getResult();
+            call.enqueue(new Callback<AtlasModel>() {
+                @Override
+                public void onResponse(@NotNull Call<AtlasModel> call, @NotNull Response<AtlasModel> response) {
+                    if (response.body() != null) {
+                        if (response.body().getStatus().equals("success")) {
+                            count = response.body().getLength();
+                            List<CourseData> data = response.body().getData();
+                            progressBar.setIndeterminate(false);
+                            progressBar.setMax(count);
+                            progressBar.setProgress(0);
+
+                            ExecutorClass.getInstance().diskIO().execute(() ->
+                                    database.facultyDao().deleteAll());
+
+                            for (CourseData course : data) {
+                                FacultyData faculty = new FacultyData(course);
+                                ExecutorClass.getInstance().diskIO().execute(() -> {
+                                    database.facultyDao().insertDetail(faculty);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressBar.setProgress(progressBar.getProgress() + 1);
+                                            Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
+                                            if (!progressBar.isIndeterminate() && progressBar.getProgress() == count){
+                                                loadAnimation.cancelAnimation();
+                                                loadLayout.setVisibility(View.GONE);
+                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                finish();
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+
+                            sharedPreferences.edit().putBoolean("firstTime", false).apply();
+
+                            FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                @Override
+                                public void onSuccess(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot != null) {
+                                        if (dataSnapshot.exists()) {
+                                            String text = dataSnapshot.getValue().toString();
+                                            sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                        }
+                                    } else {
+                                        String text = "Last updated on";
+                                        sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    String text = "Last updated on";
+                                    sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                }
+                            });
+                        }
+                    }else{
+                        count = 0;
+                        Toast.makeText(SplashActivity.this,
+                                "Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.",
+                                Toast.LENGTH_LONG).show();
+
+                        loadText.setText("Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.");
+
+                        startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<AtlasModel> call, @NotNull Throwable t) {
+                    count = 0;
+                    Toast.makeText(SplashActivity.this,
+                            "Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.",
+                            Toast.LENGTH_LONG).show();
+
+                    loadText.setText("Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.");
+
+                    startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
+                }
+            });
+
+            /*Credentials credentials = Credentials.anonymous();
             app.loginAsync(credentials, result -> {
                 if (result.isSuccess()) {
                     Log.d("Hello", "Successfully authenticated anonymously.");
@@ -303,7 +402,7 @@ public class SplashActivity extends AppCompatActivity {
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
                 }
-            });
+            });*/
         }else {
             loadLayout.setVisibility(View.GONE);
             ietLogo.setVisibility(View.VISIBLE);
@@ -342,7 +441,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -358,5 +457,5 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 }
