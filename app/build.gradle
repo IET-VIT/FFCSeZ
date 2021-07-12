@@ -57,7 +57,6 @@ dependencies {
 
     // Lottie Dependency
     implementation 'com.airbnb.android:lottie:3.7.0'
-    implementation 'com.burakustun:lottieprogressdialog:1.0.2'
 
     //Liquid Swipe
     implementation 'com.cuberto:liquid-swipe:1.0.0'

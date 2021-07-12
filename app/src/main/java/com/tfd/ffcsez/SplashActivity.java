@@ -72,6 +72,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().setStatusBarColor(getColor(R.color.splash_bg));
         getWindow().setNavigationBarColor(getColor(R.color.custom_course_bg));
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
         AppCompatDelegate.setDefaultNightMode(sharedPreferences.getInt("appTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
@@ -195,6 +196,9 @@ public class SplashActivity extends AppCompatActivity {
                                                                     if (!progressBar.isIndeterminate() && progressBar.getProgress() == count){
                                                                         loadAnimation.cancelAnimation();
                                                                         loadLayout.setVisibility(View.GONE);
+                                                                        ietLogo.setVisibility(View.VISIBLE);
+                                                                        tfdLogo.setVisibility(View.VISIBLE);
+                                                                        madeText.setVisibility(View.VISIBLE);
                                                                         startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
                                                                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                                                         finish();
@@ -215,14 +219,14 @@ public class SplashActivity extends AppCompatActivity {
                                                                 sharedPreferences.edit().putString("lastUpdated", text).apply();
                                                             }
                                                         } else {
-                                                            String text = "Last updated on";
+                                                            String text = "Last updated for";
                                                             sharedPreferences.edit().putString("lastUpdated", text).apply();
                                                         }
                                                     }
                                                 }).addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        String text = "Last updated on";
+                                                        String text = "Last updated for";
                                                         sharedPreferences.edit().putString("lastUpdated", text).apply();
                                                     }
                                                 });
@@ -230,6 +234,9 @@ public class SplashActivity extends AppCompatActivity {
                                                 if (count == 0) {
                                                     loadAnimation.cancelAnimation();
                                                     loadLayout.setVisibility(View.GONE);
+                                                    ietLogo.setVisibility(View.VISIBLE);
+                                                    tfdLogo.setVisibility(View.VISIBLE);
+                                                    madeText.setVisibility(View.VISIBLE);
                                                 }
 
                                                 realm.close();

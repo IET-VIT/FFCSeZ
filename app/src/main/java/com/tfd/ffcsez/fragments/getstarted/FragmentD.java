@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
@@ -16,12 +16,10 @@ import com.tfd.ffcsez.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 public class FragmentD extends Fragment {
 
-    @BindView(R.id.skipButton2) TextView skipButton;
-
-    public FragmentD() {
-    }
+    @BindView(R.id.skipButton2) Button skipButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

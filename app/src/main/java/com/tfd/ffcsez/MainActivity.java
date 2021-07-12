@@ -1,99 +1,98 @@
-  package com.tfd.ffcsez;
+package com.tfd.ffcsez;
 
-  import android.app.AlertDialog;
-  import android.app.DialogFragment;
-  import android.content.Context;
-  import android.content.Intent;
-  import android.content.SharedPreferences;
-  import android.content.res.Configuration;
-  import android.graphics.Color;
-  import android.graphics.drawable.ColorDrawable;
-  import android.os.Build;
-  import android.os.Bundle;
-  import android.os.VibrationEffect;
-  import android.os.Vibrator;
-  import android.text.Editable;
-  import android.text.TextWatcher;
-  import android.util.Log;
-  import android.view.GestureDetector;
-  import android.view.LayoutInflater;
-  import android.view.MotionEvent;
-  import android.view.View;
-  import android.view.inputmethod.InputMethodManager;
-  import android.widget.AutoCompleteTextView;
-  import android.widget.Button;
-  import android.widget.CompoundButton;
-  import android.widget.EditText;
-  import android.widget.ProgressBar;
-  import android.widget.RadioButton;
-  import android.widget.RadioGroup;
-  import android.widget.TextView;
-  import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-  import androidx.annotation.NonNull;
-  import androidx.annotation.Nullable;
-  import androidx.appcompat.app.AppCompatActivity;
-  import androidx.appcompat.app.AppCompatDelegate;
-  import androidx.appcompat.widget.Toolbar;
-  import androidx.core.view.GravityCompat;
-  import androidx.drawerlayout.widget.DrawerLayout;
-  import androidx.fragment.app.FragmentManager;
-  import androidx.lifecycle.LiveData;
-  import androidx.lifecycle.Observer;
-  import androidx.recyclerview.widget.LinearLayoutManager;
-  import androidx.recyclerview.widget.RecyclerView;
-  import androidx.viewpager2.widget.ViewPager2;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
-  import com.airbnb.lottie.LottieAnimationView;
-  import com.google.android.gms.tasks.OnFailureListener;
-  import com.google.android.gms.tasks.OnSuccessListener;
-  import com.google.android.material.chip.Chip;
-  import com.google.android.material.snackbar.Snackbar;
-  import com.google.android.material.switchmaterial.SwitchMaterial;
-  import com.google.android.material.tabs.TabLayout;
-  import com.google.android.material.textfield.TextInputLayout;
-  import com.google.firebase.database.DataSnapshot;
-  import com.google.firebase.database.FirebaseDatabase;
-  import com.roacult.backdrop.BackdropLayout;
-  import com.tfd.ffcsez.adapters.CourseACAdapter;
-  import com.tfd.ffcsez.adapters.CreditsAdapter;
-  import com.tfd.ffcsez.adapters.FacultyACAdapter;
-  import com.tfd.ffcsez.adapters.FacultyAdapter;
-  import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
-  import com.tfd.ffcsez.database.ExecutorClass;
-  import com.tfd.ffcsez.database.FacultyData;
-  import com.tfd.ffcsez.database.FacultyDatabase;
-  import com.tfd.ffcsez.database.TimeTableData;
-  import com.tfd.ffcsez.fragments.BottomSheetFragment;
-  import com.tfd.ffcsez.models.Coord;
-  import com.tfd.ffcsez.models.CourseData;
-  import com.tfd.ffcsez.models.CourseDetails;
-  import com.tfd.ffcsez.models.CreditDetails;
-  import com.tfd.ffcsez.models.FacultyDetails;
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
+import com.roacult.backdrop.BackdropLayout;
+import com.tfd.ffcsez.adapters.CourseACAdapter;
+import com.tfd.ffcsez.adapters.CreditsAdapter;
+import com.tfd.ffcsez.adapters.FacultyACAdapter;
+import com.tfd.ffcsez.adapters.FacultyAdapter;
+import com.tfd.ffcsez.adapters.TimetablePagerAdapter;
+import com.tfd.ffcsez.database.ExecutorClass;
+import com.tfd.ffcsez.database.FacultyData;
+import com.tfd.ffcsez.database.FacultyDatabase;
+import com.tfd.ffcsez.database.TimeTableData;
+import com.tfd.ffcsez.fragments.BottomSheetFragment;
+import com.tfd.ffcsez.models.Coord;
+import com.tfd.ffcsez.models.CourseData;
+import com.tfd.ffcsez.models.CourseDetails;
+import com.tfd.ffcsez.models.CreditDetails;
+import com.tfd.ffcsez.models.FacultyDetails;
 
-  import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.NotNull;
 
-  import java.util.ArrayList;
-  import java.util.List;
-  import java.util.regex.Matcher;
-  import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-  import burakustun.com.lottieprogressdialog.LottieDialogFragment;
-  import butterknife.BindView;
-  import butterknife.ButterKnife;
-  import io.realm.Realm;
-  import io.realm.RealmResults;
-  import io.realm.mongodb.App;
-  import io.realm.mongodb.AppConfiguration;
-  import io.realm.mongodb.Credentials;
-  import io.realm.mongodb.User;
-  import io.realm.mongodb.sync.SyncConfiguration;
-  import kotlin.Unit;
-  import kotlin.jvm.functions.Function1;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.mongodb.App;
+import io.realm.mongodb.AppConfiguration;
+import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
+import io.realm.mongodb.sync.SyncConfiguration;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 
-  public class MainActivity extends AppCompatActivity {
-    private boolean backdropIsOpen;
+public class MainActivity extends AppCompatActivity {
+
     // Views
     @BindView(R.id.container) BackdropLayout backdropLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -129,7 +128,7 @@
     // Variables
     private String courseTH = "", courseETH = "", courseELA = "", courseEPJ = "", courseSS = "";
     private String courseLO = "", timeFN = "", timeAN = "";
-    private boolean exists;
+    private boolean exists, backdropIsOpen;
     private int count;
     private Realm realm;
     private User user;
@@ -146,8 +145,9 @@
 
     // Vibration
     public static Vibrator vibrator;
-    public static void doVibration(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+    public static void doVibration() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.EFFECT_TICK));
         }
     }
@@ -171,7 +171,7 @@
         backdropLayout.setOnBackdropChangeStateListener(new Function1<BackdropLayout.State, Unit>() {
             @Override
             public Unit invoke(BackdropLayout.State state) {
-                switch(state){
+                switch (state) {
                     case OPEN:
                         backdropIsOpen = true;
                         break;
@@ -216,7 +216,7 @@
                 labChip.setChecked(false);
                 projectChip.setChecked(false);
 
-                if(facultyData.size() == 0){
+                if (facultyData.size() == 0) {
                     animation.setVisibility(View.INVISIBLE);
                     notFound.setVisibility(View.VISIBLE);
                     errorText.setText("No Courses Available");
@@ -254,7 +254,7 @@
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 doVibration();
-                if(toggle.isChecked()){
+                if (toggle.isChecked()) {
                     courseCodeLayout.setVisibility(View.INVISIBLE);
                     facultyNameLayout.setVisibility(View.VISIBLE);
                     cText.setTextColor(getColor(R.color.notselected_option));
@@ -296,7 +296,7 @@
                 courseTH = "TH";
                 courseETH = "ETH";
                 courseSS = "SS";
-            }else {
+            } else {
                 courseTH = "";
                 courseETH = "";
                 courseSS = "";
@@ -309,7 +309,7 @@
             if (labChip.isChecked()) {
                 courseELA = "ELA";
                 courseLO = "LO";
-            }else {
+            } else {
                 courseELA = "";
                 courseLO = "";
             }
@@ -417,7 +417,7 @@
             public void onChanged(List<CreditDetails> registeredCourses) {
                 creditsAdapter.updateAdapter(registeredCourses);
                 int credits = 0;
-                for (CreditDetails credit: registeredCourses)
+                for (CreditDetails credit : registeredCourses)
                     credits += credit.getC();
                 creditsNumber.setText(Integer.toString(credits));
                 rRecyclerView.smoothScrollToPosition(0);
@@ -452,13 +452,13 @@
         themeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.lightRadioButton){
+                if (checkedId == R.id.lightRadioButton) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     preferences.edit().putInt("appTheme", AppCompatDelegate.MODE_NIGHT_NO).apply();
-                }else if (checkedId == R.id.darkRadioButton){
+                } else if (checkedId == R.id.darkRadioButton) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     preferences.edit().putInt("appTheme", AppCompatDelegate.MODE_NIGHT_YES).apply();
-                }else if (checkedId == R.id.systemRadioButton){
+                } else if (checkedId == R.id.systemRadioButton) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                     preferences.edit().putInt("appTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM).apply();
                 }
@@ -481,7 +481,7 @@
         new SwipeListener(toolbar);
         toolbar.setOnMenuItemClickListener(item -> {
 
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
 
                 case R.id.fullScreen:
                     startActivity(new Intent(MainActivity.this, LandscapeActivity.class)
@@ -547,7 +547,7 @@
 
         ExecutorClass.getInstance().diskIO().execute(() -> {
             List<Coord> coords = database.timeTableDao().getChosenSlots(ConstantsActivity.getTimeTableId().getValue());
-            for (Coord coord: coords){
+            for (Coord coord : coords) {
                 if (coord.getRow() != -1)
                     ConstantsActivity.getChosenSlots()[coord.getRow()][coord.getColumn()] = 1;
             }
@@ -568,7 +568,8 @@
 
         courseCodeEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -600,7 +601,8 @@
 
         facultyNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -620,7 +622,8 @@
             }
 
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -632,10 +635,12 @@
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -657,13 +662,13 @@
                         facultyNameEditText.getText().toString().toUpperCase().trim() + "%", courseTH, courseETH,
                         courseELA, courseEPJ, courseSS, courseLO, timeFN, timeAN);
 
-            }else if (courseTH.isEmpty() && courseETH.isEmpty() && courseSS.isEmpty() && courseELA.isEmpty()
-                    && courseLO.isEmpty() && courseEPJ.isEmpty() && timeFN.isEmpty() && timeAN.isEmpty()){
+            } else if (courseTH.isEmpty() && courseETH.isEmpty() && courseSS.isEmpty() && courseELA.isEmpty()
+                    && courseLO.isEmpty() && courseEPJ.isEmpty() && timeFN.isEmpty() && timeAN.isEmpty()) {
 
                 facultyList = database.facultyDao().loadData(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
                         facultyNameEditText.getText().toString().toUpperCase().trim() + "%");
 
-            }else {
+            } else {
                 facultyList = database.facultyDao().loadAsPerFilterOR(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
                         facultyNameEditText.getText().toString().toUpperCase().trim() + "%", courseTH, courseETH,
                         courseELA, courseEPJ, courseSS, courseLO, timeFN, timeAN);
@@ -671,7 +676,7 @@
 
             runOnUiThread(() -> {
 
-                if(facultyList.size() == 0){
+                if (facultyList.size() == 0) {
                     animation.setVisibility(View.INVISIBLE);
                     notFound.setVisibility(View.VISIBLE);
                     errorText.setText("No Courses Available");
@@ -706,10 +711,10 @@
                 if (matcher.find()) {
                     int[] coord = getCoord(Integer.parseInt(slotNum.substring(1)));
                     int num;
-                    if(coord[1] == 5){
-                        num = ((coord[0] + 1)*6);
-                    }else{
-                        num = ((coord[0])*6) + (coord[1] + 1);
+                    if (coord[1] == 5) {
+                        num = ((coord[0] + 1) * 6);
+                    } else {
+                        num = ((coord[0]) * 6) + (coord[1] + 1);
                     }
                     TimeTableData data;
 
@@ -737,7 +742,7 @@
                                 ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
                             }
                         });
-                    }else {
+                    } else {
 
                         data = new TimeTableData(facultyData, 1, coord[0],
                                 coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], false);
@@ -747,16 +752,16 @@
                             ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
                         });
                     }
-                }else {
+                } else {
 
                     if (ConstantsActivity.getSlotList().get(slotNum) != null) {
                         for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
                             int[] coord = getCoord(ConstantsActivity.getSlotList().get(slotNum)[i]);
                             int num;
-                            if(coord[1] == 5){
-                                num = ((coord[0] + 1)*6);
-                            }else{
-                                num = ((coord[0])*6) + (coord[1] + 1);
+                            if (coord[1] == 5) {
+                                num = ((coord[0] + 1) * 6);
+                            } else {
+                                num = ((coord[0]) * 6) + (coord[1] + 1);
                             }
                             TimeTableData data;
 
@@ -798,7 +803,7 @@
                     }
                 }
             }
-        }else {
+        } else {
             ExecutorClass.getInstance().diskIO().execute(() -> {
                 TimeTableData data = new TimeTableData(facultyData, 1, -1,
                         -1, facultyData.getSlot(), "-:-", "-:-", false);
@@ -819,12 +824,12 @@
         int[] coord = new int[2];
         int r, c;
 
-        if (num%6 == 0){
-            r = num/6 - 1;
+        if (num % 6 == 0) {
+            r = num / 6 - 1;
             c = 5;
-        }else{
-            r = num/6;
-            c = num%6 - 1;
+        } else {
+            r = num / 6;
+            c = num % 6 - 1;
         }
 
         coord[0] = r;
@@ -839,9 +844,7 @@
                 .setTextColor(getResources().getColor(R.color.snackbar_text))
                 .show();
 
-        /*final DialogFragment lottieDialog = new LottieDialogFragment().newInstance("cloudload.json",true);
-        lottieDialog.setCancelable(false);
-        lottieDialog.show(getFragmentManager(),"refreshDialog");*/
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         View refreshView = LayoutInflater.from(this).inflate(R.layout.custom_refresh, null);
         ProgressBar progressBar = refreshView.findViewById(R.id.mainProgressBar);
@@ -903,12 +906,12 @@
                                         int size = courseData.size();
                                         Log.d("HelloCount", Integer.toString(size));
 
-                                        if (count != 0){
-                                                progressBar.setIndeterminate(false);
-                                                progressBar.setMax(count);
-                                                progressBar.setProgress(0);
-                                                progressBar.setSecondaryProgress(courseData.size());
-                                            }
+                                        if (count != 0) {
+                                            progressBar.setIndeterminate(false);
+                                            progressBar.setMax(count);
+                                            progressBar.setProgress(0);
+                                            progressBar.setSecondaryProgress(courseData.size());
+                                        }
 
                                         if ((count == 0 && courseData.size() > count) || (count != 0 && courseData.size() == count)) {
                                             ExecutorClass.getInstance().diskIO().execute(() ->
@@ -923,8 +926,9 @@
                                                         public void run() {
                                                             progressBar.setProgress(progressBar.getProgress() + 1);
                                                             Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
-                                                            if (!progressBar.isIndeterminate() && progressBar.getProgress() == count){
+                                                            if (!progressBar.isIndeterminate() && progressBar.getProgress() == count) {
                                                                 refreshDialog.dismiss();
+                                                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                                                                 preferences.edit().putBoolean("refreshNotif", false).apply();
                                                                 Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
                                                                         Snackbar.LENGTH_LONG)
@@ -937,8 +941,11 @@
                                                 });
                                             }
 
-                                            lastUpdatedText.setText(String.valueOf(preferences.getString("lastUpdatedRealm", "Last updated for")));
-                                            preferences.edit().putString("lastUpdated", preferences.getString("lastUpdatedRealm", "Last updated for")).apply();
+                                            if (!preferences.getString("lastUpdatedRealm", "Last updated for").equals("Last updated for")) {
+                                                preferences.edit().putString("lastUpdated", preferences.getString("lastUpdatedRealm", "Last updated for")).apply();
+                                            }
+                                            lastUpdatedText.setText(preferences.getString("lastUpdated", "Last updated for"));
+
                                             /*FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                                 @Override
                                                 public void onSuccess(DataSnapshot dataSnapshot) {
@@ -963,9 +970,9 @@
                                                 }
                                             });*/
 
-                                            //lottieDialog.dismiss();
                                             if (count == 0) {
                                                 refreshDialog.dismiss();
+                                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                                                 preferences.edit().putBoolean("refreshNotif", false).apply();
                                                 Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
                                                         Snackbar.LENGTH_LONG)
@@ -994,6 +1001,7 @@
                                     super.onError(exception);
                                     Log.d("Hello", "Failed to create Realm" + exception.getMessage());
                                     refreshDialog.dismiss();
+                                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
                                     Snackbar.make(backdropLayout, "Failed to get data. " + exception.getMessage(),
                                             Snackbar.LENGTH_LONG)
@@ -1017,6 +1025,7 @@
                 }
             } else {
                 refreshDialog.dismiss();
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
                 Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
                         Snackbar.LENGTH_LONG)
@@ -1027,14 +1036,14 @@
         });
     }
 
-    public class SwipeListener implements View.OnTouchListener{
+    public class SwipeListener implements View.OnTouchListener {
         GestureDetector detector;
 
-        SwipeListener(View view){
+        SwipeListener(View view) {
             int threshold = 100;
             int velocity_threshold = 100;
 
-            GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener(){
+            GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDown(MotionEvent e) {
                     return true;
@@ -1073,9 +1082,9 @@
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.END)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
-        } else if(backdropIsOpen){
+        } else if (backdropIsOpen) {
             backdropLayout.close();
         } else {
             super.onBackPressed();
@@ -1099,4 +1108,4 @@
             });
         }
     }
-  }
+}

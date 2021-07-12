@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
@@ -17,10 +16,11 @@ import com.tfd.ffcsez.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 public class FragmentE extends Fragment {
 
-    @BindView(R.id.nextButton2)
-    TextView nextButton;
+    @BindView(R.id.nextButton2) Button nextButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
