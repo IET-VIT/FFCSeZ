@@ -22,13 +22,28 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="2dp"
         android:indeterminateTint="@color/back_text1"
         android:progressTint="@color/back_text1"
         android:secondaryProgressTint="@color/project_color" />
+
+    <TextView
+        android:id="@+id/mainProgressText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textAlignment="textEnd"
+        android:textColor="@color/custom_course_text"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/mainTextView"
@@ -37,10 +52,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Fetching data from server...Please do not close the app"
+        android:text="Fetching data from the server...Please do not close the app"
         android:textAlignment="center"
         android:textColor="@color/custom_course_text" />
 </LinearLayout>

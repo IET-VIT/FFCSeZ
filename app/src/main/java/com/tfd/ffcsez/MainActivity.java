@@ -848,6 +848,7 @@ public class MainActivity extends AppCompatActivity {
 
         View refreshView = LayoutInflater.from(this).inflate(R.layout.custom_refresh, null);
         ProgressBar progressBar = refreshView.findViewById(R.id.mainProgressBar);
+        TextView progressText = refreshView.findViewById(R.id.mainProgressText);
 
         AlertDialog refreshDialog = new AlertDialog.Builder(MainActivity.this)
                 .setView(refreshView)
@@ -910,6 +911,8 @@ public class MainActivity extends AppCompatActivity {
                                             progressBar.setIndeterminate(false);
                                             progressBar.setMax(count);
                                             progressBar.setProgress(0);
+                                            progressText.setVisibility(View.VISIBLE);
+                                            progressText.setText(progressBar.getProgress() + "/" + count);
                                             progressBar.setSecondaryProgress(courseData.size());
                                         }
 
@@ -924,17 +927,21 @@ public class MainActivity extends AppCompatActivity {
                                                     runOnUiThread(new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            progressBar.setProgress(progressBar.getProgress() + 1);
-                                                            Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
-                                                            if (!progressBar.isIndeterminate() && progressBar.getProgress() == count) {
-                                                                refreshDialog.dismiss();
-                                                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                                                                preferences.edit().putBoolean("refreshNotif", false).apply();
-                                                                Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
-                                                                        Snackbar.LENGTH_LONG)
-                                                                        .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
-                                                                        .setTextColor(getResources().getColor(R.color.snackbar_text))
-                                                                        .show();
+                                                            if (!progressBar.isIndeterminate()) {
+                                                                progressBar.setProgress(progressBar.getProgress() + 1);
+                                                                progressText.setText(progressBar.getProgress() + "/" + count);
+                                                                Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
+                                                                if (progressBar.getProgress() == count) {
+                                                                    progressText.setVisibility(View.GONE);
+                                                                    refreshDialog.dismiss();
+                                                                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                                                                    preferences.edit().putBoolean("refreshNotif", false).apply();
+                                                                    Snackbar.make(backdropLayout, "You've got the latest updates. Enjoy!",
+                                                                            Snackbar.LENGTH_LONG)
+                                                                            .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
+                                                                            .setTextColor(getResources().getColor(R.color.snackbar_text))
+                                                                            .show();
+                                                                }
                                                             }
                                                         }
                                                     });

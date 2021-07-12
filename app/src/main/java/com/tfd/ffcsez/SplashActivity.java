@@ -60,6 +60,7 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.tfdLogo) ImageView tfdLogo;
     @BindView(R.id.madeText) TextView madeText;
     @BindView(R.id.splashProgressBar) ProgressBar progressBar;
+    @BindView(R.id.splashProgressText) TextView progressText;
 
 
     @Override
@@ -177,6 +178,8 @@ public class SplashActivity extends AppCompatActivity {
                                                 progressBar.setIndeterminate(false);
                                                 progressBar.setMax(count);
                                                 progressBar.setProgress(0);
+                                                progressText.setVisibility(View.VISIBLE);
+                                                progressText.setText(progressBar.getProgress() + "/" + count);
                                                 progressBar.setSecondaryProgress(courseData.size());
                                             }
 
@@ -191,17 +194,20 @@ public class SplashActivity extends AppCompatActivity {
                                                             runOnUiThread(new Runnable() {
                                                                 @Override
                                                                 public void run() {
-                                                                    progressBar.setProgress(progressBar.getProgress() + 1);
-                                                                    Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
-                                                                    if (!progressBar.isIndeterminate() && progressBar.getProgress() == count){
-                                                                        loadAnimation.cancelAnimation();
-                                                                        loadLayout.setVisibility(View.GONE);
-                                                                        ietLogo.setVisibility(View.VISIBLE);
-                                                                        tfdLogo.setVisibility(View.VISIBLE);
-                                                                        madeText.setVisibility(View.VISIBLE);
-                                                                        startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                                                        finish();
+                                                                    if (!progressBar.isIndeterminate()) {
+                                                                        progressBar.setProgress(progressBar.getProgress() + 1);
+                                                                        progressText.setText(progressBar.getProgress() + "/" + count);
+                                                                        Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
+                                                                        if (progressBar.getProgress() == count) {
+                                                                            loadAnimation.cancelAnimation();
+                                                                            loadLayout.setVisibility(View.GONE);
+                                                                            ietLogo.setVisibility(View.VISIBLE);
+                                                                            tfdLogo.setVisibility(View.VISIBLE);
+                                                                            madeText.setVisibility(View.VISIBLE);
+                                                                            startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                                            finish();
+                                                                        }
                                                                     }
                                                                 }
                                                             });
