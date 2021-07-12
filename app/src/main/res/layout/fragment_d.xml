@@ -28,6 +28,7 @@
             app:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/light_grey"
             app:strokeWidth="0dp" />
 
         <ImageView
