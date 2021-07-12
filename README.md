@@ -1,15 +1,24 @@
 <p align="center">
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ">
-    <img align="left" src="images/icon.png" alt="App Icon" width="250" height="250">
+    <img align="left" src="images/icon.png" alt="App Icon" width="275" height="275">
   </a>
+  
+  <p align="center">
+    <img src="https://img.shields.io/badge/STATUS-ACITVE-green?style=for-the-badge">
+    <img src="https://img.shields.io/badge/Version-1.0-orange?style=for-the-badge">
+    <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge">
+    </a>
+  </p>  
   
   <h1 align="center">FFCSeZ</h3>
   <h3 align="center">An app to ease your FFCS</h3>
   
   <p align="center">
-  <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ"><strong>Explore the docs »</strong></a>
-    <br>
-    <br>
+     <img src="https://img.shields.io/badge/Explore%20the%20docs-%3E%3E-blue?style=for-the-badge&logo=readthedocs">
+  </p>
+  
+   <p align="center">
   ·
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/issues">Report a bug</a>
   ·
@@ -21,14 +30,19 @@
 <br>
 
 <p align="center">
-
-[![Contributors](https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/graphs/contributors)
-[![Forks](https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/network/members)
-[![Stargazers](https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/stargazers)
-[![Issues](https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/issues)
-[![MIT License](https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge)](https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE)
-
-</p>
+  <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/Team-Fourth-Dimension/FFCSeZ.svg?style=for-the-badge">
+  </a>
+  <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/network/members">
+    <img src="https://img.shields.io/github/forks/Team-Fourth-Dimension/FFCSeZ.svg?style=for-the-badge">
+  </a>  
+  <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/stargazers">
+    <img src="https://img.shields.io/github/stars/Team-Fourth-Dimension/FFCSeZ.svg?style=for-the-badge">
+  </a>
+  <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/issues">
+    <img src="https://img.shields.io/github/issues/Team-Fourth-Dimension/FFCSeZ.svg?style=for-the-badge">
+  </a>
+</p>  
 
 <details open="open">
   <summary><h3 style="display: inline-block">Table of Contents</h3></summary>
