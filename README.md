@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ">
-    <img align="left" src="images/icon.png" alt="App Icon" width="275" height="275">
+    <img align="left" src="https://drive.google.com/u/0/uc?id=1EIRjgBU204x3hUKocU1XcljB-28wParr&export=download" alt="App Icon" width="275" height="275">
   </a>
   
   <p align="center">
@@ -51,6 +51,7 @@
       <ul>
         <li><a href="#-features">Features</a></li>
         <li><a href="#-tech-stack">Tech Stack</a></li>
+        <li><a href="#-screenshots">Screenshots</a></li>
       </ul>
     </li>
     <li>
@@ -83,6 +84,9 @@ FFCSeZ is an app to facilitate the smooth and hassle-free preparation of timetab
 
 ## <img src="https://techstackapps.com/media/2019/11/TechStackApps-logo-icon.png" width="32" height="32"> Tech Stack
 <img src="https://2.bp.blogspot.com/-tzm1twY_ENM/XlCRuI0ZkRI/AAAAAAAAOso/BmNOUANXWxwc5vwslNw3WpjrDlgs9PuwQCLcBGAsYHQ/s1600/pasted%2Bimage%2B0.png" width="40" height="40" alt="Android Studio"> <img src="https://symbols-electrical.getvecta.com/stencil_261/26_mongodb-realm.8095f50267.png" width="36" height="36" alt="Realm"> <img src="https://img.icons8.com/color/452/mongodb.png" width="40" height="40" alt="MongoDB Atlas"> <img src="https://i.pinimg.com/originals/a5/58/b4/a558b426cb8973523f37bbed94cf0f09.png" width="40" height="40" alt="Figma"> <img src="https://img.icons8.com/color/452/firebase.png" width="40" height="40" alt="Firebase">
+
+## <img src="https://facebook.github.io/screenshot-tests-for-android/static/logo.png" width="32" height="32"> Screenshots
+<img src="https://drive.google.com/u/0/uc?id=1bzQm7U1wiz2Z3CH3VlJzTGMkFFQVy_Ck&export=download" width="270" height="508" alt="Home Screen"> <img src="https://drive.google.com/u/0/uc?id=1SfKmcJE8j8b1tlh2CtqezNDBwloR9iEG&export=download" width="270" height="508" alt="Course Selection Screen"> <img src="https://drive.google.com/u/0/uc?id=1HMg2ikjmf0z-xDjOhvmkl08nZp7nrZD-&export=download" width="270" height="508" alt="Multiple Timetables"> <img src="https://drive.google.com/u/0/uc?id=1c_xhk1NcnIAsPO0NzWdirgtbzmV2oGWc&export=download" width="270" height="508" alt="Credits"> <img src="https://drive.google.com/u/0/uc?id=1NK_yxTJ5DZ_cyST2-Nb1F_Dn2qIifjF6&export=download" width="505.5" height="270" alt="Legacy View">
 
 ## <img src="https://cdn.iconscout.com/icon/free/png-512/laptop-user-1-1179329.png" width="32" height="32"> Getting Started
 To get a local copy up and running follow these simple steps.
