@@ -90,8 +90,7 @@ FFCSeZ is an app to facilitate the smooth and hassle-free preparation of timetab
 <img src="https://drive.google.com/u/0/uc?id=1bzQm7U1wiz2Z3CH3VlJzTGMkFFQVy_Ck&export=download" width="270" height="508" alt="Home Screen"> <img src="https://drive.google.com/u/0/uc?id=1HMg2ikjmf0z-xDjOhvmkl08nZp7nrZD-&export=download" width="270" height="508" alt="Multiple Timetables">
 
 ### Course Selection Screen
-<img src="https://drive.google.com/u/0/uc?id=1SfKmcJE8j8b1tlh2CtqezNDBwloR9iEG&export=download" width="270" height="508" alt="Course Selection Screen">
-<img src="https://drive.google.com/u/0/uc?id=1LaTbScMigB5F8b4ZZGjn4rokMolZaU0j&export=download" width="270" height="555" alt="Course Selection Screen Live">
+<img src="https://drive.google.com/u/0/uc?id=1SfKmcJE8j8b1tlh2CtqezNDBwloR9iEG&export=download" width="270" height="508" alt="Course Selection Screen"> <img src="https://drive.google.com/u/0/uc?id=1kbshgBgIiFhqPahZ2Iq3nS7CZSd2mrGj&export=download" width="245.68" height="505" alt="Course Selection Screen Live">
 
 ### Registered Courses
 <img src="https://drive.google.com/u/0/uc?id=1c_xhk1NcnIAsPO0NzWdirgtbzmV2oGWc&export=download" width="270" height="508" alt="Credits">
