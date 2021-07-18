@@ -37,6 +37,12 @@
         app:showAsAction="ifRoom"
         android:id="@+id/appTheme"/>
 
+    <item android:title="Tutorial"
+        android:iconTint="@color/white"
+        android:icon="@drawable/ic_assistant"
+        app:showAsAction="ifRoom"
+        android:id="@+id/tutorial"/>
+
     <item android:title="Get Started"
         android:iconTint="@color/white"
         android:icon="@drawable/ic_assistant"

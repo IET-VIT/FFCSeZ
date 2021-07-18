@@ -30,7 +30,7 @@
     <color name="cyan">#a0ffe6</color>
     <color name="blue">#03256c</color>
     <color name="blood_red">#B00020</color>
-    <color name="opacity_black">#80000000</color>
+    <color name="opacity_black">#E6000000</color>
     <color name="pitch_black">#000000</color>
     <color name="dark_purple">#52214c</color>
 
@@ -69,6 +69,4 @@
 
     <color name="selected_option">@color/blue</color>
     <color name="notselected_option">#555555</color>
-
-
 </resources>

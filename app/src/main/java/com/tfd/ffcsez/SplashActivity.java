@@ -52,6 +52,8 @@ public class SplashActivity extends AppCompatActivity {
     private User user;
     private App app;
     private int count;
+    private FacultyDatabase database;
+    private SharedPreferences sharedPreferences;
 
     @BindView(R.id.loadAnimation) LottieAnimationView loadAnimation;
     @BindView(R.id.loadTextView) TextView loadText;
@@ -75,13 +77,13 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setNavigationBarColor(getColor(R.color.custom_course_bg));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("com.tfd.ffcsez", Context.MODE_PRIVATE);
         AppCompatDelegate.setDefaultNightMode(sharedPreferences.getInt("appTheme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
 
         setContentView(R.layout.activity_splash);
 
         ButterKnife.bind(this);
-        FacultyDatabase database = FacultyDatabase.getInstance(getApplicationContext());
+        database = FacultyDatabase.getInstance(getApplicationContext());
 
         if (sharedPreferences.getBoolean("firstTime", true)) {
             Log.d("Hello", "firstTime");
@@ -147,156 +149,25 @@ public class SplashActivity extends AppCompatActivity {
                                     if (dataSnapshot.exists()) {
                                         count = Integer.parseInt(dataSnapshot.getValue().toString());
                                         sharedPreferences.edit().putInt("realmCount", count).apply();
+                                        getDataRealm(config);
                                     }
                                 } else {
                                     count = 0;
+                                    getDataRealm(config);
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 count = 0;
-                            }
-                        });
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Realm.getInstanceAsync(config, new Realm.Callback() {
-                                    @Override
-                                    public void onSuccess(@NonNull Realm realm) {
-                                        Log.d("Hello", "Realm created");
-                                        SplashActivity.this.realm = realm;
-
-                                        RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
-                                        data.addChangeListener(courseData -> {
-                                            int size = courseData.size();
-                                            Log.d("Hello", Integer.toString(size));
-                                            Log.d("HelloCount", Integer.toString(count));
-
-                                            if (count != 0){
-                                                progressBar.setIndeterminate(false);
-                                                progressBar.setMax(count);
-                                                progressBar.setProgress(0);
-                                                progressText.setVisibility(View.VISIBLE);
-                                                progressText.setText(progressBar.getProgress() + "/" + count);
-                                                progressBar.setSecondaryProgress(courseData.size());
-                                            }
-
-                                            if ((count == 0 && courseData.size() > count) || (count != 0 && courseData.size() == count)) {
-                                                ExecutorClass.getInstance().diskIO().execute(() ->
-                                                        database.facultyDao().deleteAll());
-
-                                                for (CourseData course : courseData) {
-                                                    FacultyData faculty = new FacultyData(course);
-                                                    ExecutorClass.getInstance().diskIO().execute(() -> {
-                                                            database.facultyDao().insertDetail(faculty);
-                                                            runOnUiThread(new Runnable() {
-                                                                @Override
-                                                                public void run() {
-                                                                    if (!progressBar.isIndeterminate()) {
-                                                                        progressBar.setProgress(progressBar.getProgress() + 1);
-                                                                        progressText.setText(progressBar.getProgress() + "/" + count);
-                                                                        Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
-                                                                        if (progressBar.getProgress() == count) {
-                                                                            loadAnimation.cancelAnimation();
-                                                                            loadLayout.setVisibility(View.GONE);
-                                                                            ietLogo.setVisibility(View.VISIBLE);
-                                                                            tfdLogo.setVisibility(View.VISIBLE);
-                                                                            madeText.setVisibility(View.VISIBLE);
-                                                                            startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                                                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                                                            finish();
-                                                                        }
-                                                                    }
-                                                                }
-                                                            });
-                                                    });
-                                                }
-
-                                                sharedPreferences.edit().putBoolean("firstTime", false).apply();
-
-                                                FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DataSnapshot dataSnapshot) {
-                                                        if (dataSnapshot != null) {
-                                                            if (dataSnapshot.exists()) {
-                                                                String text = dataSnapshot.getValue().toString();
-                                                                sharedPreferences.edit().putString("lastUpdated", text).apply();
-                                                            }
-                                                        } else {
-                                                            String text = "Last updated for";
-                                                            sharedPreferences.edit().putString("lastUpdated", text).apply();
-                                                        }
-                                                    }
-                                                }).addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        String text = "Last updated for";
-                                                        sharedPreferences.edit().putString("lastUpdated", text).apply();
-                                                    }
-                                                });
-
-                                                if (count == 0) {
-                                                    loadAnimation.cancelAnimation();
-                                                    loadLayout.setVisibility(View.GONE);
-                                                    ietLogo.setVisibility(View.VISIBLE);
-                                                    tfdLogo.setVisibility(View.VISIBLE);
-                                                    madeText.setVisibility(View.VISIBLE);
-                                                }
-
-                                                realm.close();
-
-                                                if (user != null) {
-                                                    user.logOutAsync(result -> {
-                                                        if (result.isSuccess()) {
-                                                            Log.d("Hello", "Successfully logged out.");
-                                                        } else {
-                                                            Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                                        }
-                                                    });
-                                                }
-
-                                                if (progressBar.isIndeterminate()) {
-                                                    startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                                    finish();
-                                                }
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void onError(@NotNull Throwable exception) {
-                                        super.onError(exception);
-                                        loadText.setText(exception.getMessage());
-                                        Log.d("Hello", "Failed to create Realm" + exception.getMessage());
-                                        Toast.makeText(SplashActivity.this,
-                                                "Couldn't login securely to the server. " + exception.getMessage(),
-                                                Toast.LENGTH_LONG).show();
-
-                                        if (user != null) {
-                                            user.logOutAsync(result -> {
-                                                if (result.isSuccess()) {
-                                                    Log.d("Hello", "Successfully logged out.");
-                                                } else {
-                                                    Log.d("Hello", "Failed to log out, error: " + result.getError());
-                                                }
-                                            });
-                                        }
-
-                                        startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
-                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                        finish();
-                                    }
-                                });
+                                getDataRealm(config);
                             }
                         });
                     }
 
                 } else {
                     Toast.makeText(SplashActivity.this,
-                            "Couldn't connect to the server. Downloads will take place the next time you open the app or by using the refresh option.",
+                            "Couldn't connect to the server. Please check your network connection.",
                             Toast.LENGTH_LONG).show();
 
                     if (realm != null)
@@ -351,8 +222,139 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 startActivity(intent);
                 finish();
-            }, 1600);
+            }, 1700);
         }
+    }
+
+    private void getDataRealm(SyncConfiguration config) {
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(@NonNull Realm realm) {
+                Log.d("Hello", "Realm created");
+                SplashActivity.this.realm = realm;
+
+                RealmResults<CourseData> data = realm.where(CourseData.class).findAllAsync();
+                data.addChangeListener(courseData -> {
+                    int size = courseData.size();
+                    Log.d("Hello", Integer.toString(size));
+                    Log.d("HelloCount", Integer.toString(count));
+
+                    if (count != 0){
+                        progressBar.setIndeterminate(false);
+                        progressBar.setMax(count);
+                        progressBar.setProgress(0);
+                        progressText.setVisibility(View.VISIBLE);
+                        progressText.setText(progressBar.getProgress() + "/" + count);
+                        progressBar.setSecondaryProgress(courseData.size());
+                    }
+
+                    if ((count == 0 && courseData.size() > count) || (count != 0 && courseData.size() == count)) {
+                        ExecutorClass.getInstance().diskIO().execute(() ->
+                                database.facultyDao().deleteAll());
+
+                        for (CourseData course : courseData) {
+                            FacultyData faculty = new FacultyData(course);
+                            ExecutorClass.getInstance().diskIO().execute(() -> {
+                                database.facultyDao().insertDetail(faculty);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (!progressBar.isIndeterminate()) {
+                                            progressBar.setProgress(progressBar.getProgress() + 1);
+                                            progressText.setText(progressBar.getProgress() + "/" + count);
+                                            Log.i("HelloProgress", Integer.toString(progressBar.getProgress()));
+                                            if (progressBar.getProgress() == count) {
+                                                loadAnimation.cancelAnimation();
+                                                loadLayout.setVisibility(View.GONE);
+                                                ietLogo.setVisibility(View.VISIBLE);
+                                                tfdLogo.setVisibility(View.VISIBLE);
+                                                madeText.setVisibility(View.VISIBLE);
+                                                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                                finish();
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        }
+
+                        sharedPreferences.edit().putBoolean("firstTime", false).apply();
+
+                        FirebaseDatabase.getInstance().getReference().child("lastUpdated").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            @Override
+                            public void onSuccess(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot != null) {
+                                    if (dataSnapshot.exists()) {
+                                        String text = dataSnapshot.getValue().toString();
+                                        sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                    }
+                                } else {
+                                    String text = "Last updated for";
+                                    sharedPreferences.edit().putString("lastUpdated", text).apply();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                String text = "Last updated for";
+                                sharedPreferences.edit().putString("lastUpdated", text).apply();
+                            }
+                        });
+
+                        if (count == 0) {
+                            loadAnimation.cancelAnimation();
+                            loadLayout.setVisibility(View.GONE);
+                            ietLogo.setVisibility(View.VISIBLE);
+                            tfdLogo.setVisibility(View.VISIBLE);
+                            madeText.setVisibility(View.VISIBLE);
+                        }
+
+                        realm.close();
+
+                        if (user != null) {
+                            user.logOutAsync(result -> {
+                                if (result.isSuccess()) {
+                                    Log.d("Hello", "Successfully logged out.");
+                                } else {
+                                    Log.d("Hello", "Failed to log out, error: " + result.getError());
+                                }
+                            });
+                        }
+
+                        if (progressBar.isIndeterminate()) {
+                            startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            finish();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(@NotNull Throwable exception) {
+                super.onError(exception);
+                loadText.setText(exception.getMessage());
+                Log.d("Hello", "Failed to create Realm" + exception.getMessage());
+                Toast.makeText(SplashActivity.this,
+                        "Couldn't login securely to the server. " + exception.getMessage(),
+                        Toast.LENGTH_LONG).show();
+
+                if (user != null) {
+                    user.logOutAsync(result -> {
+                        if (result.isSuccess()) {
+                            Log.d("Hello", "Successfully logged out.");
+                        } else {
+                            Log.d("Hello", "Failed to log out, error: " + result.getError());
+                        }
+                    });
+                }
+
+                startActivity(new Intent(SplashActivity.this, GetStartedActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            }
+        });
     }
 
     @Override

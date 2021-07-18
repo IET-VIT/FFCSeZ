@@ -45,15 +45,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.FirebaseDatabase;
 import com.roacult.backdrop.BackdropLayout;
 import com.tfd.ffcsez.adapters.CourseACAdapter;
 import com.tfd.ffcsez.adapters.CreditsAdapter;
@@ -89,6 +85,9 @@ import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -128,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
     // Variables
     private String courseTH = "", courseETH = "", courseELA = "", courseEPJ = "", courseSS = "";
     private String courseLO = "", timeFN = "", timeAN = "";
-    private boolean exists, backdropIsOpen;
-    private int count;
+    private boolean exists, backdropIsOpen = false;
+    private int count, item;
     private Realm realm;
     private User user;
     private App app;
@@ -233,22 +232,6 @@ public class MainActivity extends AppCompatActivity {
                 searchCount.setText(facultyData.size() + " result(s)");
             }
         });
-
-        /*toggle.setOnClickListener(v -> {
-            doVibration();
-            if(toggle.isChecked()){
-                courseCodeLayout.setVisibility(View.INVISIBLE);
-                facultyNameLayout.setVisibility(View.VISIBLE);
-                cText.setTextColor(getColor(R.color.notselected_option));
-                fText.setTextColor(getColor(R.color.selected_option));
-
-            } else {
-                courseCodeLayout.setVisibility(View.VISIBLE);
-                facultyNameLayout.setVisibility(View.INVISIBLE);
-                fText.setTextColor(getColor(R.color.notselected_option));
-                cText.setTextColor(getColor(R.color.selected_option));
-            }
-        });*/
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -484,50 +467,60 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
 
                 case R.id.fullScreen:
+                    doVibration();
                     startActivity(new Intent(MainActivity.this, LandscapeActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    doVibration();
                     return true;
 
                 case R.id.custom:
-                    customDialog.show();
                     doVibration();
+                    customDialog.show();
                     return true;
 
                 case R.id.refresh:
-                    refreshRealm();
                     doVibration();
+                    refreshRealm();
                     return true;
 
                 case R.id.timetable:
+                    doVibration();
                     BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                     bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-                    doVibration();
                     return true;
 
                 case R.id.registered:
-                    drawerLayout.openDrawer(GravityCompat.END);
                     doVibration();
+                    drawerLayout.openDrawer(GravityCompat.END);
                     return true;
 
                 case R.id.appTheme:
-                    themeDialog.show();
                     doVibration();
+                    themeDialog.show();
                     return true;
 
                 case R.id.about:
+                    doVibration();
                     startActivity(new Intent(MainActivity.this, AboutActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    doVibration();
                     return true;
 
                 case R.id.getStarted:
-                    getStartedDialog.show();
                     doVibration();
+                    getStartedDialog.show();
+                    return true;
+
+                case R.id.tutorial:
+                    doVibration();
+                    showTutorial();
                     return true;
             }
             return false;
         });
+
+        if (preferences.getBoolean("firstTimeTutorial", true)) {
+            showTutorial();
+            preferences.edit().putBoolean("firstTimeTutorial", false).apply();
+        }
     }
 
     @Override
@@ -1034,7 +1027,7 @@ public class MainActivity extends AppCompatActivity {
                 refreshDialog.dismiss();
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-                Snackbar.make(backdropLayout, "Couldn't fetch the data. Please try again in sometime.",
+                Snackbar.make(backdropLayout, "Couldn't fetch the data. Please check your network connection or try again in sometime.",
                         Snackbar.LENGTH_LONG)
                         .setBackgroundTint(getResources().getColor(R.color.snackbar_bg))
                         .setTextColor(getResources().getColor(R.color.snackbar_text))
@@ -1085,6 +1078,207 @@ public class MainActivity extends AppCompatActivity {
         public boolean onTouch(View v, MotionEvent event) {
             return detector.onTouchEvent(event);
         }
+    }
+
+    private void showTutorial() {
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(100);
+
+        MaterialShowcaseSequence sequence1 = new MaterialShowcaseSequence(this);
+        sequence1.setConfig(config);
+        MaterialShowcaseSequence sequence2 = new MaterialShowcaseSequence(this);
+        sequence2.setConfig(config);
+        MaterialShowcaseSequence sequence3 = new MaterialShowcaseSequence(this);
+        sequence3.setConfig(config);
+
+        sequence1.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(toolbar)
+                        .setDismissText("NEXT")
+                        .setTitleText("Welcome to FFCSeZ - An app to ease your FFCS")
+                        .setContentText("Here is a short walk-through of the app.")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withRectangleShape()
+                        .build()
+        );
+
+        sequence1.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(tabLayout)
+                        .setDismissText("NEXT")
+                        .setTitleText("Timetable View")
+                        .setContentText("View your entire timetable for the week along with a dedicated tab for J-components.")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withRectangleShape()
+                        .build()
+        );
+
+        sequence1.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(findViewById(R.id.timetable))
+                        .setDismissText("NEXT")
+                        .setTitleText("Custom Timetables")
+                        .setContentText("View your custom timetables and create new ones.")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withCircleShape()
+                        .build()
+        );
+
+        sequence1.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(findViewById(R.id.fullScreen))
+                        .setDismissText("NEXT")
+                        .setTitleText("Legacy Timetable View")
+                        .setContentText("View your entire timetable in a fullscreen landscape mode with divisions of morning and afternoon timings.")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withCircleShape()
+                        .build()
+        );
+
+        sequence1.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(findViewById(R.id.registered))
+                        .setDismissText("NEXT")
+                        .setTitleText("Credits View")
+                        .setContentText("View all your registered courses and their total credits (tap on the icon or swipe from the right edge).")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withCircleShape()
+                        .build()
+        );
+
+        sequence2.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(facultyRecyclerView)
+                        .setDismissText("NEXT")
+                        .setTitleText("Course Selection Screen")
+                        .setContentText("View all the faculties, slots and courses available based on the keywords and filters chosen.")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withRectangleShape()
+                        .build()
+        );
+
+        sequence2.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(findViewById(R.id.filterGroup))
+                        .setDismissText("NEXT")
+                        .setTitleText("Filters")
+                        .setContentText("Narrow down your search using filters. Filters are available based on the " +
+                                "slot timings (Morning or Afternoon) and also based on the course or component type (Theory, Lab or Project).")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withRectangleShape()
+                        .build()
+        );
+
+        sequence2.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(courseCodeLayout)
+                        .setDismissText("NEXT")
+                        .setTitleText("Search")
+                        .setContentText("Search for your desired course or faculty slots using a course code, course title or the faculty name." +
+                                "\n\nTap on any course to add it to the timetable." +
+                                "\n\nDelete a course by tapping the delete icon next to the course in the timetable.")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withRectangleShape()
+                        .build()
+        );
+
+        sequence2.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(toggle)
+                        .setDismissText("NEXT")
+                        .setTitleText("Search")
+                        .setContentText("Searching made easy. You can search for your desired course or faculty slots in the following three combinations:" +
+                                "\n\n1. Course code alone.\n2. Faculty name alone.\n3. Course code + Faculty name (only those faculties available for the entered course code will be shown in this case).")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withRectangleShape()
+                        .build()
+        );
+
+        sequence3.addSequenceItem(
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(toolbar)
+                        .setDismissText("GOT IT")
+                        .setTitleText("And that's all for now folks!")
+                        .setContentText("Explore many of the other features and utilities available in the app by using the three dots menu." +
+                                "\n\nYou can come back to this tutorial anytime by tapping the Tutorial option in the three dots menu.\n\nHappy FFCS!")
+                        .setMaskColour(getColor(R.color.opacity_black))
+                        .setTitleTextColor(getColor(R.color.white))
+                        .setContentTextColor(getColor(R.color.white))
+                        .setDismissTextColor(getColor(R.color.white))
+                        .renderOverNavigationBar()
+                        .withRectangleShape()
+                        .build()
+        );
+
+        item = 0;
+        sequence1.setOnItemDismissedListener(new MaterialShowcaseSequence.OnSequenceItemDismissedListener() {
+            @Override
+            public void onDismiss(MaterialShowcaseView itemView, int position) {
+                Log.d("HelloPost", Integer.toString(position));
+                item++;
+                if (item == 5) {
+                    item = 0;
+                    if (!backdropIsOpen) {
+                        backdropLayout.open();
+                    }
+                    sequence2.start();
+                }
+            }
+        });
+        sequence2.setOnItemDismissedListener(new MaterialShowcaseSequence.OnSequenceItemDismissedListener() {
+            @Override
+            public void onDismiss(MaterialShowcaseView itemView, int position) {
+                item++;
+                if (item == 4) {
+                    item = 0;
+                    if (backdropIsOpen) {
+                        backdropLayout.close();
+                    }
+                    sequence3.start();
+                }
+            }
+        });
+
+        if (backdropIsOpen) {
+            backdropLayout.close();
+        }
+        sequence1.start();
     }
 
     @Override
