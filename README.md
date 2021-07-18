@@ -107,7 +107,9 @@ Open Android Studio, select `Import from Version Control` and paste the followin
 ``` 
 https://github.com/Team-Fourth-Dimension/FFCSeZ.git 
 ```
-Run a Gradle build if there is some error in syncing the dependencies. Generate an APK by going to `Build > Build APK` and install it on your Android device or run the app from within Android Studio either by using an emulator or by USB debugging. Note that you will have to add your own `google-services.json` file under `../app` for the Gradle build to succeed.
+Run a Gradle build if there is some error in syncing the dependencies. Generate an APK by going to `Build > Build APK` and install it on your Android device or run the app from within Android Studio either by using an emulator or by USB debugging. 
+
+**Note that you will have to add your own `google-services.json` file under `../app` for the Gradle build to succeed.**
 
 ## <img src="https://image.flaticon.com/icons/png/128/712/712058.png" width="32" height="32"> Roadmap
 The main features of the app are broken down into a technical task timeline.
