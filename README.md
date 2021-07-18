@@ -107,7 +107,7 @@ Open Android Studio, select `Import from Version Control` and paste the followin
 ``` 
 https://github.com/Team-Fourth-Dimension/FFCSeZ.git 
 ```
-Run a gradle build if there is some error in syncing the dependencies. Generate an APK by going to `Build > Build APK` and install it on your Android device or run the app from within Android Studio either by using an emulator or by USB debugging.
+Run a Gradle build if there is some error in syncing the dependencies. Generate an APK by going to `Build > Build APK` and install it on your Android device or run the app from within Android Studio either by using an emulator or by USB debugging. Note that you will have to add your own `google-services.json` file under `../app` for the Gradle build to succeed.
 
 ## <img src="https://image.flaticon.com/icons/png/128/712/712058.png" width="32" height="32"> Roadmap
 The main features of the app are broken down into a technical task timeline.
@@ -116,6 +116,7 @@ The main features of the app are broken down into a technical task timeline.
   - [x] Add the required dependencies for library support.
   - [ ] Create a Login UI for GoogleAuth.
   - [x] Setup database services.
+  - [ ] Add an app tutorial.
 
 - <strong><em> Task2: Setting up the FFCS interface and database </em></strong>
   - [x] Build the UI for the FFCS selection screen.
