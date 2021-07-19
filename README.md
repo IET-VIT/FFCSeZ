@@ -1,17 +1,18 @@
 <p align="center">
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ">
-    <img align="left" src="https://drive.google.com/u/0/uc?id=1EIRjgBU204x3hUKocU1XcljB-28wParr&export=download" alt="App Icon" width="275" height="275">
+    <img align="left" src="https://drive.google.com/u/0/uc?id=1EIRjgBU204x3hUKocU1XcljB-28wParr&export=download" alt="App Icon" width="300" height="300">
   </a>
   
   <p align="center">
     <img src="https://img.shields.io/badge/STATUS-ACITVE-green?style=for-the-badge">
-    <img src="https://img.shields.io/badge/Version-1.0-orange?style=for-the-badge">
+    <img src="https://img.shields.io/badge/BUILDS-PASSING-green?style=for-the-badge">
+    <img src="https://img.shields.io/badge/Version-1.1-orange?style=for-the-badge">
     <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge">
     </a>
   </p>  
   
-  <h1 align="center">FFCSeZ</h3>
+  <h1 align="center"><font size="10">FFCSeZ</font></h1>
   <h3 align="center">An app to ease your FFCS</h3>
   
   <p align="center">
@@ -109,7 +110,7 @@ https://github.com/Team-Fourth-Dimension/FFCSeZ.git
 ```
 Run a Gradle build if there is some error in syncing the dependencies. Generate an APK by going to `Build > Build APK` and install it on your Android device or run the app from within Android Studio either by using an emulator or by USB debugging. 
 
-**Note that you will have to add your own `google-services.json` file under `../app` for the Gradle build to succeed.**
+> **Note that you will have to add your own `google-services.json` file under `../app` for the Gradle build to succeed.**
 
 ## <img src="https://image.flaticon.com/icons/png/128/712/712058.png" width="32" height="32"> Roadmap
 The main features of the app are broken down into a technical task timeline.
@@ -118,7 +119,6 @@ The main features of the app are broken down into a technical task timeline.
   - [x] Add the required dependencies for library support.
   - [ ] Create a Login UI for GoogleAuth.
   - [x] Setup database services.
-  - [ ] Add an app tutorial.
 
 - <strong><em> Task2: Setting up the FFCS interface and database </em></strong>
   - [x] Build the UI for the FFCS selection screen.
@@ -139,6 +139,7 @@ The main features of the app are broken down into a technical task timeline.
   - [ ] Adding the import timetable feature.
   - [x] Add notifications to remind when new FFCS data has arrived
   - [x] UI cleanup.
+  - [x] Add an app tutorial.
 
 - <strong><em> Task 5: Notes (To-Dos) and Reminders </em></strong>
   - [ ] Building the UI for the to-dos activity for each class.
