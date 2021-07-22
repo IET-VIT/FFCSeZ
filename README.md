@@ -8,7 +8,7 @@
     <img src="https://img.shields.io/badge/BUILDS-PASSING-green?style=for-the-badge">
     <img src="https://img.shields.io/badge/Version-1.1-orange?style=for-the-badge">
     <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE">
-      <img src="https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge">
+      <img src="https://img.shields.io/github/license/Team-Fourth-Dimension/FFCSeZ.svg?style=for-the-badge">
     </a>
   </p>  
   
