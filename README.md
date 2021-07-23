@@ -1,8 +1,4 @@
 <p align="center">
-  <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ">
-    <img align="left" src="https://drive.google.com/u/0/uc?id=1EIRjgBU204x3hUKocU1XcljB-28wParr&export=download" alt="App Icon" width="300" height="300">
-  </a>
-  
   <p align="center">
     <img src="https://img.shields.io/badge/STATUS-ACITVE-green?style=for-the-badge">
     <img src="https://img.shields.io/badge/BUILDS-PASSING-green?style=for-the-badge">
@@ -10,16 +6,17 @@
     <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/blob/master/LICENSE">
       <img src="https://img.shields.io/github/license/Team-Fourth-Dimension/FFCSeZ.svg?style=for-the-badge">
     </a>
-  </p>  
+  </p>
   
-  <h1 align="center">FFCSeZ</h1>
-  <h3 align="center">An app to eaZe your FFCS</h3>
+  <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ">
+    <img src=https://user-images.githubusercontent.com/76874556/126758930-61ff8262-f1a2-449c-a8d5-4ae3de6d2456.png alt="FFCSeZ">
+  </a>  
   
   <p align="center">
      <a href='https://play.google.com/store/apps/details?id=com.tfd.ffcsez&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width="193.8" height="75"/></a>
   </p>
   
-   <p align="center">
+  <p align="center">
   ·
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/issues">Report a bug</a>
   ·
@@ -27,8 +24,6 @@
   ·
   </p>
 </p>
-
-<br>
 
 <p align="center">
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ/graphs/contributors">
@@ -66,6 +61,7 @@
     <li><a href="#-contributing">Contributing</a></li>
     <li><a href="#-license">License</a></li>
     <li><a href="#-reach-out">Reach out</a></li>
+    <li><a href="#-acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -177,6 +173,10 @@ Distributed under the **MIT License**. See [`LICENSE`](https://github.com/Team-F
 ## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Google_Contacts_icon.svg/1024px-Google_Contacts_icon.svg.png" width=32 height=32> Reach out
 ##### Arjun Sivaraman via [Email](mailto:arjun140702@gmail.com) · [Github](https://github.com/1407arjun) · [Linkedin](https://linkedin.com/in/arjun-sivaraman-1407)
 ##### Prasoon Soni via [Email](mailto:prasoonsoni03@gmail.com) · [Github](https://github.com/prasoonsoni) · [Linkedin](https://www.linkedin.com/in/prasoonsoni)
+
+## <img src="https://www.pivotsoftware.com/uploads/images/_feature/icon-25.png" width=32 height=32> Acknowledgements
+1. [Freepik](https://freepik.com) - For the background images.
+2. [Lottie Files](https://lottiefiles.com) - For some of the animated gifs in the app.
 
 <br><h4 align="center"> With :heart: by <a href="https://ietvit.tech/" target="_blank">Team Fourth Dimension, IET-VIT</a></h4>
 
