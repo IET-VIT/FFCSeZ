@@ -8,6 +8,10 @@
     </a>
   </p>
   
+  <p align="center">
+    <img src="https://user-images.githubusercontent.com/76874556/126889507-cd6ad750-8d46-481a-a6f9-26a903f90745.png" width="355.630965006" height="160" alt="TFDLogo">
+  </p>
+  
   <a href="https://github.com/Team-Fourth-Dimension/FFCSeZ">
     <img src=https://user-images.githubusercontent.com/76874556/126758930-61ff8262-f1a2-449c-a8d5-4ae3de6d2456.png alt="FFCSeZ">
   </a>  
@@ -178,6 +182,6 @@ Distributed under the **MIT License**. See [`LICENSE`](https://github.com/Team-F
 1. [Freepik](https://freepik.com) - For the background images.
 2. [Lottie Files](https://lottiefiles.com) - For some of the animated gifs in the app.
 
-<br><h4 align="center"> With :heart: by <a href="https://ietvit.tech/" target="_blank">Team Fourth Dimension, IET-VIT</a></h4>
+<br><h4 align="center"> With :heart: by <a href="https://www.linkedin.com/company/tfdvit/" target="_blank">Team Fourth Dimension, IET-VIT</a></h4>
 
 
