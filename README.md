@@ -117,7 +117,6 @@ The main features of the app are broken down into a technical task timeline.
 
 - <strong><em> Task 1: Project Setup </em></strong>
   - [x] Add the required dependencies for library support.
-  - [ ] Create a Login UI for GoogleAuth.
   - [x] Setup database services.
 
 - <strong><em> Task2: Setting up the FFCS interface and database </em></strong>
@@ -142,8 +141,12 @@ The main features of the app are broken down into a technical task timeline.
   - [x] Add an app tutorial.
 
 - <strong><em> Task 5: Notes (To-Dos) and Reminders </em></strong>
+  - [ ] Create a Login UI for GoogleAuth.
+  - [ ] Shift to a backend for fetches and insertions into the database.
   - [ ] Building the UI for the to-dos activity for each class.
   - [ ] Setting up a broadcast receiver for the notifications.
+  - [ ] Grouping students having the same slots after locking their timetables.
+  - [ ] Creating UIs for easy management and assignment.
   - [ ] Code for Task 5.
 
 - <strong><em> Task 6: Alarms </em></strong>
