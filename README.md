@@ -79,9 +79,6 @@ FFCSeZ is an app to facilitate the smooth and hassle-free preparation of timetab
 - Easy add/drop courses with credit management.
 - Filters to help you narrow down to your preferred slots.
 - Support for multiple mock time tables.
-- Time-table sharing.
-- To-do listings for all classes with timely reminders, if set.
-- Sleep alarms to remind a few moments before a class starts based on the current timetable.
 
 ## <img src="https://techstackapps.com/media/2019/11/TechStackApps-logo-icon.png" width="32" height="32"> Tech Stack
 <img src="https://2.bp.blogspot.com/-tzm1twY_ENM/XlCRuI0ZkRI/AAAAAAAAOso/BmNOUANXWxwc5vwslNw3WpjrDlgs9PuwQCLcBGAsYHQ/s1600/pasted%2Bimage%2B0.png" width="40" height="40" alt="Android Studio"> <img src="https://symbols-electrical.getvecta.com/stencil_261/26_mongodb-realm.8095f50267.png" width="36" height="36" alt="Realm"> <img src="https://img.icons8.com/color/452/mongodb.png" width="40" height="40" alt="MongoDB Atlas"> <img src="https://i.pinimg.com/originals/a5/58/b4/a558b426cb8973523f37bbed94cf0f09.png" width="40" height="40" alt="Figma"> <img src="https://img.icons8.com/color/452/firebase.png" width="40" height="40" alt="Firebase">
@@ -140,30 +137,17 @@ The main features of the app are broken down into a technical task timeline.
   - [x] UI cleanup.
   - [x] Add an app tutorial.
 
-- <strong><em> Task 5: Notes (To-Dos) and Reminders </em></strong>
-  - [ ] Create a Login UI for GoogleAuth.
-  - [ ] Shift to a backend for fetches and insertions into the database.
-  - [ ] Building the UI for the to-dos activity for each class.
-  - [ ] Setting up a broadcast receiver for the notifications.
-  - [ ] Grouping students having the same slots after locking their timetables.
-  - [ ] Creating UIs for easy management and assignment.
-  - [ ] Code for Task 5.
+- <strong><em> Task 5: Cleanup </em></strong>
+  - [x] Cleanup or improvise the UI/UX.
+  - [x] Refactor code and code optimizations.
+  - [x] Implement a dark theme and its toggle.
 
-- <strong><em> Task 6: Alarms </em></strong>
-  - [ ] UI for the alarms setup.
-  - [ ] Implementation of alarms using a content provider.
-  - [ ] Driver code.
-  - [ ] Complete debug till Task 6.
+- <strong><em> Task 6: Additional features </em></strong>
+  - [ ] Setup faculty reviews database and UI.
+  - [ ] Add more student-centric features.
 
-- <strong><em> Task 7: Cleanup </em></strong>
-  - [ ] Cleanup or improvise the UI/UX.
-  - [ ] Refactor code and code optimizations.
-  - [ ] Add guide at first-time startup.
-
-- <strong><em> Task 8: Widgets and Additional features </em></strong>
-  - [ ] Implement a dark theme and its toggle.
+- <strong><em> Task 7: Widgets and Additional features </em></strong>
   - [ ] Build a widget of the current timetable.
-  - [ ] Build a widget of the to-dos of the current timetable.
 
 ## <img src="https://hpe-developer-portal.s3.amazonaws.com/uploads/media/2020/3/git-icon-1788c-1590702885345.png" width=32 height=32> Contributing
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
