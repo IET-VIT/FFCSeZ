@@ -39,6 +39,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.projectChip) Chip projectChip;
 
     // Variables
-    private String courseTH = "", courseETH = "", courseELA = "", courseEPJ = "", courseSS = "";
+    private String courseTH = "", courseETH = "", courseELA = "", coursePJT = "", courseSS = "";
     private String courseLO = "", timeFN = "", timeAN = "";
     private boolean exists, backdropIsOpen = false;
     private int count, item;
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 courseTH = "";
                 courseETH = "";
                 courseELA = "";
-                courseEPJ = "";
+                coursePJT = "";
                 courseSS = "";
                 courseLO = "";
                 timeFN = "";
@@ -302,9 +303,9 @@ public class MainActivity extends AppCompatActivity {
         projectChip.setOnClickListener(v -> {
             doVibration();
             if (projectChip.isChecked())
-                courseEPJ = "EPJ";
+                coursePJT = "PJT";
             else
-                courseEPJ = "";
+                coursePJT = "";
             updateFilters();
         });
 
@@ -394,16 +395,38 @@ public class MainActivity extends AppCompatActivity {
         rRecyclerView.setLayoutManager(rLayoutManager);
         rRecyclerView.setAdapter(creditsAdapter);
 
-        LiveData<List<CreditDetails>> creditsListLD = database.timeTableDao().loadCreditDetails(ConstantsActivity.getTimeTableId().getValue());
-        creditsListLD.observe(MainActivity.this, new Observer<List<CreditDetails>>() {
+        MutableLiveData<Integer> timetableId = ConstantsActivity.getTimeTableId();
+        timetableId.observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(List<CreditDetails> registeredCourses) {
-                creditsAdapter.updateAdapter(registeredCourses);
-                int credits = 0;
-                for (CreditDetails credit : registeredCourses)
-                    credits += credit.getC();
-                creditsNumber.setText(Integer.toString(credits));
-                rRecyclerView.smoothScrollToPosition(0);
+            public void onChanged(Integer integer) {
+                for (int i = 0; i < 10; i++){
+                    for(int j = 0; j < 6; j++){
+                        ConstantsActivity.getChosenSlots()[i][j] = 0;
+                    }
+                }
+
+                ExecutorClass.getInstance().diskIO().execute(() -> {
+                    List<Coord> coords = database.timeTableDao().getChosenSlots(integer);
+                    for (Coord coord: coords){
+                        if (coord.getRow() != -1)
+                            ConstantsActivity.getChosenSlots()[coord.getRow()][coord.getColumn()] = 1;
+                    }
+                });
+
+                facultyAdapter.notifyDataSetChanged();
+
+                LiveData<List<CreditDetails>> creditsListLD = database.timeTableDao().loadCreditDetails(integer);
+                creditsListLD.observe(MainActivity.this, new Observer<List<CreditDetails>>() {
+                    @Override
+                    public void onChanged(List<CreditDetails> registeredCourses) {
+                        creditsAdapter.updateAdapter(registeredCourses);
+                        int credits = 0;
+                        for (CreditDetails credit : registeredCourses)
+                            credits += credit.getC();
+                        creditsNumber.setText(Integer.toString(credits));
+                        rRecyclerView.smoothScrollToPosition(0);
+                    }
+                });
             }
         });
 
@@ -570,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
                 courseTH = "";
                 courseETH = "";
                 courseELA = "";
-                courseEPJ = "";
+                coursePJT = "";
                 courseSS = "";
                 courseLO = "";
                 timeFN = "";
@@ -580,6 +603,7 @@ public class MainActivity extends AppCompatActivity {
                 theoryChip.setChecked(false);
                 labChip.setChecked(false);
                 projectChip.setChecked(false);
+                updateFilters();
             }
 
             @Override
@@ -602,7 +626,7 @@ public class MainActivity extends AppCompatActivity {
                 courseTH = "";
                 courseETH = "";
                 courseELA = "";
-                courseEPJ = "";
+                coursePJT = "";
                 courseSS = "";
                 courseLO = "";
                 timeFN = "";
@@ -612,6 +636,7 @@ public class MainActivity extends AppCompatActivity {
                 theoryChip.setChecked(false);
                 labChip.setChecked(false);
                 projectChip.setChecked(false);
+                updateFilters();
             }
 
             @Override
@@ -649,14 +674,14 @@ public class MainActivity extends AppCompatActivity {
         ExecutorClass.getInstance().diskIO().execute(() -> {
 
             if (!(courseTH.isEmpty() && courseETH.isEmpty() && courseSS.isEmpty() && courseELA.isEmpty()
-                    && courseLO.isEmpty() && courseEPJ.isEmpty()) && !(timeFN.isEmpty() && timeAN.isEmpty())) {
+                    && courseLO.isEmpty() && coursePJT.isEmpty()) && !(timeFN.isEmpty() && timeAN.isEmpty())) {
 
                 facultyList = database.facultyDao().loadAsPerFilterAND(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
                         facultyNameEditText.getText().toString().toUpperCase().trim() + "%", courseTH, courseETH,
-                        courseELA, courseEPJ, courseSS, courseLO, timeFN, timeAN);
+                        courseELA, coursePJT, courseSS, courseLO, timeFN, timeAN);
 
             } else if (courseTH.isEmpty() && courseETH.isEmpty() && courseSS.isEmpty() && courseELA.isEmpty()
-                    && courseLO.isEmpty() && courseEPJ.isEmpty() && timeFN.isEmpty() && timeAN.isEmpty()) {
+                    && courseLO.isEmpty() && coursePJT.isEmpty() && timeFN.isEmpty() && timeAN.isEmpty()) {
 
                 facultyList = database.facultyDao().loadData(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
                         facultyNameEditText.getText().toString().toUpperCase().trim() + "%");
@@ -664,7 +689,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 facultyList = database.facultyDao().loadAsPerFilterOR(courseCodeEditText.getText().toString().toUpperCase().trim() + "%",
                         facultyNameEditText.getText().toString().toUpperCase().trim() + "%", courseTH, courseETH,
-                        courseELA, courseEPJ, courseSS, courseLO, timeFN, timeAN);
+                        courseELA, coursePJT, courseSS, courseLO, timeFN, timeAN);
             }
 
             runOnUiThread(() -> {
@@ -690,7 +715,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setTTSlot(FacultyData facultyData, View v) {
-        if (!facultyData.getCourseType().equals("EPJ")) {
+        if (!(facultyData.getCourseType().equals("PJT") || facultyData.getCourseType().equals("EPJ"))) {
 
             String[] slot = facultyData.getSlot().split("[+]");
             Pattern pattern = Pattern.compile("^L");

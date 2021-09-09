@@ -33,7 +33,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     private List<FacultyData> list;
     private final Context context;
     private FacultyDatabase database;
-    private boolean exists;
+    private boolean exists, epjExists;
 
     public FacultyAdapter(List<FacultyData> list, Context context) {
         this.list = list;
@@ -98,7 +98,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
             if (list.get(position).getCourseType().equals("LO") || list.get(position).getCourseType().equals("ELA")) {
                 holder.cardView.setCardBackgroundColor(context.getColor(R.color.teal_100));
 
-            }else if (list.get(position).getCourseType().equals("EPJ")){
+            }else if (list.get(position).getCourseType().equals("PJT")){
                 holder.cardView.setCardBackgroundColor(context.getColor(R.color.sky_blue));
 
             }else{
@@ -184,7 +184,8 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
     public void setTTSlot(FacultyData facultyData, View v){
 
         exists = false;
-        if (!facultyData.getCourseType().equals("EPJ")) {
+        epjExists = false;
+        if (!(facultyData.getCourseType().equals("EPJ") || facultyData.getCourseType().equals("PJT"))) {
             String[] slot = facultyData.getSlot().split("[+]");
             Pattern pattern = Pattern.compile("^L");
             Matcher matcher;
@@ -226,6 +227,25 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
                                 database.timeTableDao().insertSlot(data);
                                 ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
+
+                                List<FacultyData> epjSlot = database.facultyDao().loadEPJData(data.getCourseCode(), data.getEmpName());
+                                if (epjSlot.size() != 0) {
+                                    TimeTableData epjData = new TimeTableData(epjSlot.get(0), ConstantsActivity.getTimeTableId().getValue(), -1,
+                                            -1, epjSlot.get(0).getSlot(), "-:-", "-:-", false);
+                                    List<TimeTableData> clashEpjSlots = database.timeTableDao()
+                                            .loadClashSlots(-1, -1);
+
+                                    for (TimeTableData timeTableData : clashEpjSlots) {
+                                        if (timeTableData.getEmpName().equals(epjData.getEmpName()) && timeTableData.getCourseCode().equals(epjData.getCourseCode())) {
+                                            epjExists = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!epjExists) {
+                                        database.timeTableDao().insertSlot(epjData);
+                                    }
+                                }
                             }
                         });
 
@@ -236,6 +256,25 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                         ExecutorClass.getInstance().diskIO().execute(() -> {
                             database.timeTableDao().insertSlot(data);
                             ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
+
+                            List<FacultyData> epjSlot = database.facultyDao().loadEPJData(data.getCourseCode(), data.getEmpName());
+                            if (epjSlot.size() != 0) {
+                                TimeTableData epjData = new TimeTableData(epjSlot.get(0), ConstantsActivity.getTimeTableId().getValue(), -1,
+                                        -1, epjSlot.get(0).getSlot(), "-:-", "-:-", false);
+                                List<TimeTableData> clashEpjSlots = database.timeTableDao()
+                                        .loadClashSlots(-1, -1);
+
+                                for (TimeTableData timeTableData : clashEpjSlots) {
+                                    if (timeTableData.getEmpName().equals(epjData.getEmpName()) && timeTableData.getCourseCode().equals(epjData.getCourseCode())) {
+                                        epjExists = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!epjExists) {
+                                    database.timeTableDao().insertSlot(epjData);
+                                }
+                            }
                         });
                     }
 
@@ -275,6 +314,25 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
                                         database.timeTableDao().insertSlot(data);
                                         ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
+
+                                        List<FacultyData> epjSlot = database.facultyDao().loadEPJData(data.getCourseCode(), data.getEmpName());
+                                        if (epjSlot.size() != 0) {
+                                            TimeTableData epjData = new TimeTableData(epjSlot.get(0), ConstantsActivity.getTimeTableId().getValue(), -1,
+                                                    -1, epjSlot.get(0).getSlot(), "-:-", "-:-", false);
+                                            List<TimeTableData> clashEpjSlots = database.timeTableDao()
+                                                    .loadClashSlots(-1, -1);
+
+                                            for (TimeTableData timeTableData : clashEpjSlots) {
+                                                if (timeTableData.getEmpName().equals(epjData.getEmpName()) && timeTableData.getCourseCode().equals(epjData.getCourseCode())) {
+                                                    epjExists = true;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (!epjExists) {
+                                                database.timeTableDao().insertSlot(epjData);
+                                            }
+                                        }
                                     }
                                 });
 
@@ -285,6 +343,25 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
                                     database.timeTableDao().insertSlot(data);
                                     ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] = 1;
+
+                                    List<FacultyData> epjSlot = database.facultyDao().loadEPJData(data.getCourseCode(), data.getEmpName());
+                                        if (epjSlot.size() != 0) {
+                                            TimeTableData epjData = new TimeTableData(epjSlot.get(0), ConstantsActivity.getTimeTableId().getValue(), -1,
+                                                    -1, epjSlot.get(0).getSlot(), "-:-", "-:-", false);
+                                            List<TimeTableData> clashEpjSlots = database.timeTableDao()
+                                                    .loadClashSlots(-1, -1);
+
+                                            for (TimeTableData timeTableData : clashEpjSlots) {
+                                                if (timeTableData.getEmpName().equals(epjData.getEmpName()) && timeTableData.getCourseCode().equals(epjData.getCourseCode())) {
+                                                    epjExists = true;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (!epjExists) {
+                                                database.timeTableDao().insertSlot(epjData);
+                                            }
+                                        }
                                 });
                             }
                         }

@@ -106,7 +106,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                 holder.typeSelector.setBackgroundColor(context.getColor(R.color.lab_color));
                 holder.slotNumber.setTextColor(context.getColor(R.color.lab_color));
 
-            }else if (list.get(position).getCourseType().equals("EPJ")){
+            }else if (list.get(position).getCourseType().equals("EPJ") || list.get(position).getCourseType().equals("PJT")){
                 holder.typeSelector.setBackgroundColor(context.getColor(R.color.project_color));
                 holder.slotNumber.setTextColor(context.getColor(R.color.project_color));
 
@@ -121,7 +121,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
 
             TimeTableData data = list.get(position);
 
-            if (!data.getCourseType().equals("EPJ")) {
+            if (!(data.getCourseType().equals("EPJ") || data.getCourseType().equals("PJT"))) {
                 ExecutorClass.getInstance().diskIO().execute(() -> {
                     List<TimeTableData> slots = database.timeTableDao()
                             .loadSlotDetails(data.getEmpName(), data.getSlot());

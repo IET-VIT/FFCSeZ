@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -30,6 +32,7 @@ import com.tfd.ffcsez.database.ExecutorClass;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TTDetails;
 import com.tfd.ffcsez.models.Coord;
+import com.tfd.ffcsez.models.CreditDetails;
 
 import java.util.List;
 
@@ -215,24 +218,6 @@ public class TTDetailsAdapter extends RecyclerView.Adapter<TTDetailsAdapter.Recy
                 MainActivity.doVibration();
                 ConstantsActivity.getTimeTableId().setValue(details.getTimeTableId());
                 preferences.edit().putInt("lastTT", ConstantsActivity.getTimeTableId().getValue()).apply();
-
-                for (int i = 0; i < 10; i++){
-                    for(int j = 0; j < 6; j++){
-                        ConstantsActivity.getChosenSlots()[i][j] = 0;
-                    }
-                }
-
-                ExecutorClass.getInstance().diskIO().execute(() -> {
-                    List<Coord> coords = database.timeTableDao().getChosenSlots(ConstantsActivity.getTimeTableId().getValue());
-                    for (Coord coord: coords){
-                        if (coord.getRow() != -1)
-                            ConstantsActivity.getChosenSlots()[coord.getRow()][coord.getColumn()] = 1;
-                    }
-                });
-
-                if (MainActivity.facultyAdapter != null)
-                    MainActivity.facultyAdapter.notifyDataSetChanged();
-
                 notifyDataSetChanged();
             }
         });
