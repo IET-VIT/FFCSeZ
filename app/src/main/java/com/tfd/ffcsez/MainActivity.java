@@ -603,7 +603,6 @@ public class MainActivity extends AppCompatActivity {
                 theoryChip.setChecked(false);
                 labChip.setChecked(false);
                 projectChip.setChecked(false);
-                updateFilters();
             }
 
             @Override
@@ -636,7 +635,6 @@ public class MainActivity extends AppCompatActivity {
                 theoryChip.setChecked(false);
                 labChip.setChecked(false);
                 projectChip.setChecked(false);
-                updateFilters();
             }
 
             @Override

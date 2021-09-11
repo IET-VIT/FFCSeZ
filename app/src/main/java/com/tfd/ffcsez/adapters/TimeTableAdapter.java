@@ -7,11 +7,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,10 +24,13 @@ import com.tfd.ffcsez.ConstantsActivity;
 import com.tfd.ffcsez.MainActivity;
 import com.tfd.ffcsez.R;
 import com.tfd.ffcsez.database.ExecutorClass;
+import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TimeTableData;
+import com.tfd.ffcsez.models.CodeFac;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.RecyclerViewHolder> {
@@ -79,9 +84,11 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
 
         TimeTableData model = list.get(position);
+        Log.d("HelloPost", model.getCourseType());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             holder.deleteButton.setTooltipText("Delete Course");
         }
+
         holder.startTime.setText(model.getStartTime());
         holder.endTime.setText(model.getEndTime());
         holder.slotNumber.setText(model.getCurrentSlot());
@@ -95,6 +102,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
         holder.p.setText(model.getP());
         holder.j.setText(model.getJ());
         holder.c.setText(model.getC());
+
+        //holder.deleteButton.setEnabled(!model.getCourseType().equals("EPJ"));
 
         if (list.get(position).isClash()) {
             holder.typeSelector.setBackgroundColor(context.getColor(R.color.clash_color));
@@ -141,19 +150,36 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                             }
                         }
                     }
+
+                    List<FacultyData> epjSlot = database.facultyDao().loadEPJData(data.getCourseCode(), data.getEmpName());
+                    if (epjSlot.size() != 0) {
+                        List<CodeFac> epjClashSlot = database.timeTableDao().loadEpjClash(data.getCourseCode(), data.getEmpName());
+                        Log.d("HelloSlots", epjClashSlot.toString());
+                        if (epjClashSlot.size() == 0)
+                            database.timeTableDao().deleteEpj(data.getCourseCode(), data.getEmpName());
+                    }
+
                 });
-            }else{
+
+                Snackbar.make(v, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(),
+                        Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
+                        .setTextColor(context.getResources().getColor(R.color.snackbar_text))
+                        .show();
+            }else if (data.getCourseType().equals("EPJ")){
+                Toast.makeText(context, "Cannot remove a project component alone. Remove the corresponding theory/lab slot(s).",
+                        Toast.LENGTH_LONG).show();
+            } else {
                 ExecutorClass.getInstance().diskIO().execute(() -> database.timeTableDao().deleteSlot(data));
+                Snackbar.make(v, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(),
+                        Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
+                        .setTextColor(context.getResources().getColor(R.color.snackbar_text))
+                        .show();
             }
 
             if (MainActivity.facultyAdapter != null)
                 MainActivity.facultyAdapter.notifyDataSetChanged();
-
-            Snackbar.make(v, "Course removed successfully - " + data.getCourseCode() + " - " + data.getCourseType(),
-                    Snackbar.LENGTH_LONG)
-                    .setBackgroundTint(context.getResources().getColor(R.color.snackbar_bg))
-                    .setTextColor(context.getResources().getColor(R.color.snackbar_text))
-                    .show();
         });
     }
 

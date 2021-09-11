@@ -8,10 +8,12 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.tfd.ffcsez.models.CodeFac;
 import com.tfd.ffcsez.models.Coord;
 import com.tfd.ffcsez.models.CreditDetails;
 
 import java.util.List;
+import java.util.Map;
 
 @Dao
 public interface TimeTableDao {
@@ -34,6 +36,9 @@ public interface TimeTableDao {
     @Query("SELECT DISTINCT courseCode, courseType, `c` FROM timetable WHERE `timeTableId` = :timeTableId ORDER BY courseCode, courseType")
     LiveData<List<CreditDetails>> loadCreditDetails(int timeTableId);
 
+    @Query("SELECT DISTINCT courseCode, empName, slot FROM timetable WHERE courseCode = :courseCode AND empName = :empName AND courseType <> 'EPJ'")
+    List<CodeFac> loadEpjClash(String courseCode, String empName);
+
     @Query("DELETE FROM timetable")
     void deleteAll();
 
@@ -42,6 +47,9 @@ public interface TimeTableDao {
 
     @Delete
     void deleteSlot(TimeTableData timeTableData);
+
+    @Query("DELETE FROM timetable WHERE courseCode = :courseCode AND empName = :empName AND courseType = 'EPJ'")
+    void deleteEpj(String courseCode, String empName);
 
     @Query("DELETE FROM timetable WHERE timeTableId = :timeTableId")
     void deleteAllTTSlots(int timeTableId);
