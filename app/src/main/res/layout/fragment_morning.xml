@@ -85,7 +85,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="12:16 AM\nTO\n1:00 PM"
+            android:text="12:31 AM\nTO\n1:20 PM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -252,7 +252,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="12:00 PM\nTO\n12:45 PM"
+            android:text="12:00 PM\nTO\n12:50 PM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -279,7 +279,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="11:31 AM\nTO\n12:15 PM"
+            android:text="11:40 AM\nTO\n12:30 PM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -446,7 +446,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="11:00 AM\nTO\n11:45 AM"
+            android:text="11:00 AM\nTO\n11:50 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -473,7 +473,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="10:46 AM\nTO\n11:30 AM"
+            android:text="10:41 AM\nTO\n11:30 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -640,7 +640,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="10:00 AM\nTO\n10:45 AM"
+            android:text="10:00 AM\nTO\n10:50 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -667,7 +667,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="10:00 AM\nTO\n10:45 AM"
+            android:text="9:51 AM\nTO\n10:40 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -834,7 +834,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="9:00 AM\nTO\n9:45 AM"
+            android:text="9:00 AM\nTO\n9:50 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -861,7 +861,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="8:46 AM\nTO\n9:30 AM"
+            android:text="8:51 AM\nTO\n9:40 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -1029,7 +1029,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="8:00 AM\nTO\n8:45 AM"
+            android:text="8:00 AM\nTO\n8:50 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
@@ -1056,7 +1056,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="2dp"
-            android:text="8:00 AM\nTO\n8:45 AM"
+            android:text="8:00 AM\nTO\n8:50 AM"
             android:textColor="@color/black"
             android:textSize="8sp" />
     </com.google.android.material.card.MaterialCardView>
