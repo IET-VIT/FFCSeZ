@@ -171,6 +171,10 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                             List<TimeTableData> clashSlots = database.timeTableDao()
                                     .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn());
 
+                            if (clashSlots.size == 0) {
+                                ConstantsActivity.getChosenSlots()[timeTableData.getRow()][timeTableData.getColumn()] = 0;
+                            }
+
                             if (clashSlots.size() == 0 || clashSlots.size() == 1) {
                                 if (ConstantsActivity.getExceptionSlots().contains((timeTableData.getRow() * 6) + (timeTableData.getColumn() + 1) + 1) && (timeTableData.getCourseType().equals("TH") || timeTableData.getCourseType().equals("ETH") || timeTableData.getCourseType().equals("SS")) && timeTableData.getColumn() + 1 < 6) {
                                     List<TimeTableData> clashSlots1 = database.timeTableDao()
@@ -202,7 +206,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                                     if (clashSlots.size() == 1) {
                                         clashSlots.get(0).setClash(false);
                                         database.timeTableDao().updateDetail(clashSlots.get(0));
-                                    }
+                                    } else if 
                                 }
                             }
                         }
