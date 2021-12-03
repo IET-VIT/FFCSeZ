@@ -29,6 +29,7 @@ import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TimeTableData;
 import com.tfd.ffcsez.models.CodeFac;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,23 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
     public TimeTableAdapter(List<TimeTableData> list, Context context) {
         this.list = list;
         this.context = context;
+    }
+
+    private boolean isClashing(int r, int c, boolean lab) {
+
+        if (lab && (c - 1) >= 0) {
+            ArrayList<String> list = ConstantsActivity.getChosenSlotsType().get((r * 6) + c);
+            if (list != null && list.contains("T"))
+                return true;
+        }
+
+        if (!lab && (c + 1) < 6) {
+            ArrayList<String> list = ConstantsActivity.getChosenSlotsType().get((r * 6) + (c + 2));
+            if (list != null && list.contains("L"))
+                return true;
+        }
+
+        return false;
     }
 
     @NonNull
@@ -138,15 +156,54 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                     for (TimeTableData timeTableData : slots) {
                         database.timeTableDao().deleteSlot(timeTableData);
 
+                        if (ConstantsActivity.getChosenSlotsType().get((timeTableData.getRow()*6) + (timeTableData.getColumn() + 1)) != null) {
+                            ArrayList<String> alist = ConstantsActivity.getChosenSlotsType().get((timeTableData.getRow()*6) + (timeTableData.getColumn() + 1));
+                            if (timeTableData.getCourseType().equals("ETH") || timeTableData.getCourseType().equals("TH") || timeTableData.getCourseType().equals("SS"))
+                                alist.remove("T");
+                            else if (timeTableData.getCourseType().equals("ELA") || timeTableData.getCourseType().equals("LO"))
+                                alist.remove("L");
+                            ConstantsActivity.getChosenSlotsType().put((timeTableData.getRow()*6) + (timeTableData.getColumn() + 1), alist);
+                        }
+
                         if (!timeTableData.isClash()) {
                             ConstantsActivity.getChosenSlots()[timeTableData.getRow()][timeTableData.getColumn()] = 0;
                         } else {
                             List<TimeTableData> clashSlots = database.timeTableDao()
                                     .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn());
 
-                            if (clashSlots.size() == 1) {
-                                clashSlots.get(0).setClash(false);
-                                database.timeTableDao().updateDetail(clashSlots.get(0));
+                            if (clashSlots.size() == 0 || clashSlots.size() == 1) {
+                                if (ConstantsActivity.getExceptionSlots().contains((timeTableData.getRow() * 6) + (timeTableData.getColumn() + 1) + 1) && (timeTableData.getCourseType().equals("TH") || timeTableData.getCourseType().equals("ETH") || timeTableData.getCourseType().equals("SS")) && timeTableData.getColumn() + 1 < 6) {
+                                    List<TimeTableData> clashSlots1 = database.timeTableDao()
+                                            .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn() + 1);
+                                    Log.i("Helloclash1", list.toString());
+
+                                    for (TimeTableData ttdata : clashSlots1) {
+                                        Log.i("Helloclashtt", ttdata.getCurrentSlot());
+                                        if ((ttdata.getCourseType().equals("ELA") || ttdata.getCourseType().equals("LO")) && ttdata.getColumn() - 1 >= 0) {
+                                            if (!isClashing(ttdata.getRow(), ttdata.getColumn(), true) && clashSlots1.size() == 1) {
+                                                ttdata.setClash(false);
+                                                database.timeTableDao().updateDetail(ttdata);
+                                            }
+                                        }
+                                    }
+                                } else if (ConstantsActivity.getExceptionSlots().contains((timeTableData.getRow() * 6) + (timeTableData.getColumn() + 1)) && (timeTableData.getCourseType().equals("ELA") || timeTableData.getCourseType().equals("LO")) && timeTableData.getColumn() - 1 >= 0) {
+                                    List<TimeTableData> clashSlots1 = database.timeTableDao()
+                                            .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn() - 1);
+
+                                    for (TimeTableData ttdata : clashSlots1) {
+                                        if ((ttdata.getCourseType().equals("TH") || ttdata.getCourseType().equals("ETH") || ttdata.getCourseType().equals("SS")) && ttdata.getColumn() + 1 < 6) {
+                                            if (!isClashing(ttdata.getRow(), ttdata.getColumn(), false) && clashSlots1.size() == 1) {
+                                                ttdata.setClash(false);
+                                                database.timeTableDao().updateDetail(ttdata);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (clashSlots.size() == 1) {
+                                        clashSlots.get(0).setClash(false);
+                                        database.timeTableDao().updateDetail(clashSlots.get(0));
+                                    }
+                                }
                             }
                         }
                     }

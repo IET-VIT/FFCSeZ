@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.tfd.ffcsez.database.FacultyData;
 import com.tfd.ffcsez.database.FacultyDatabase;
 import com.tfd.ffcsez.database.TimeTableData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -142,7 +144,8 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
 
             if (matcher.find()){
 
-                if (isClashing(Integer.parseInt(slotNum.substring(1)))){
+                if (isClashing(Integer.parseInt(slotNum.substring(1)), true)){
+                    Log.i("helloss", slotNum);
                     clash += slotNum + " ";
                 }
 
@@ -151,7 +154,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                 if (ConstantsActivity.getSlotList().get(slotNum) != null) {
                     for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
 
-                        if (isClashing(ConstantsActivity.getSlotList().get(slotNum)[i])) {
+                        if (isClashing(ConstantsActivity.getSlotList().get(slotNum)[i], false)) {
                             clash += slotNum + " ";
                             break;
                         }
@@ -166,7 +169,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         return clash;
     }
 
-    private boolean isClashing(int num){
+    private boolean isClashing(int num, boolean lab){
         int r, c;
 
         if (num%6 == 0){
@@ -176,6 +179,18 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
         }else{
             r = num/6;
             c = num%6 - 1;
+        }
+
+        if (lab && (c - 1) >= 0 && ConstantsActivity.getExceptionSlots().contains(num)) {
+            ArrayList<String> list = ConstantsActivity.getChosenSlotsType().get((r * 6) + c);
+            if (list != null && list.contains("T"))
+                return true;
+        }
+
+        if (!lab && (c + 1) < 6 && ConstantsActivity.getExceptionSlots().contains(num + 1)) {
+            ArrayList<String> list = ConstantsActivity.getChosenSlotsType().get((r * 6) + (c + 2));
+            if (list != null && list.contains("L"))
+                return true;
         }
 
         return ConstantsActivity.getChosenSlots()[r][c] == 1;
@@ -203,7 +218,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                     }
                     TimeTableData data;
 
-                    if (ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] == 1) {
+                    if (isClashing(num, true)) {
 
                         data = new TimeTableData(facultyData, ConstantsActivity.getTimeTableId().getValue(), coord[0],
                                 coord[1], slotNum, ConstantsActivity.getLabTiming().get(num)[0], ConstantsActivity.getLabTiming().get(num)[1], true);
@@ -211,6 +226,16 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                         ExecutorClass.getInstance().diskIO().execute(() -> {
                             List<TimeTableData> clashSlots = database.timeTableDao()
                                     .loadClashSlots(coord[0], coord[1]);
+
+                            if (ConstantsActivity.getExceptionSlots().contains(num) && coord[1] - 1 >= 0) {
+                                List<TimeTableData> clashSlots1 = database.timeTableDao().loadClashSlots(coord[0], coord[1] - 1);
+                                for (TimeTableData ttdata: clashSlots1) {
+                                    if (ttdata.getCourseType().equals("TH") || ttdata.getCourseType().equals("ETH") || ttdata.getCourseType().equals("SS")) {
+                                        ttdata.setClash(true);
+                                        database.timeTableDao().updateDetail(ttdata);
+                                    }
+                                }
+                            }
 
                             for (TimeTableData timeTableData : clashSlots) {
                                 if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
@@ -278,6 +303,23 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                         });
                     }
 
+                    if (ConstantsActivity.getChosenSlotsType().get(num) == null) {
+                        ArrayList<String> list = new ArrayList<>();
+                        if (data.getCourseType().equals("ETH") || data.getCourseType().equals("TH") || data.getCourseType().equals("SS"))
+                            list.add("T");
+                        else if (data.getCourseType().equals("ELA") || data.getCourseType().equals("LO"))
+                            list.add("L");
+                        ConstantsActivity.getChosenSlotsType().put(num, list);
+                    } else {
+                        ArrayList<String> list = ConstantsActivity.getChosenSlotsType().get(num);
+                        if (data.getCourseType().equals("ETH") || data.getCourseType().equals("TH") || data.getCourseType().equals("SS"))
+                            list.add("T");
+                        else if (data.getCourseType().equals("ELA") || data.getCourseType().equals("LO"))
+                            list.add("L");
+                        ConstantsActivity.getChosenSlotsType().put(num, list);
+                    }
+
+
                 }else {
                     if (ConstantsActivity.getSlotList().get(slotNum) != null) {
                         for (int i = 0; i < ConstantsActivity.getSlotList().get(slotNum).length; i++) {
@@ -290,7 +332,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                             }
                             TimeTableData data;
 
-                            if (ConstantsActivity.getChosenSlots()[coord[0]][coord[1]] == 1) {
+                            if (isClashing(num, false)) {
 
                                 data = new TimeTableData(facultyData, ConstantsActivity.getTimeTableId().getValue(), coord[0],
                                         coord[1], slotNum, ConstantsActivity.getTheoryTiming().get(num)[0], ConstantsActivity.getTheoryTiming().get(num)[1], true);
@@ -298,6 +340,16 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                                 ExecutorClass.getInstance().diskIO().execute(() -> {
                                     List<TimeTableData> clashSlots = database.timeTableDao()
                                             .loadClashSlots(coord[0], coord[1]);
+
+                                    if (ConstantsActivity.getExceptionSlots().contains(num + 1) && coord[1] + 1 < 6) {
+                                        List<TimeTableData> clashSlots1 = database.timeTableDao().loadClashSlots(coord[0], coord[1] + 1);
+                                        for (TimeTableData ttdata: clashSlots1) {
+                                            if (ttdata.getCourseType().equals("ELA") || ttdata.getCourseType().equals("LO")) {
+                                                ttdata.setClash(true);
+                                                database.timeTableDao().updateDetail(ttdata);
+                                            }
+                                        }
+                                    }
 
                                     for (TimeTableData timeTableData : clashSlots) {
                                         if (timeTableData.getEmpName().equals(data.getEmpName()) && timeTableData.getSlot().equals(data.getSlot())) {
@@ -363,6 +415,22 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.Recycler
                                             }
                                         }
                                 });
+                            }
+
+                            if (ConstantsActivity.getChosenSlotsType().get(num) == null) {
+                                ArrayList<String> list = new ArrayList<>();
+                                if (data.getCourseType().equals("ETH") || data.getCourseType().equals("TH") || data.getCourseType().equals("SS"))
+                                    list.add("T");
+                                else if (data.getCourseType().equals("ELA") || data.getCourseType().equals("LO"))
+                                    list.add("L");
+                                ConstantsActivity.getChosenSlotsType().put(num, list);
+                            } else {
+                                ArrayList<String> list = ConstantsActivity.getChosenSlotsType().get(num);
+                                if (data.getCourseType().equals("ETH") || data.getCourseType().equals("TH") || data.getCourseType().equals("SS"))
+                                    list.add("T");
+                                else if (data.getCourseType().equals("ELA") || data.getCourseType().equals("LO"))
+                                    list.add("L");
+                                ConstantsActivity.getChosenSlotsType().put(num, list);
                             }
                         }
                     }

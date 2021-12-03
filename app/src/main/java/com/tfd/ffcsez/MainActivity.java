@@ -71,6 +71,7 @@ import com.tfd.ffcsez.models.FacultyDetails;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -405,12 +406,34 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+                ConstantsActivity.setChosenSlotsType(new HashMap<>());
                 ExecutorClass.getInstance().diskIO().execute(() -> {
                     List<Coord> coords = database.timeTableDao().getChosenSlots(integer);
                     for (Coord coord: coords){
-                        if (coord.getRow() != -1)
+                        if (coord.getRow() != -1) {
+                            Log.i("hellocoor", Integer.toString(coord.getRow()));
+                            Log.i("hellocooc", Integer.toString(coord.getColumn()));
                             ConstantsActivity.getChosenSlots()[coord.getRow()][coord.getColumn()] = 1;
+                            if (ConstantsActivity.getChosenSlotsType().get((coord.getRow()*6) + (coord.getColumn() + 1)) == null) {
+                                ArrayList<String> list = new ArrayList<>();
+                                if (coord.getCourseType().equals("ETH") || coord.getCourseType().equals("TH") || coord.getCourseType().equals("SS"))
+                                    list.add("T");
+                                else if (coord.getCourseType().equals("ELA") || coord.getCourseType().equals("LO"))
+                                    list.add("L");
+                                Log.i("hellocool", list.toString());
+                                ConstantsActivity.getChosenSlotsType().put((coord.getRow()*6) + (coord.getColumn() + 1), list);
+                            } else {
+                                ArrayList<String> list = ConstantsActivity.getChosenSlotsType().get((coord.getRow()*6) + (coord.getColumn() + 1));
+                                if (coord.getCourseType().equals("ETH") || coord.getCourseType().equals("TH") || coord.getCourseType().equals("SS"))
+                                    list.add("T");
+                                else if (coord.getCourseType().equals("ELA") || coord.getCourseType().equals("LO"))
+                                    list.add("L");
+                                Log.i("hellocool", list.toString());
+                                ConstantsActivity.getChosenSlotsType().put((coord.getRow()*6) + (coord.getColumn() + 1), list);
+                            }
+                        }
                     }
+
                 });
 
                 facultyAdapter.notifyDataSetChanged();

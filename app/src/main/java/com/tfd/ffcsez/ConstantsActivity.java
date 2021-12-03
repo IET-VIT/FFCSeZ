@@ -1,10 +1,10 @@
 package com.tfd.ffcsez;
 
-import android.content.SharedPreferences;
+import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ConstantsActivity {
@@ -14,7 +14,9 @@ public class ConstantsActivity {
     public static HashMap<Integer, String[]> labTiming;
     public static HashMap<Integer, String[]> theoryTiming;
     public static int[][] chosenSlots;
+    public static HashMap<Integer, ArrayList<String>> chosenSlotsType;
     public static MutableLiveData<Integer> timeTableId;
+    public static ArrayList<Integer> exceptionSlots;
 
     public ConstantsActivity() { }
 
@@ -32,77 +34,77 @@ public class ConstantsActivity {
             theoryTiming = new HashMap<>();
 
             // Morning
-            theoryTiming.put(1, new String[]{"8:00 AM","8:45 AM"});
-            theoryTiming.put(2, new String[]{"9:00 AM","9:45 AM"});
-            theoryTiming.put(3, new String[]{"10:00 AM","10:45 AM"});
-            theoryTiming.put(4, new String[]{"11:00 AM","11:45 AM"});
-            theoryTiming.put(5, new String[]{"12:00 PM","12:45 PM"});
+            theoryTiming.put(1, new String[]{"8:00 AM","8:50 AM"});
+            theoryTiming.put(2, new String[]{"9:00 AM","9:50 AM"});
+            theoryTiming.put(3, new String[]{"10:00 AM","10:50 AM"});
+            theoryTiming.put(4, new String[]{"11:00 AM","11:50 AM"});
+            theoryTiming.put(5, new String[]{"12:00 PM","12:50 PM"});
             theoryTiming.put(6, new String[]{"-","-"});
 
-            theoryTiming.put(7, new String[]{"8:00 AM","8:45 AM"});
-            theoryTiming.put(8, new String[]{"9:00 AM","9:45 AM"});
-            theoryTiming.put(9, new String[]{"10:00 AM","10:45 AM"});
-            theoryTiming.put(10, new String[]{"11:00 AM","11:45 AM"});
-            theoryTiming.put(11, new String[]{"12:00 PM","12:45 PM"});
+            theoryTiming.put(7, new String[]{"8:00 AM","8:50 AM"});
+            theoryTiming.put(8, new String[]{"9:00 AM","9:50 AM"});
+            theoryTiming.put(9, new String[]{"10:00 AM","10:50 AM"});
+            theoryTiming.put(10, new String[]{"11:00 AM","11:50 AM"});
+            theoryTiming.put(11, new String[]{"12:00 PM","12:50 PM"});
             theoryTiming.put(12, new String[]{"-","-"});
 
-            theoryTiming.put(13, new String[]{"8:00 AM","8:45 AM"});
-            theoryTiming.put(14, new String[]{"9:00 AM","9:45 AM"});
-            theoryTiming.put(15, new String[]{"10:00 AM","10:45 AM"});
-            theoryTiming.put(16, new String[]{"11:00 AM","11:45 AM"});
-            theoryTiming.put(17, new String[]{"12:00 PM","12:45 PM"});
+            theoryTiming.put(13, new String[]{"8:00 AM","8:50 AM"});
+            theoryTiming.put(14, new String[]{"9:00 AM","9:50 AM"});
+            theoryTiming.put(15, new String[]{"10:00 AM","10:50 AM"});
+            theoryTiming.put(16, new String[]{"11:00 AM","11:50 AM"});
+            theoryTiming.put(17, new String[]{"12:00 PM","12:50 PM"});
             theoryTiming.put(18, new String[]{"-","-"});
 
-            theoryTiming.put(19, new String[]{"8:00 AM","8:45 AM"});
-            theoryTiming.put(20, new String[]{"9:00 AM","9:45 AM"});
-            theoryTiming.put(21, new String[]{"10:00 AM","10:45 AM"});
-            theoryTiming.put(22, new String[]{"11:00 AM","11:45 AM"});
-            theoryTiming.put(23, new String[]{"12:00 PM","12:45 PM"});
+            theoryTiming.put(19, new String[]{"8:00 AM","8:50 AM"});
+            theoryTiming.put(20, new String[]{"9:00 AM","9:50 AM"});
+            theoryTiming.put(21, new String[]{"10:00 AM","10:50 AM"});
+            theoryTiming.put(22, new String[]{"11:00 AM","11:50 AM"});
+            theoryTiming.put(23, new String[]{"12:00 PM","12:50 PM"});
             theoryTiming.put(24, new String[]{"-","-"});
 
-            theoryTiming.put(25, new String[]{"8:00 AM","8:45 AM"});
-            theoryTiming.put(26, new String[]{"9:00 AM","9:45 AM"});
-            theoryTiming.put(27, new String[]{"10:00 AM","10:45 AM"});
-            theoryTiming.put(28, new String[]{"11:00 AM","11:45 AM"});
-            theoryTiming.put(29, new String[]{"12:00 PM","12:45 PM"});
+            theoryTiming.put(25, new String[]{"8:00 AM","8:50 AM"});
+            theoryTiming.put(26, new String[]{"9:00 AM","9:50 AM"});
+            theoryTiming.put(27, new String[]{"10:00 AM","10:50 AM"});
+            theoryTiming.put(28, new String[]{"11:00 AM","11:50 AM"});
+            theoryTiming.put(29, new String[]{"12:00 PM","12:50 PM"});
             theoryTiming.put(30, new String[]{"-","-"});
 
 
             // Afternoon
-            theoryTiming.put(31, new String[]{"2:00 PM","2:45 PM"});
-            theoryTiming.put(32, new String[]{"3:00 PM","3:45 AM"});
-            theoryTiming.put(33, new String[]{"4:00 PM","4:45 PM"});
-            theoryTiming.put(34, new String[]{"5:00 PM","5:45 PM"});
-            theoryTiming.put(35, new String[]{"6:00 PM","6:45 PM"});
-            theoryTiming.put(36, new String[]{"7:00 PM","7:45 PM"});
+            theoryTiming.put(31, new String[]{"2:00 PM","2:50 PM"});
+            theoryTiming.put(32, new String[]{"3:00 PM","3:50 AM"});
+            theoryTiming.put(33, new String[]{"4:00 PM","4:50 PM"});
+            theoryTiming.put(34, new String[]{"5:00 PM","5:50 PM"});
+            theoryTiming.put(35, new String[]{"6:00 PM","6:50 PM"});
+            theoryTiming.put(36, new String[]{"7:00 PM","7:50 PM"});
 
-            theoryTiming.put(37, new String[]{"2:00 PM","2:45 PM"});
-            theoryTiming.put(38, new String[]{"3:00 PM","3:45 AM"});
-            theoryTiming.put(39, new String[]{"4:00 PM","4:45 PM"});
-            theoryTiming.put(40, new String[]{"5:00 PM","5:45 PM"});
-            theoryTiming.put(41, new String[]{"6:00 PM","6:45 PM"});
-            theoryTiming.put(42, new String[]{"7:00 PM","7:45 PM"});
+            theoryTiming.put(37, new String[]{"2:00 PM","2:50 PM"});
+            theoryTiming.put(38, new String[]{"3:00 PM","3:50 AM"});
+            theoryTiming.put(39, new String[]{"4:00 PM","4:50 PM"});
+            theoryTiming.put(40, new String[]{"5:00 PM","5:50 PM"});
+            theoryTiming.put(41, new String[]{"6:00 PM","6:50 PM"});
+            theoryTiming.put(42, new String[]{"7:00 PM","7:50 PM"});
 
-            theoryTiming.put(43, new String[]{"2:00 PM","2:45 PM"});
-            theoryTiming.put(44, new String[]{"3:00 PM","3:45 AM"});
-            theoryTiming.put(45, new String[]{"4:00 PM","4:45 PM"});
-            theoryTiming.put(46, new String[]{"5:00 PM","5:45 PM"});
-            theoryTiming.put(47, new String[]{"6:00 PM","6:45 PM"});
-            theoryTiming.put(48, new String[]{"7:00 PM","7:45 PM"});
+            theoryTiming.put(43, new String[]{"2:00 PM","2:50 PM"});
+            theoryTiming.put(44, new String[]{"3:00 PM","3:50 AM"});
+            theoryTiming.put(45, new String[]{"4:00 PM","4:50 PM"});
+            theoryTiming.put(46, new String[]{"5:00 PM","5:50 PM"});
+            theoryTiming.put(47, new String[]{"6:00 PM","6:50 PM"});
+            theoryTiming.put(48, new String[]{"7:00 PM","7:50 PM"});
 
-            theoryTiming.put(49, new String[]{"2:00 PM","2:45 PM"});
-            theoryTiming.put(50, new String[]{"3:00 PM","3:45 AM"});
-            theoryTiming.put(51, new String[]{"4:00 PM","4:45 PM"});
-            theoryTiming.put(52, new String[]{"5:00 PM","5:45 PM"});
-            theoryTiming.put(53, new String[]{"6:00 PM","6:45 PM"});
-            theoryTiming.put(54, new String[]{"7:00 PM","7:45 PM"});
+            theoryTiming.put(49, new String[]{"2:00 PM","2:50 PM"});
+            theoryTiming.put(50, new String[]{"3:00 PM","3:50 AM"});
+            theoryTiming.put(51, new String[]{"4:00 PM","4:50 PM"});
+            theoryTiming.put(52, new String[]{"5:00 PM","5:50 PM"});
+            theoryTiming.put(53, new String[]{"6:00 PM","6:50 PM"});
+            theoryTiming.put(54, new String[]{"7:00 PM","7:50 PM"});
 
-            theoryTiming.put(55, new String[]{"2:00 PM","2:45 PM"});
-            theoryTiming.put(56, new String[]{"3:00 PM","3:45 AM"});
-            theoryTiming.put(57, new String[]{"4:00 PM","4:45 PM"});
-            theoryTiming.put(58, new String[]{"5:00 PM","5:45 PM"});
-            theoryTiming.put(59, new String[]{"6:00 PM","6:45 PM"});
-            theoryTiming.put(60, new String[]{"7:00 PM","7:45 PM"});
+            theoryTiming.put(55, new String[]{"2:00 PM","2:50 PM"});
+            theoryTiming.put(56, new String[]{"3:00 PM","3:50 AM"});
+            theoryTiming.put(57, new String[]{"4:00 PM","4:50 PM"});
+            theoryTiming.put(58, new String[]{"5:00 PM","5:50 PM"});
+            theoryTiming.put(59, new String[]{"6:00 PM","6:50 PM"});
+            theoryTiming.put(60, new String[]{"7:00 PM","7:50 PM"});
         }
 
         return theoryTiming;
@@ -113,76 +115,76 @@ public class ConstantsActivity {
             labTiming = new HashMap<>();
 
             // Morning
-            labTiming.put(1, new String[]{"8:00 AM","8:45 AM"});
-            labTiming.put(2, new String[]{"8:46 AM","9:30 AM"});
-            labTiming.put(3, new String[]{"10:00 AM","10:45 AM"});
-            labTiming.put(4, new String[]{"10:46 AM","11:30 AM"});
-            labTiming.put(5, new String[]{"11:31 AM","12:15 PM"});
-            labTiming.put(6, new String[]{"12:16 PM","1:00 PM"});
+            labTiming.put(1, new String[]{"8:00 AM","8:50 AM"});
+            labTiming.put(2, new String[]{"8:51 AM","9:40 AM"});
+            labTiming.put(3, new String[]{"9:51 AM","10:40 AM"});
+            labTiming.put(4, new String[]{"10:41 AM","11:30 AM"});
+            labTiming.put(5, new String[]{"11:40 AM","12:30 PM"});
+            labTiming.put(6, new String[]{"12:31 PM","1:20 PM"});
 
-            labTiming.put(7, new String[]{"8:00 AM","8:45 AM"});
-            labTiming.put(8, new String[]{"8:46 AM","9:30 AM"});
-            labTiming.put(9, new String[]{"10:00 AM","10:45 AM"});
-            labTiming.put(10, new String[]{"10:46 AM","11:30 AM"});
-            labTiming.put(11, new String[]{"11:31 AM","12:15 PM"});
-            labTiming.put(12, new String[]{"12:16 PM","1:00 PM"});
+            labTiming.put(7, new String[]{"8:00 AM","8:50 AM"});
+            labTiming.put(8, new String[]{"8:51 AM","9:40 AM"});
+            labTiming.put(9, new String[]{"9:51 AM","10:40 AM"});
+            labTiming.put(10, new String[]{"10:41 AM","11:30 AM"});
+            labTiming.put(11, new String[]{"11:40 AM","12:30 PM"});
+            labTiming.put(12, new String[]{"12:31 PM","1:20 PM"});
 
-            labTiming.put(13, new String[]{"8:00 AM","8:45 AM"});
-            labTiming.put(14, new String[]{"8:46 AM","9:30 AM"});
-            labTiming.put(15, new String[]{"10:00 AM","10:45 AM"});
-            labTiming.put(16, new String[]{"10:46 AM","11:30 AM"});
-            labTiming.put(17, new String[]{"11:31 AM","12:15 PM"});
-            labTiming.put(18, new String[]{"12:16 PM","1:00 PM"});
+            labTiming.put(13, new String[]{"8:00 AM","8:50 AM"});
+            labTiming.put(14, new String[]{"8:51 AM","9:40 AM"});
+            labTiming.put(15, new String[]{"9:51 AM","10:40 AM"});
+            labTiming.put(16, new String[]{"10:41 AM","11:30 AM"});
+            labTiming.put(17, new String[]{"11:40 AM","12:30 PM"});
+            labTiming.put(18, new String[]{"12:31 PM","1:20 PM"});
 
-            labTiming.put(19, new String[]{"8:00 AM","8:45 AM"});
-            labTiming.put(20, new String[]{"8:46 AM","9:30 AM"});
-            labTiming.put(21, new String[]{"10:00 AM","10:45 AM"});
-            labTiming.put(22, new String[]{"10:46 AM","11:30 AM"});
-            labTiming.put(23, new String[]{"11:31 AM","12:15 PM"});
-            labTiming.put(24, new String[]{"12:16 PM","1:00 PM"});
+            labTiming.put(19, new String[]{"8:00 AM","8:50 AM"});
+            labTiming.put(20, new String[]{"8:51 AM","9:40 AM"});
+            labTiming.put(21, new String[]{"9:51 AM","10:40 AM"});
+            labTiming.put(22, new String[]{"10:41 AM","11:30 AM"});
+            labTiming.put(23, new String[]{"11:40 AM","12:30 PM"});
+            labTiming.put(24, new String[]{"12:31 PM","1:20 PM"});
 
-            labTiming.put(25, new String[]{"8:00 AM","8:45 AM"});
-            labTiming.put(26, new String[]{"8:46 AM","9:30 AM"});
-            labTiming.put(27, new String[]{"10:00 AM","10:45 AM"});
-            labTiming.put(28, new String[]{"10:46 AM","11:30 AM"});
-            labTiming.put(29, new String[]{"11:31 AM","12:15 PM"});
-            labTiming.put(30, new String[]{"12:16 PM","1:00 PM"});
+            labTiming.put(25, new String[]{"8:00 AM","8:50 AM"});
+            labTiming.put(26, new String[]{"8:51 AM","9:40 AM"});
+            labTiming.put(27, new String[]{"9:51 AM","10:40 AM"});
+            labTiming.put(28, new String[]{"10:41 AM","11:30 AM"});
+            labTiming.put(29, new String[]{"11:40 AM","12:30 PM"});
+            labTiming.put(30, new String[]{"12:31 PM","1:20 PM"});
 
             // Afternoon
-            labTiming.put(31, new String[]{"2:00 PM","2:45 PM"});
-            labTiming.put(32, new String[]{"2:46 PM","3:30 AM"});
-            labTiming.put(33, new String[]{"4:00 PM","4:45 PM"});
-            labTiming.put(34, new String[]{"4:46 PM","5:30 PM"});
-            labTiming.put(35, new String[]{"5:31 PM","6:15 PM"});
-            labTiming.put(36, new String[]{"6:00 PM","7:00 PM"});
+            labTiming.put(31, new String[]{"2:00 PM","2:50 PM"});
+            labTiming.put(32, new String[]{"2:51 PM","3:40 AM"});
+            labTiming.put(33, new String[]{"3:51 PM","4:40 PM"});
+            labTiming.put(34, new String[]{"4:41 PM","5:30 PM"});
+            labTiming.put(35, new String[]{"5:40 PM","6:30 PM"});
+            labTiming.put(36, new String[]{"6:31 PM","7:20 PM"});
 
-            labTiming.put(37, new String[]{"2:00 PM","2:45 PM"});
-            labTiming.put(38, new String[]{"2:46 PM","3:30 AM"});
-            labTiming.put(39, new String[]{"4:00 PM","4:45 PM"});
-            labTiming.put(40, new String[]{"4:46 PM","5:30 PM"});
-            labTiming.put(41, new String[]{"5:31 PM","6:15 PM"});
-            labTiming.put(42, new String[]{"6:00 PM","7:00 PM"});
+            labTiming.put(37, new String[]{"2:00 PM","2:50 PM"});
+            labTiming.put(38, new String[]{"2:51 PM","3:40 AM"});
+            labTiming.put(39, new String[]{"3:51 PM","4:40 PM"});
+            labTiming.put(40, new String[]{"4:41 PM","5:30 PM"});
+            labTiming.put(41, new String[]{"5:40 PM","6:30 PM"});
+            labTiming.put(42, new String[]{"6:31 PM","7:20 PM"});
 
-            labTiming.put(43, new String[]{"2:00 PM","2:45 PM"});
-            labTiming.put(44, new String[]{"2:46 PM","3:30 AM"});
-            labTiming.put(45, new String[]{"4:00 PM","4:45 PM"});
-            labTiming.put(46, new String[]{"4:46 PM","5:30 PM"});
-            labTiming.put(47, new String[]{"5:31 PM","6:15 PM"});
-            labTiming.put(48, new String[]{"6:00 PM","7:00 PM"});
+            labTiming.put(43, new String[]{"2:00 PM","2:50 PM"});
+            labTiming.put(44, new String[]{"2:51 PM","3:40 AM"});
+            labTiming.put(45, new String[]{"3:51 PM","4:40 PM"});
+            labTiming.put(46, new String[]{"4:41 PM","5:30 PM"});
+            labTiming.put(47, new String[]{"5:40 PM","6:30 PM"});
+            labTiming.put(48, new String[]{"6:31 PM","7:20 PM"});
 
-            labTiming.put(49, new String[]{"2:00 PM","2:45 PM"});
-            labTiming.put(50, new String[]{"2:46 PM","3:30 AM"});
-            labTiming.put(51, new String[]{"4:00 PM","4:45 PM"});
-            labTiming.put(52, new String[]{"4:46 PM","5:30 PM"});
-            labTiming.put(53, new String[]{"5:31 PM","6:15 PM"});
-            labTiming.put(54, new String[]{"6:00 PM","7:00 PM"});
+            labTiming.put(49, new String[]{"2:00 PM","2:50 PM"});
+            labTiming.put(50, new String[]{"2:51 PM","3:40 AM"});
+            labTiming.put(51, new String[]{"3:51 PM","4:40 PM"});
+            labTiming.put(52, new String[]{"4:41 PM","5:30 PM"});
+            labTiming.put(53, new String[]{"5:40 PM","6:30 PM"});
+            labTiming.put(54, new String[]{"6:31 PM","7:20 PM"});
 
-            labTiming.put(55, new String[]{"2:00 PM","2:45 PM"});
-            labTiming.put(56, new String[]{"2:46 PM","3:30 AM"});
-            labTiming.put(57, new String[]{"4:00 PM","4:45 PM"});
-            labTiming.put(58, new String[]{"4:46 PM","5:30 PM"});
-            labTiming.put(59, new String[]{"5:31 PM","6:15 PM"});
-            labTiming.put(60, new String[]{"6:00 PM","7:00 PM"});
+            labTiming.put(55, new String[]{"2:00 PM","2:50 PM"});
+            labTiming.put(56, new String[]{"2:51 PM","3:40 AM"});
+            labTiming.put(57, new String[]{"3:51 PM","4:40 PM"});
+            labTiming.put(58, new String[]{"4:41 PM","5:30 PM"});
+            labTiming.put(59, new String[]{"5:40 PM","6:30 PM"});
+            labTiming.put(60, new String[]{"6:31 PM","7:20 PM"});
         }
 
         return labTiming;
@@ -321,5 +323,45 @@ public class ConstantsActivity {
         }
 
         return chosenSlots;
+    }
+
+    public static HashMap<Integer, ArrayList<String>> getChosenSlotsType() {
+        if (chosenSlotsType == null){
+            chosenSlotsType = new HashMap<>();
+        }
+        Log.i("hellotypes", chosenSlotsType.toString());
+        return chosenSlotsType;
+    }
+
+    public static void setChosenSlotsType(HashMap<Integer, ArrayList<String>> newChosenSlotsType) {
+        chosenSlotsType = newChosenSlotsType;
+    }
+
+    public static ArrayList<Integer> getExceptionSlots() {
+        if (exceptionSlots == null) {
+            exceptionSlots = new ArrayList<>();
+            exceptionSlots.add(5);
+            exceptionSlots.add(6);
+            exceptionSlots.add(11);
+            exceptionSlots.add(12);
+            exceptionSlots.add(17);
+            exceptionSlots.add(18);
+            exceptionSlots.add(23);
+            exceptionSlots.add(24);
+            exceptionSlots.add(29);
+            exceptionSlots.add(30);
+            exceptionSlots.add(35);
+            exceptionSlots.add(36);
+            exceptionSlots.add(41);
+            exceptionSlots.add(42);
+            exceptionSlots.add(47);
+            exceptionSlots.add(48);
+            exceptionSlots.add(53);
+            exceptionSlots.add(54);
+            exceptionSlots.add(59);
+            exceptionSlots.add(60);
+
+        }
+        return exceptionSlots;
     }
 }

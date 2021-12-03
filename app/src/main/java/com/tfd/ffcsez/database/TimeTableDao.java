@@ -30,7 +30,7 @@ public interface TimeTableDao {
     @Query("SELECT * FROM timetable WHERE `row` = :row AND `column` = :column")
     List<TimeTableData> loadClashSlots(int row, int column);
 
-    @Query("SELECT `row`, `column` FROM timetable WHERE timeTableId = :timeTableId")
+    @Query("SELECT `row`, `column`, `courseType` FROM timetable WHERE timeTableId = :timeTableId")
     List<Coord> getChosenSlots(int timeTableId);
 
     @Query("SELECT DISTINCT courseCode, courseType, `c` FROM timetable WHERE `timeTableId` = :timeTableId ORDER BY courseCode, courseType")
