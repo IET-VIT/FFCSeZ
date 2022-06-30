@@ -13,7 +13,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 3
-        versionName "1.2"
+        versionName "1.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -68,13 +68,13 @@ dependencies {
     implementation 'com.github.roiacult:BackdropLayout:2.3'
 
     //Android Architecture Components
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.4.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.0'
 
     //Room Database
-    implementation("androidx.room:room-runtime:2.3.0")
-    annotationProcessor "androidx.room:room-compiler:2.3.0"
-    testImplementation("androidx.room:room-testing:2.3.0")
+    implementation("androidx.room:room-runtime:2.4.2")
+    annotationProcessor "androidx.room:room-compiler:2.4.2"
+    testImplementation("androidx.room:room-testing:2.4.2")
 
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.3'

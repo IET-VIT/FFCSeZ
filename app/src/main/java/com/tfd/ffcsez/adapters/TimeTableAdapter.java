@@ -171,7 +171,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                             List<TimeTableData> clashSlots = database.timeTableDao()
                                     .loadClashSlots(timeTableData.getRow(), timeTableData.getColumn());
 
-                            if (clashSlots.size == 0) {
+                            if (clashSlots.size() == 0) {
                                 ConstantsActivity.getChosenSlots()[timeTableData.getRow()][timeTableData.getColumn()] = 0;
                             }
 
@@ -206,7 +206,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.Recy
                                     if (clashSlots.size() == 1) {
                                         clashSlots.get(0).setClash(false);
                                         database.timeTableDao().updateDetail(clashSlots.get(0));
-                                    } else if 
+                                    }
                                 }
                             }
                         }
